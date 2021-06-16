@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "262903725533",
+    "project_id": "matrix-df60c",
+    "storage_bucket": "matrix-df60c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262903725533:android:3aebea06d5086ed1cfca34",
+        "android_client_info": {
+          "package_name": "com.andelinks.survey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262903725533-psqr6gveki9rcavs334p040donu1jcgj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiFqAzGi6AOUBXQFCF03DDA7ylfDCFkrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262903725533-psqr6gveki9rcavs334p040donu1jcgj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
