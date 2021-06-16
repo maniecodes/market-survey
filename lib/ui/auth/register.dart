@@ -16,7 +16,7 @@ class RegistrationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SignUpFormController _signUpFormCtrl = Get.put(SignUpFormController());
+    SignUpFormController _signUpFormCtrl = Get.find<SignUpFormController>();
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(

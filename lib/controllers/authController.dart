@@ -4,21 +4,20 @@ import 'package:get/get.dart';
 import 'package:survey/controllers/controllers.dart';
 import 'package:survey/models/models.dart';
 import 'package:survey/routes/routes.dart';
-import 'package:survey/services/services.dart';
+import 'package:survey/service/services.dart';
 import 'package:survey/ui/widgets/loading.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Rxn<User> firebaseUser = Rxn<User>();
 
-  // Firebase user one=-time fetch
-  Future<User> get getUser async => _auth.currentUser!;
-
-  // Firebase user a realtime stream
-  Stream<User?> get user => _auth.authStateChanges();
-
   final AuthService _authService = AuthService();
   final UserService _userService = UserService();
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
 
   @override
   void onReady() async {
@@ -33,25 +32,26 @@ class AuthController extends GetxController {
     }
   }
 
+  // Firebase user one=-time fetch
+  Future<User> get getUser async => _auth.currentUser!;
+
+  // Firebase user a realtime stream
+  Stream<User?> get user => _auth.authStateChanges();
+
   // Method to handle user sign in using email and password
   Future<void> login(String email, String password) async {
-    print('got here');
-    print(email);
-    print(password);
     showLoadingIndicator();
     try {
       UserCredential _authResult =
           await _authService.loginUser(email.trim(), password.trim());
       if (_authResult.user != null) {
         hideLoadingIndicator();
-        Get.reset();
         update();
         // Get.find<UserController>().user =
         //     await _userService.getUser(_authResult.user!.uid);
       }
     } catch (error) {
       hideLoadingIndicator();
-      Get.reset();
       Get.snackbar("Could not sign in", error.toString(),
           snackPosition: SnackPosition.BOTTOM,
           duration: Duration(seconds: 7),
@@ -78,7 +78,7 @@ class AuthController extends GetxController {
         if (await _userService.createNewUser(_newUser)) {
           // Get.find<UserController>().user = _newUser;
           hideLoadingIndicator();
-          Get.reset();
+          // Get.reset();
           update();
         }
 
@@ -90,7 +90,7 @@ class AuthController extends GetxController {
       }
     } catch (error) {
       hideLoadingIndicator();
-      Get.reset();
+      //Get.reset();
       Get.snackbar("Error creating account", error.toString(),
           snackPosition: SnackPosition.TOP,
           duration: Duration(seconds: 7),

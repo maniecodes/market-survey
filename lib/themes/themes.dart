@@ -26,7 +26,7 @@ class Themes {
     textTheme: TextTheme(
       // App bar text
       headline1: TextStyle(
-          fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
+          fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),
       // Hint text
       headline2: TextStyle(
           fontSize: 14.0, fontWeight: FontWeight.bold, color: Colors.black),

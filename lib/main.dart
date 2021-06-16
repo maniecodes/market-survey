@@ -13,10 +13,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
-  Get.lazyPut<ThemeController>(() => ThemeController());
+  Get.put<ThemeController>(ThemeController(), permanent: true);
   runApp(App());
 }
-
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

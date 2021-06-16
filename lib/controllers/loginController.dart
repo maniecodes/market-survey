@@ -35,4 +35,9 @@ class LoginFormController extends GetxController {
 
   submitFunction() async =>
       await _authController.login(email.value, password.value);
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
 }

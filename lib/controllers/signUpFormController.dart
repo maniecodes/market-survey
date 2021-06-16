@@ -111,4 +111,9 @@ class SignUpFormController extends GetxController {
 
   submitFunction() async => await _authController.register(firstName.value,
       lastName.value, phone.value, email.value, password.value);
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
 }

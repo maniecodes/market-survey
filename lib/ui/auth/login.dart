@@ -12,7 +12,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginFormController _loginFormCtrl = Get.put(LoginFormController());
+    LoginFormController _loginFormCtrl = Get.find();
     return Scaffold(
       key: _scaffoldKey,
       body: SafeArea(
