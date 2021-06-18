@@ -33,7 +33,7 @@ class AuthController extends GetxController {
   }
 
   // Firebase user one=-time fetch
-  Future<User> get getUser async => _auth.currentUser!;
+  User get getUser => _auth.currentUser!;
 
   // Firebase user a realtime stream
   Stream<User?> get user => _auth.authStateChanges();
@@ -64,21 +64,26 @@ class AuthController extends GetxController {
   Future<void> register(String firstName, String lastName, String phone,
       String email, String password) async {
     showLoadingIndicator();
+
     try {
       UserCredential _authResult =
           await _authService.registerUser(email, password);
+      User user = _authResult.user!;
       if (_authResult.user != null) {
         UserModel _newUser = UserModel(
-          id: _authResult.user!.uid,
+          uid: _authResult.user!.uid,
           firstName: firstName,
           lastName: lastName,
           phone: phone,
           email: _authResult.user!.email,
         );
+
         if (await _userService.createNewUser(_newUser)) {
+          user = _auth.currentUser!;
+          user.updateDisplayName(lastName + ' ' + firstName);
+          await user.reload();
           // Get.find<UserController>().user = _newUser;
           hideLoadingIndicator();
-          // Get.reset();
           update();
         }
 

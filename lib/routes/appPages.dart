@@ -6,6 +6,7 @@ import 'package:survey/bindings/signUpBinding.dart';
 import 'package:survey/routes/appRoutes.dart';
 import 'package:survey/ui/auth/login.dart';
 import 'package:survey/ui/auth/register.dart';
+import 'package:survey/ui/customerType.dart';
 import 'package:survey/ui/dashboard.dart';
 
 class AppPages {
@@ -26,5 +27,6 @@ class AppPages {
       page: () => DashboardPage(),
       binding: DashboardBinding(),
     ),
+    GetPage(name: Routes.CUSTOMER_TYPE, page: () => CustomerTypePage())
   ];
 }

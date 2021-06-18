@@ -6,8 +6,8 @@ class UserService {
 
   Future<bool> createNewUser(UserModel user) async {
     try {
-      await _firestore.collection("users").doc(user.id).set({
-        "uid": user.id,
+      await _firestore.collection("users").doc(user.uid).set({
+        "uid": user.uid,
         "firstName": user.firstName,
         "lastName": user.lastName,
         "phone": user.phone,
@@ -21,7 +21,10 @@ class UserService {
   }
 
   Future<UserModel> getUser(String uid) async {
+    print('got inside here');
     DocumentSnapshot _doc = await _firestore.collection("users").doc(uid).get();
+    print('user service');
+    print(_doc.data());
     return UserModel.fromDocumentSnapshot(documentSnapshot: _doc);
   }
 }

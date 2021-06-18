@@ -5,7 +5,8 @@ import 'package:survey/controllers/dashboardController.dart';
 class DashboardBinding extends Bindings {
   @override
   void dependencies() {
-Get.lazyPut<DashboardController>(() => DashboardController());
+    Get.lazyPut<DashboardController>(() => DashboardController());
     Get.lazyPut<UserController>(() => UserController());
+    //  Get.put<UserController>(UserController(), permanent: true);
   }
 }
