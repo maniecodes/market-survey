@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:survey/controllers/controllers.dart';
 import 'package:survey/routes/routes.dart';
 import 'package:survey/themes/themes.dart';
-import 'package:survey/ui/widgets/customWidgets.dart';
+// import 'package:survey/ui/widgets/customWidgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:survey/utils/hexColor.dart';
 import 'bindings/bindings.dart';
@@ -16,6 +16,7 @@ void main() async {
   await GetStorage.init();
   Get.put<ThemeController>(ThemeController(), permanent: true);
   runApp(App());
+  configLoading();
 }
 
 class App extends StatelessWidget {
@@ -24,16 +25,16 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeController.to.getThemeModeFromStore();
-    return Loading(
-      child: GetMaterialApp(
-        initialBinding: AuthBinding(),
-        theme: Themes().lightTheme,
-        darkTheme: Themes().darkTheme,
-        themeMode: ThemeMode.system,
-        debugShowCheckedModeBanner: false,
-        getPages: AppPages.pages,
-        initialRoute: Routes.LOGIN,
-      ),
+    // return Loading(
+    return GetMaterialApp(
+      initialBinding: AuthBinding(),
+      theme: Themes().lightTheme,
+      darkTheme: Themes().darkTheme,
+      themeMode: ThemeMode.system,
+      debugShowCheckedModeBanner: false,
+      getPages: AppPages.pages,
+      initialRoute: Routes.LOGIN,
+      builder: EasyLoading.init(),
     );
   }
 }

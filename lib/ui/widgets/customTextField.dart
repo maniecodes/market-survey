@@ -7,6 +7,7 @@ class CustomTextfieldWidget extends StatelessWidget {
   final IconData? prefixIcon;
   final String hintText;
   final String labelText;
+  final String? initialValue;
   final bool obscureText;
   final TextEditingController controller;
 //  final FocusNode? currentFocusNode;
@@ -24,6 +25,7 @@ class CustomTextfieldWidget extends StatelessWidget {
       required this.labelText,
       required this.obscureText,
       required this.controller,
+      this.initialValue,
       //   required this.currentFocusNode,
       this.onChanged,
       this.onSubmitted,
@@ -41,7 +43,7 @@ class CustomTextfieldWidget extends StatelessWidget {
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: Theme.of(context).textTheme.bodyText1,
-      textInputAction: TextInputAction.next,
+      // textInputAction: TextInputAction.next,
       keyboardType: keyboardType,
       //autofillHints: [AutofillHints.organizationName],
       maxLines: 1,

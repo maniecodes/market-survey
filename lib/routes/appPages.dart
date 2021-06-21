@@ -6,8 +6,10 @@ import 'package:survey/bindings/signUpBinding.dart';
 import 'package:survey/routes/appRoutes.dart';
 import 'package:survey/ui/auth/login.dart';
 import 'package:survey/ui/auth/register.dart';
+import 'package:survey/ui/borrowingCustomer.dart';
 import 'package:survey/ui/customerType.dart';
 import 'package:survey/ui/dashboard.dart';
+import 'package:survey/ui/savingCustomer.dart';
 
 class AppPages {
   AppPages._();
@@ -27,6 +29,18 @@ class AppPages {
       page: () => DashboardPage(),
       binding: DashboardBinding(),
     ),
-    GetPage(name: Routes.CUSTOMER_TYPE, page: () => CustomerTypePage())
+    GetPage(
+      name: Routes.CUSTOMER_TYPE,
+      page: () => CustomerTypePage(),
+    ),
+    GetPage(
+      name: Routes.BORROWING_CUSTOMER,
+      page: () => BorrowingCustomerPage(),
+      binding: BorrowingBinding(),
+    ),
+    GetPage(
+      name: Routes.SAVING_CUSTOMER,
+      page: () => SavingCustomerPage(),
+    )
   ];
 }

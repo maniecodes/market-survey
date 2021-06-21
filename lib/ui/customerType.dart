@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:survey/routes/routes.dart';
 
 class CustomerTypePage extends StatelessWidget {
   const CustomerTypePage({Key? key}) : super(key: key);
@@ -23,7 +25,7 @@ class CustomerTypePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Get.toNamed(Routes.BORROWING_CUSTOMER),
                     child: Container(
                       height: 200,
                       width: 150,
@@ -50,7 +52,7 @@ class CustomerTypePage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Get.toNamed(Routes.SAVING_CUSTOMER),
                     child: Container(
                       height: 200,
                       width: 150,

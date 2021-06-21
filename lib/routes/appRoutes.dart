@@ -7,4 +7,6 @@ abstract class Routes {
   static const CREATE_SURVEY = "/create-survery";
   static const VIEW_SURVERY = "/view-survery";
   static const CUSTOMER_TYPE = "/customer-type";
+  static const SAVING_CUSTOMER = "/saving-customer";
+  static const BORROWING_CUSTOMER = "/borrowing-customer";
 }

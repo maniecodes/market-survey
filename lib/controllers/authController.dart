@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:survey/controllers/controllers.dart';
 import 'package:survey/models/models.dart';
 import 'package:survey/routes/routes.dart';
 import 'package:survey/service/services.dart';
-import 'package:survey/ui/widgets/loading.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -40,18 +40,22 @@ class AuthController extends GetxController {
 
   // Method to handle user sign in using email and password
   Future<void> login(String email, String password) async {
-    showLoadingIndicator();
+    // showLoadingIndicator();
+    EasyLoading.show(status: 'loading...');
     try {
       UserCredential _authResult =
           await _authService.loginUser(email.trim(), password.trim());
       if (_authResult.user != null) {
-        hideLoadingIndicator();
+        // hideLoadingIndicator();
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess('Login Successful!');
         update();
         // Get.find<UserController>().user =
         //     await _userService.getUser(_authResult.user!.uid);
       }
     } catch (error) {
-      hideLoadingIndicator();
+      // hideLoadingIndicator();
+      EasyLoading.dismiss();
       Get.snackbar("Could not sign in", error.toString(),
           snackPosition: SnackPosition.BOTTOM,
           duration: Duration(seconds: 7),
@@ -63,8 +67,7 @@ class AuthController extends GetxController {
   // User Registration
   Future<void> register(String firstName, String lastName, String phone,
       String email, String password) async {
-    showLoadingIndicator();
-
+    EasyLoading.show(status: 'loading...');
     try {
       UserCredential _authResult =
           await _authService.registerUser(email, password);
@@ -82,8 +85,8 @@ class AuthController extends GetxController {
           user = _auth.currentUser!;
           user.updateDisplayName(lastName + ' ' + firstName);
           await user.reload();
-          // Get.find<UserController>().user = _newUser;
-          hideLoadingIndicator();
+          EasyLoading.dismiss();
+          //  EasyLoading.showSuccess('Great Success!');
           update();
         }
 
@@ -94,8 +97,8 @@ class AuthController extends GetxController {
             colorText: Get.theme.snackBarTheme.actionTextColor);
       }
     } catch (error) {
-      hideLoadingIndicator();
-      //Get.reset();
+      // hideLoadingIndicator();
+      EasyLoading.dismiss();
       Get.snackbar("Error creating account", error.toString(),
           snackPosition: SnackPosition.TOP,
           duration: Duration(seconds: 7),
