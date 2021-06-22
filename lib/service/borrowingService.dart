@@ -31,6 +31,10 @@ class BorrowingService {
         "sellingDSR": data.sellingDSR,
         "dsrName": data.dsrName,
         "responserLocation": data.responserLocation,
+        "customerImageUrl": data.customerImageUrl,
+        "customerIDImageName": data.customerIDImageName,
+        "customerIDImageUrl": data.customerIDImageUrl,
+        "customerImageName": data.customerImageName,
       });
       return true;
     } catch (e) {

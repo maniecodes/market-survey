@@ -25,6 +25,10 @@ class BorrowingModel {
   String? sellingDSR;
   String? dsrName;
   String? responserLocation;
+  String? customerImageUrl;
+  String? customerImageName;
+  String? customerIDImageUrl;
+  String? customerIDImageName;
 
   BorrowingModel(
       {required this.uid,
@@ -50,7 +54,11 @@ class BorrowingModel {
       this.deviceSerial,
       this.sellingDSR,
       this.dsrName,
-      this.responserLocation});
+      this.responserLocation,
+      this.customerImageUrl,
+      this.customerIDImageName,
+      this.customerIDImageUrl,
+      this.customerImageName});
 
   BorrowingModel.fromDocumentSnapshot(
       {required DocumentSnapshot documentSnapshot}) {
@@ -79,5 +87,9 @@ class BorrowingModel {
     sellingDSR = documentSnapshot['sellingDSR'];
     dsrName = documentSnapshot['dsrName'];
     responserLocation = documentSnapshot['responserLocation'];
+    customerImageUrl = documentSnapshot['customerImageUrl'];
+    customerIDImageName = documentSnapshot['customerIDImageName'];
+    customerIDImageUrl = documentSnapshot['customerIDImageUrl'];
+    customerImageName = documentSnapshot['customerImageName'];
   }
 }

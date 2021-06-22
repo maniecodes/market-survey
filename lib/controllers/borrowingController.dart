@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +8,12 @@ import 'package:survey/controllers/controllers.dart';
 import 'package:survey/models/borrowing.dart';
 import 'package:survey/routes/routes.dart';
 import 'package:survey/service/services.dart';
+
+extension FileExtention on FileSystemEntity {
+  String? get name {
+    return this.path.split("/").last;
+  }
+}
 
 class BorrowingController extends GetxController {
   AuthController _auth = AuthController();
@@ -223,51 +229,51 @@ class BorrowingController extends GetxController {
   void customerTypeHintTextChanged(String val) =>
       customerTypeHintText.value = val;
 
-  submitFunction() async {
-    if (surnameValidation.value) {
-      try {
-        BorrowingModel data = BorrowingModel(
-            uid: _auth.getUser.uid,
-            surname: surname.value,
-            otherNames: otherNames.value,
-            customerTypeLabel: customerTypeLabel.value,
-            customerTypeID: customerTypeID.value,
-            customerType: customerType,
-            bvn: bvn.value,
-            otherNumber: otherNumber.value,
-            dateOfBirth: dateOfBirth.value,
-            gender: gender.value,
-            maritalStatus: maritalStatus.value,
-            address: address.value,
-            alternativeSurname: alternativeSurname.value,
-            alternativeOtherName: alternativeOtherName.value,
-            alternativePhone: alternativePhone.value,
-            alternativeSecondPhone: alternativeSecondPhone.value,
-            alternativeContactRelationship:
-                alternativeContactRelationship.value,
-            phoneType: phoneType.value,
-            deviceSerial: deviceSerial.value,
-            serviceCenter: serviceCenter.value,
-            paymentPlan: paymentPlan.value,
-            sellingDSR: sellingDSR.value,
-            dsrName: dsrName.value,
-            responserLocation: responserLocation.value);
-        if (await _borrowingService.createSurvery(data)) {
-          EasyLoading.dismiss();
-          EasyLoading.showSuccess('Entry submitted!');
-          update();
-        }
-        EasyLoading.dismiss();
-      } catch (error) {
-        EasyLoading.dismiss();
-        Get.snackbar("Could not save", error.toString(),
-            snackPosition: SnackPosition.TOP,
-            duration: Duration(seconds: 7),
-            backgroundColor: Colors.redAccent,
-            colorText: Colors.white);
-      }
-    } else {}
-  }
+  // submitFunction() async {
+  //   if (surnameValidation.value) {
+  //     try {
+  //       BorrowingModel data = BorrowingModel(
+  //           uid: _auth.getUser.uid,
+  //           surname: surname.value,
+  //           otherNames: otherNames.value,
+  //           customerTypeLabel: customerTypeLabel.value,
+  //           customerTypeID: customerTypeID.value,
+  //           customerType: customerType,
+  //           bvn: bvn.value,
+  //           otherNumber: otherNumber.value,
+  //           dateOfBirth: dateOfBirth.value,
+  //           gender: gender.value,
+  //           maritalStatus: maritalStatus.value,
+  //           address: address.value,
+  //           alternativeSurname: alternativeSurname.value,
+  //           alternativeOtherName: alternativeOtherName.value,
+  //           alternativePhone: alternativePhone.value,
+  //           alternativeSecondPhone: alternativeSecondPhone.value,
+  //           alternativeContactRelationship:
+  //               alternativeContactRelationship.value,
+  //           phoneType: phoneType.value,
+  //           deviceSerial: deviceSerial.value,
+  //           serviceCenter: serviceCenter.value,
+  //           paymentPlan: paymentPlan.value,
+  //           sellingDSR: sellingDSR.value,
+  //           dsrName: dsrName.value,
+  //           responserLocation: responserLocation.value);
+  //       if (await _borrowingService.createSurvery(data)) {
+  //         EasyLoading.dismiss();
+  //         EasyLoading.showSuccess('Entry submitted!');
+  //         update();
+  //       }
+  //       EasyLoading.dismiss();
+  //     } catch (error) {
+  //       EasyLoading.dismiss();
+  //       Get.snackbar("Could not save", error.toString(),
+  //           snackPosition: SnackPosition.TOP,
+  //           duration: Duration(seconds: 7),
+  //           backgroundColor: Colors.redAccent,
+  //           colorText: Colors.white);
+  //     }
+  //   } else {}
+  // }
 
   void checkFormValidation() async {
     try {
@@ -275,12 +281,40 @@ class BorrowingController extends GetxController {
       final isValid = formKey.currentState!.validate();
 
       if (!isValid) {
-        EasyLoading.showError('Fill in required fields');
+        EasyLoading.showError(selectedCustomerPhotoImagePath.toString());
         return;
       }
       formKey.currentState!.save();
 
-      BorrowingModel data = BorrowingModel(
+      File customerImage = new File(selectedCustomerPhotoImagePath.value);
+      File customerID = new File(selectedCustomerIDImagePath.value);
+
+      String customerPhotoImageName = selectedCustomerPhotoImagePath
+          .substring(selectedCustomerPhotoImagePath.lastIndexOf("/"),
+              selectedCustomerPhotoImagePath.lastIndexOf("."))
+          .replaceAll("/", "");
+
+      String customerIDImageName = selectedCustomerIDImagePath
+          .substring(selectedCustomerIDImagePath.lastIndexOf("/"),
+              selectedCustomerIDImagePath.lastIndexOf("."))
+          .replaceAll("/", "");
+
+      TaskSnapshot customerImageSnapshot = await FirebaseStorage.instance
+          .ref('uploads/customerImage/${customerImage.name}')
+          .putFile(customerImage);
+
+      TaskSnapshot customerIDSnapshot = await FirebaseStorage.instance
+          .ref('uploads/customerID/${customerID.name}')
+          .putFile(customerID);
+
+      if (customerImageSnapshot.state == TaskState.success &&
+          customerIDSnapshot.state == TaskState.success) {
+        String customerImageDownloadUrl =
+            await customerImageSnapshot.ref.getDownloadURL();
+        String customerIDDownloadUrl =
+            await customerIDSnapshot.ref.getDownloadURL();
+
+        BorrowingModel data = BorrowingModel(
           uid: _auth.getUser.uid,
           surname: surname.value,
           otherNames: otherNames.value,
@@ -304,15 +338,21 @@ class BorrowingController extends GetxController {
           paymentPlan: paymentPlan.value,
           sellingDSR: sellingDSR.value,
           dsrName: dsrName.value,
-          responserLocation: responserLocation.value);
-      if (await _borrowingService.createSurvery(data)) {
-        EasyLoading.dismiss();
-        EasyLoading.showSuccess('Entry submitted!');
+          responserLocation: responserLocation.value,
+          customerIDImageName: customerIDImageName,
+          customerIDImageUrl: customerIDDownloadUrl,
+          customerImageName: customerPhotoImageName,
+          customerImageUrl: customerImageDownloadUrl,
+        );
+        if (await _borrowingService.createSurvery(data)) {
+          EasyLoading.dismiss();
+          EasyLoading.showSuccess('Entry submitted!');
 
-        Get.offAllNamed(Routes.DASHBOARD);
-        update();
+          Get.offAllNamed(Routes.DASHBOARD);
+          update();
+        }
+        EasyLoading.dismiss();
       }
-      EasyLoading.dismiss();
     } catch (error) {
       EasyLoading.dismiss();
       Get.snackbar("Could not save", error.toString(),
