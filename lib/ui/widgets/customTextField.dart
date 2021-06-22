@@ -10,8 +10,9 @@ class CustomTextfieldWidget extends StatelessWidget {
   final String? initialValue;
   final bool obscureText;
   final TextEditingController controller;
-//  final FocusNode? currentFocusNode;
+//final FocusNode? currentFocusNode;
   final Function(String)? onChanged;
+  final void Function(String?)? onSaved;
   final Function(String)? onSubmitted;
   final String? errorText;
   final String? Function(String?)? validator;
@@ -28,6 +29,7 @@ class CustomTextfieldWidget extends StatelessWidget {
       this.initialValue,
       //   required this.currentFocusNode,
       this.onChanged,
+      this.onSaved,
       this.onSubmitted,
       this.errorText,
       this.validator,
@@ -40,6 +42,7 @@ class CustomTextfieldWidget extends StatelessWidget {
       controller: controller,
       //  focusNode: currentFocusNode,
       onChanged: onChanged,
+      onSaved: onSaved,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: Theme.of(context).textTheme.bodyText1,

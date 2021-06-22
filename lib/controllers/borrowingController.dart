@@ -6,13 +6,34 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:survey/controllers/controllers.dart';
 import 'package:survey/models/borrowing.dart';
+import 'package:survey/routes/routes.dart';
 import 'package:survey/service/services.dart';
 
 class BorrowingController extends GetxController {
   AuthController _auth = AuthController();
   BorrowingService _borrowingService = BorrowingService();
-  RxBool isCustomerType = false.obs;
   final customerType = 'Borrowing';
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  late TextEditingController surnameController,
+      otherNamesController,
+      customerTypeController,
+      bvnController,
+      otherNumberController,
+      dateOfBirthController,
+      addressController,
+      alternativeSurnameController,
+      alternativeOtherNameController,
+      alternativePhoneController,
+      alternativeSecondPhoneController,
+      phoneTypeController,
+      deviceSerialController,
+      serviceCenterController,
+      sellingDSRController,
+      dsrNameController,
+      responderLocationController;
+
+  RxBool isCustomerType = false.obs;
 
   RxString customerTypeHintText = ''.obs;
   RxString selectedCustomerIDImagePath = ''.obs;
@@ -61,60 +82,81 @@ class BorrowingController extends GetxController {
   RxnString sellingDSRErrorText = RxnString(null);
   RxnString dsrNameErrorText = RxnString(null);
   RxnString responserLocationErrorText = RxnString(null);
-  Rxn<Function> submitFunc = Rxn<Function>(null);
+  // Rxn<Function> submitFunc = Rxn<Function>(null);
 
   RxBool surnameValidation = false.obs;
 
   @override
   void onInit() async {
     super.onInit();
-    debounce(surname, surnameValidations, time: Duration(microseconds: 400));
+    surnameController = TextEditingController();
+    otherNamesController = TextEditingController();
+    customerTypeController = TextEditingController();
+    bvnController = TextEditingController();
+    otherNumberController = TextEditingController();
+    dateOfBirthController = TextEditingController();
+    addressController = TextEditingController();
+    alternativeSurnameController = TextEditingController();
+    alternativeOtherNameController = TextEditingController();
+    alternativePhoneController = TextEditingController();
+    alternativeSecondPhoneController = TextEditingController();
+    phoneTypeController = TextEditingController();
+    deviceSerialController = TextEditingController();
+    serviceCenterController = TextEditingController();
+    sellingDSRController = TextEditingController();
+    dsrNameController = TextEditingController();
+    responderLocationController = TextEditingController();
   }
 
-  void addressValidations(String val) async {
-    addressErrorText.value = null;
-    submitFunc.value = null;
-    if (val.isNotEmpty) {
-      submitFunc.value = submitFunc;
-      addressErrorText.value = null;
-      return;
+  String? validateGender(String value) {
+    if (value.isEmpty) {
+      return "Gender is required";
     }
-    addressErrorText.value = "Customer address is required";
+    return null;
   }
 
-  void customerTypeValidations(String val) async {
-    customerTypeErrorText.value = null;
-    submitFunc.value = null;
-    if (val.isNotEmpty) {
-      submitFunc.value = submitFunc;
-      customerTypeErrorText.value = null;
-      return;
+  String? validateDateOfBirth(String value) {
+    if (value.isEmpty) {
+      return "Date of birth is required";
     }
-    customerTypeErrorText.value = "Customer type is required";
+    return null;
   }
 
-  void otherNamesValidations(String val) async {
-    otherNamesErrorText.value = null;
-    submitFunc.value = null;
-    if (val.isNotEmpty) {
-      submitFunc.value = submitFunc;
-      otherNamesErrorText.value = null;
-      return;
+  String? validateBVN(String value) {
+    if (value.isNotEmpty && (value.length != 10)) {
+      return "Wrong BVN number";
     }
-    otherNamesErrorText.value = "Input other names";
+    return null;
   }
 
-  void surnameValidations(String val) async {
-    print(val);
-    surnameErrorText.value = null;
-    submitFunc.value = null;
-    if (val.isNotEmpty) {
-      submitFunc.value = submitFunc;
-      surnameErrorText.value = null;
-      surnameValidation.value = true;
-      return;
+  String? validatecustomerTypeID(String value) {
+    if (value.isEmpty) {
+      return "ID number is required";
     }
-    surnameErrorText.value = "Surname is required";
+    return null;
+  }
+
+  String? validatecustomerTypeLabel(String value) {
+    if (value.isEmpty) {
+      return "Select a customer ID type";
+    }
+    return null;
+  }
+
+  String? validateSurname(String value) {
+    print(value);
+    if (value.isEmpty) {
+      return "Surname is requried";
+    }
+    print('here');
+    return null;
+  }
+
+  String? validateotherNames(String value) {
+    if (value.isEmpty) {
+      return "Other names are required";
+    }
+    return null;
   }
 
   void getCustomerPhotoImage(ImageSource imageSource) async {
@@ -183,8 +225,6 @@ class BorrowingController extends GetxController {
 
   submitFunction() async {
     if (surnameValidation.value) {
-      EasyLoading.show(status: 'loading...');
-
       try {
         BorrowingModel data = BorrowingModel(
             uid: _auth.getUser.uid,
@@ -226,13 +266,82 @@ class BorrowingController extends GetxController {
             backgroundColor: Colors.redAccent,
             colorText: Colors.white);
       }
-    } else {
-      EasyLoading.showError('Fill in required fields');
+    } else {}
+  }
+
+  void checkFormValidation() async {
+    try {
+      EasyLoading.show(status: 'loading...');
+      final isValid = formKey.currentState!.validate();
+
+      if (!isValid) {
+        EasyLoading.showError('Fill in required fields');
+        return;
+      }
+      formKey.currentState!.save();
+
+      BorrowingModel data = BorrowingModel(
+          uid: _auth.getUser.uid,
+          surname: surname.value,
+          otherNames: otherNames.value,
+          customerTypeLabel: customerTypeLabel.value,
+          customerTypeID: customerTypeID.value,
+          customerType: customerType,
+          bvn: bvn.value,
+          otherNumber: otherNumber.value,
+          dateOfBirth: dateOfBirth.value,
+          gender: gender.value,
+          maritalStatus: maritalStatus.value,
+          address: address.value,
+          alternativeSurname: alternativeSurname.value,
+          alternativeOtherName: alternativeOtherName.value,
+          alternativePhone: alternativePhone.value,
+          alternativeSecondPhone: alternativeSecondPhone.value,
+          alternativeContactRelationship: alternativeContactRelationship.value,
+          phoneType: phoneType.value,
+          deviceSerial: deviceSerial.value,
+          serviceCenter: serviceCenter.value,
+          paymentPlan: paymentPlan.value,
+          sellingDSR: sellingDSR.value,
+          dsrName: dsrName.value,
+          responserLocation: responserLocation.value);
+      if (await _borrowingService.createSurvery(data)) {
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess('Entry submitted!');
+
+        Get.offAllNamed(Routes.DASHBOARD);
+        update();
+      }
+      EasyLoading.dismiss();
+    } catch (error) {
+      EasyLoading.dismiss();
+      Get.snackbar("Could not save", error.toString(),
+          snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 7),
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white);
     }
   }
 
   @override
   void onClose() {
+    surnameController.dispose();
+    otherNamesController.dispose();
+    customerTypeController.dispose();
+    bvnController.dispose();
+    otherNumberController.dispose();
+    dateOfBirthController.dispose();
+    addressController.dispose();
+    alternativeSurnameController.dispose();
+    alternativeOtherNameController.dispose();
+    alternativePhoneController.dispose();
+    alternativeSecondPhoneController.dispose();
+    phoneTypeController.dispose();
+    deviceSerialController.dispose();
+    serviceCenterController.dispose();
+    sellingDSRController.dispose();
+    dsrNameController.dispose();
+    responderLocationController.dispose();
     super.onClose();
   }
 }
