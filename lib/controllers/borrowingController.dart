@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:survey/controllers/controllers.dart';
-import 'package:survey/models/borrowing.dart';
+import 'package:survey/models/survey.dart';
 import 'package:survey/routes/routes.dart';
 import 'package:survey/service/services.dart';
 
@@ -281,7 +281,7 @@ class BorrowingController extends GetxController {
       final isValid = formKey.currentState!.validate();
 
       if (!isValid) {
-        EasyLoading.showError(selectedCustomerPhotoImagePath.toString());
+        EasyLoading.showError('Some fields are required');
         return;
       }
       formKey.currentState!.save();
@@ -314,7 +314,7 @@ class BorrowingController extends GetxController {
         String customerIDDownloadUrl =
             await customerIDSnapshot.ref.getDownloadURL();
 
-        BorrowingModel data = BorrowingModel(
+        SurveyModel data = SurveyModel(
           uid: _auth.getUser.uid,
           surname: surname.value,
           otherNames: otherNames.value,

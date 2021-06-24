@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey/controllers/controllers.dart';
 import 'package:survey/routes/routes.dart';
+import 'package:survey/ui/widgets/customPasswordField.dart';
 import 'package:survey/ui/widgets/customWidgets.dart';
 
 class LoginPage extends StatelessWidget {
@@ -50,14 +51,14 @@ class LoginPage extends StatelessWidget {
                               keyboardType: TextInputType.emailAddress,
                               //prefixIcon: Icons.email,
                               errorText: _loginFormCtrl.emailErrorText.value,
-                              obscureText: false,
+                              
                             );
                           }),
                           SizedBox(
                             height: 20,
                           ),
                           Obx(() {
-                            return CustomTextfieldWidget(
+                            return CustomPasswordfieldWidget(
                               labelText: 'Password',
                               controller: passwordController,
                               onChanged: _loginFormCtrl.passwordChanged,

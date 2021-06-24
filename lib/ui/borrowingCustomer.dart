@@ -101,7 +101,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                         keyboardType: TextInputType.name,
                         //prefixIcon: Icons.account_balance_rounded,
                         errorText: controller.surnameErrorText.value,
-                        obscureText: false,
+                        
                         validator: (value) =>
                             controller.validateSurname(value!)),
                     SizedBox(
@@ -117,7 +117,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                         keyboardType: TextInputType.name,
                         //prefixIcon: Icons.account_balance_rounded,
                         errorText: controller.otherNamesErrorText.value,
-                        obscureText: false,
+                        
                         validator: (value) =>
                             controller.validateotherNames(value!)),
                     SizedBox(
@@ -167,7 +167,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                                     //prefixIcon: Icons.account_balance_rounded,
                                     errorText: controller
                                         .customerTypeIDErrorText.value,
-                                    obscureText: false,
+                                    
                                     validator: (value) => controller
                                         .validatecustomerTypeID(value!)),
                                 SizedBox(
@@ -190,7 +190,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.bvnErrorText.value,
-                      obscureText: false,
+                      
                       validator: (value) => controller.validateBVN(value!),
                     ),
                     SizedBox(
@@ -206,7 +206,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.otherNumberErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -289,7 +289,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.addressErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -387,7 +387,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.alternativeSurnameErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -402,7 +402,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.alternativeOtherNameErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -417,7 +417,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.alternativePhoneErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -433,7 +433,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText:
                           controller.alternativeSecondPhoneErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -467,7 +467,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.phoneTypeErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -482,7 +482,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.deviceSerialErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -497,7 +497,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.serviceCenterErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -566,7 +566,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     //   keyboardType: TextInputType.name,
                     //   //prefixIcon: Icons.account_balance_rounded,
                     //   errorText: null,
-                    //   obscureText: false,
+                    //   
                     // ),
                     // SizedBox(
                     //   height: SPACING + 10,
@@ -581,7 +581,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     //   keyboardType: TextInputType.name,
                     //   //prefixIcon: Icons.account_balance_rounded,
                     //   errorText: null,
-                    //   obscureText: false,
+                    //   
                     // ),
                     // SizedBox(
                     //   height: SPACING + 10,
@@ -598,7 +598,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     //   keyboardType: TextInputType.name,
                     //   //prefixIcon: Icons.account_balance_rounded,
                     //   errorText: null,
-                    //   obscureText: false,
+                    //   
                     // ),
                     // SizedBox(
                     //   height: SPACING + 10,
@@ -614,7 +614,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     //   keyboardType: TextInputType.name,
                     //   //prefixIcon: Icons.account_balance_rounded,
                     //   errorText: null,
-                    //   obscureText: false,
+                    //   
                     // ),
                     // SizedBox(
                     //   height: SPACING + 10,
@@ -630,7 +630,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     //   keyboardType: TextInputType.name,
                     //   //prefixIcon: Icons.account_balance_rounded,
                     //   errorText: null,
-                    //   obscureText: false,
+                    //   
                     // ),
                     // SizedBox(
                     //   height: SPACING + 10,
@@ -645,7 +645,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     //   keyboardType: TextInputType.name,
                     //   //prefixIcon: Icons.account_balance_rounded,
                     //   errorText: null,
-                    //   obscureText: false,
+                    //   
                     // ),
                     // SizedBox(
                     //   height: SPACING + 10,
@@ -661,7 +661,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     //   keyboardType: TextInputType.name,
                     //   //prefixIcon: Icons.account_balance_rounded,
                     //   errorText: null,
-                    //   obscureText: false,
+                    //   
                     // ),
                     SizedBox(
                       height: SPACING + 10,
@@ -694,7 +694,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.sellingDSRErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -709,7 +709,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.dsrNameErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -724,7 +724,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.responserLocationErrorText.value,
-                      obscureText: false,
+                      
                     ),
                     SizedBox(
                       height: SPACING + 10,

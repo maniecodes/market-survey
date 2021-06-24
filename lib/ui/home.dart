@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey/controllers/controllers.dart';
 import 'package:survey/routes/routes.dart';
+import 'package:survey/ui/widgets/surveyCard.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends GetWidget<AuthController> {
   final data = Get.find<AuthController>().getUser;
@@ -9,6 +12,7 @@ class HomePage extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -18,9 +22,7 @@ class HomePage extends GetWidget<AuthController> {
               Get.find<UserController>().user = await user.getUserDetails();
             },
             builder: (_) {
-              return Text(_.user.firstName.toString() +
-                  ' ' +
-                  _.user.lastName.toString());
+              return Text('Welcome, ' + _.user.firstName.toString());
             },
           )),
       drawer: Drawer(
@@ -69,8 +71,61 @@ class HomePage extends GetWidget<AuthController> {
           },
         ),
       ),
-      body: Container(
-        child: Text('${data.email.toString()}'),
+      body: GetX<DashboardController>(
+        init: Get.put<DashboardController>(DashboardController()),
+        builder: (DashboardController dashboardController) {
+          if (dashboardController.surveys != null) {
+            return GroupedListView<dynamic, String>(
+              elements: dashboardController.surveys!,
+              groupBy: (survey) {
+                return formatter.format(
+                    DateTime.parse(survey.createdAt.toDate().toString()));
+              },
+              order: GroupedListOrder.DESC,
+              groupSeparatorBuilder: (String value) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  value,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              ),
+              itemBuilder: (c, survey) {
+                // print(survey.createdAt.toDate().toString());
+                return SurveyCard(
+                    uid: controller.getUser.uid,
+                    name: Get.find<UserController>().user.firstName,
+                    survey: survey,
+                    onTap: () async {
+                      Get.toNamed(Routes.VIEW_SURVERY, arguments: survey);
+                    });
+              },
+            );
+            // return ListView.builder(
+            //   itemBuilder: (_, index) {
+            //     return GetX<UserController>(
+            //       initState: (_) async {
+            //         Get.find<UserController>().user =
+            //             await user.getUserDetails();
+            //       },
+            //       builder: (_) {
+            //         return SurveyCard(
+            //             uid: controller.getUser.uid,
+            //             name: _.user.firstName,
+            //             survey: dashboardController.surveys![index],
+            //             onTap: () async {
+            //               Get.toNamed(Routes.VIEW_SURVERY,
+            //                   arguments: dashboardController.surveys![index]);
+            //             });
+            //       },
+            //     );
+            //   },
+            //   itemCount: dashboardController.surveys!.length,
+            // );
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(

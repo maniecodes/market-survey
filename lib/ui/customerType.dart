@@ -8,7 +8,9 @@ class CustomerTypePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Customer Type'),
+      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(20),

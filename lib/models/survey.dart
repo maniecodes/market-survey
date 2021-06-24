@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class BorrowingModel {
+class SurveyModel {
+  String? id;
   late String uid;
   late String surname;
   String? otherNames;
-  late String customerTypeLabel;
-  late String customerTypeID;
+  String? customerTypeLabel;
+  String? customerTypeID;
   late String customerType;
   String? bvn;
   String? otherNumber;
-  late String dateOfBirth;
+  String? dateOfBirth;
   late String gender;
   String? maritalStatus;
   String? address;
@@ -29,17 +30,19 @@ class BorrowingModel {
   String? customerImageName;
   String? customerIDImageUrl;
   String? customerIDImageName;
+  Timestamp? createdAt;
 
-  BorrowingModel(
-      {required this.uid,
+  SurveyModel(
+      {this.id,
+      required this.uid,
       required this.surname,
       this.otherNames,
-      required this.customerTypeLabel,
-      required this.customerTypeID,
+      this.customerTypeLabel,
+      this.customerTypeID,
       required this.customerType,
       this.bvn,
       this.otherNumber,
-      required this.dateOfBirth,
+      this.dateOfBirth,
       required this.gender,
       this.maritalStatus,
       this.address,
@@ -58,38 +61,44 @@ class BorrowingModel {
       this.customerImageUrl,
       this.customerIDImageName,
       this.customerIDImageUrl,
-      this.customerImageName});
+      this.customerImageName,
+      this.createdAt});
 
-  BorrowingModel.fromDocumentSnapshot(
+  SurveyModel.fromDocumentSnapshot(
       {required DocumentSnapshot documentSnapshot}) {
+    id = documentSnapshot['id'];
     uid = documentSnapshot.id;
     surname = documentSnapshot['surname'];
     otherNames = documentSnapshot['otherNames'];
-    customerTypeLabel = documentSnapshot['customerTypeLabel'];
-    customerTypeID = documentSnapshot['customerTypeID'];
     customerType = documentSnapshot['customerType'];
-    bvn = documentSnapshot['bvn'];
-    otherNumber = documentSnapshot['otherNumber'];
-    dateOfBirth = documentSnapshot['dateOfBirth'];
     gender = documentSnapshot['gender'];
-    maritalStatus = documentSnapshot['maritalStatus'];
     address = documentSnapshot['address'];
     alternativeSurname = documentSnapshot['alternativeSurname'];
     alternativeOtherName = documentSnapshot['alternativeOtherName'];
-    alternativePhone = documentSnapshot['alternativePhone'];
-    alternativeSecondPhone = documentSnapshot['alternativeSecondPhone'];
     alternativeContactRelationship =
         documentSnapshot['alternativeContactRelationship'];
-    phoneType = documentSnapshot['phoneType'];
-    deviceSerial = documentSnapshot['deviceSerial'];
-    serviceCenter = documentSnapshot['serviceCenter'];
     paymentPlan = documentSnapshot['paymentPlan'];
-    sellingDSR = documentSnapshot['sellingDSR'];
-    dsrName = documentSnapshot['dsrName'];
     responserLocation = documentSnapshot['responserLocation'];
-    customerImageUrl = documentSnapshot['customerImageUrl'];
-    customerIDImageName = documentSnapshot['customerIDImageName'];
-    customerIDImageUrl = documentSnapshot['customerIDImageUrl'];
-    customerImageName = documentSnapshot['customerImageName'];
+    createdAt = documentSnapshot['createdAt'];
+
+    if (documentSnapshot['customerType'] == 'Borrowing') {
+      customerTypeLabel = documentSnapshot['customerTypeLabel'];
+      customerTypeID = documentSnapshot['customerTypeID'];
+      bvn = documentSnapshot['bvn'];
+      otherNumber = documentSnapshot['otherNumber'];
+      dateOfBirth = documentSnapshot['dateOfBirth'];
+      maritalStatus = documentSnapshot['maritalStatus'];
+      alternativePhone = documentSnapshot['alternativePhone'];
+      alternativeSecondPhone = documentSnapshot['alternativeSecondPhone'];
+      phoneType = documentSnapshot['phoneType'];
+      deviceSerial = documentSnapshot['deviceSerial'];
+      serviceCenter = documentSnapshot['serviceCenter'];
+      sellingDSR = documentSnapshot['sellingDSR'];
+      dsrName = documentSnapshot['dsrName'];
+      customerImageUrl = documentSnapshot['customerImageUrl'];
+      customerIDImageName = documentSnapshot['customerIDImageName'];
+      customerIDImageUrl = documentSnapshot['customerIDImageUrl'];
+      customerImageName = documentSnapshot['customerImageName'];
+    }
   }
 }

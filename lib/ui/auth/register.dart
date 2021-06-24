@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey/controllers/controllers.dart';
 import 'package:survey/routes/routes.dart';
+import 'package:survey/ui/widgets/customPasswordField.dart';
 import 'package:survey/ui/widgets/customWidgets.dart';
 
 class RegistrationPage extends StatelessWidget {
@@ -23,9 +24,12 @@ class RegistrationPage extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColorLight,
         elevation: 0.0,
         title: Text('Sign up', style: Theme.of(context).textTheme.headline1),
-        leading: Icon(
-          Icons.arrow_back,
-          color: Theme.of(context).primaryColorDark,
+        leading: GestureDetector(
+          onTap: () => Get.toNamed(Routes.LOGIN),
+          child: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).primaryColorDark,
+          ),
         ),
       ),
       body: SafeArea(
@@ -56,7 +60,6 @@ class RegistrationPage extends StatelessWidget {
                             keyboardType: TextInputType.name,
                             //prefixIcon: Icons.account_balance_rounded,
                             errorText: _signUpFormCtrl.fisrtNameErrorText.value,
-                            obscureText: false,
                           );
                         }),
                         SizedBox(
@@ -73,7 +76,6 @@ class RegistrationPage extends StatelessWidget {
                             keyboardType: TextInputType.name,
                             //prefixIcon: Icons.account_balance_rounded,
                             errorText: _signUpFormCtrl.lastNameErrorText.value,
-                            obscureText: false,
                           );
                         }),
                         SizedBox(
@@ -90,7 +92,6 @@ class RegistrationPage extends StatelessWidget {
                             keyboardType: TextInputType.number,
                             //prefixIcon: Icons.format_list_numbered,
                             errorText: _signUpFormCtrl.phoneErrorText.value,
-                            obscureText: false,
                           );
                         }),
                         SizedBox(
@@ -107,14 +108,13 @@ class RegistrationPage extends StatelessWidget {
                             keyboardType: TextInputType.emailAddress,
                             //prefixIcon: Icons.email,
                             errorText: _signUpFormCtrl.emailErrorText.value,
-                            obscureText: false,
                           );
                         }),
                         SizedBox(
                           height: SPACING,
                         ),
                         Obx(() {
-                          return CustomTextfieldWidget(
+                          return CustomPasswordfieldWidget(
                             labelText: 'Password',
                             controller: passwordController,
                             onChanged: _signUpFormCtrl.passwordChanged,
