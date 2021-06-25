@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey/routes/routes.dart';
+import 'package:survey/utils/hexColor.dart';
 
 class CustomerTypePage extends StatelessWidget {
   const CustomerTypePage({Key? key}) : super(key: key);
@@ -9,7 +10,10 @@ class CustomerTypePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Customer Type'),
+        title: Text(
+          'Customer Type',
+          style: Theme.of(context).textTheme.headline1,
+        ),
       ),
       body: SafeArea(
         child: Container(
@@ -19,7 +23,10 @@ class CustomerTypePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Select Customer Type'),
+              Text(
+                'Select Customer Type',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -32,6 +39,7 @@ class CustomerTypePage extends StatelessWidget {
                       height: 200,
                       width: 150,
                       decoration: BoxDecoration(
+                        color: HexColor('#ffc4cf'),
                         border: Border.all(
                           color: Theme.of(context).primaryColor,
                           width: 1,
@@ -42,13 +50,14 @@ class CustomerTypePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.whatshot_rounded,
-                            size: 30,
+                            Icons.double_arrow,
+                            size: 70,
+                            color: Colors.black,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text('TBC'),
-                          )
+                          Text(
+                            'Total Borrowing Customer',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
                         ],
                       ),
                     ),
@@ -59,6 +68,7 @@ class CustomerTypePage extends StatelessWidget {
                       height: 200,
                       width: 150,
                       decoration: BoxDecoration(
+                        color: HexColor('#ffc4cf'),
                         border: Border.all(
                           color: Theme.of(context).primaryColor,
                           width: 1,
@@ -69,13 +79,14 @@ class CustomerTypePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.fact_check_outlined,
-                            size: 30,
+                            Icons.money,
+                            size: 70,
+                            color: Colors.black,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text('TSC'),
-                          )
+                          Text(
+                            'Total Saving Customer',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
                         ],
                       ),
                     ),

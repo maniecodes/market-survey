@@ -22,7 +22,10 @@ class HomePage extends GetWidget<AuthController> {
               Get.find<UserController>().user = await user.getUserDetails();
             },
             builder: (_) {
-              return Text('Welcome, ' + _.user.firstName.toString());
+              return Text(
+                'Welcome ' + _.user.firstName.toString(),
+                style: Theme.of(context).textTheme.headline1,
+              );
             },
           )),
       drawer: Drawer(
@@ -45,15 +48,12 @@ class HomePage extends GetWidget<AuthController> {
                     ListTile(
                       title: Text('Home'),
                       leading: Icon(Icons.home),
-                      onTap: () async {
-                        debugPrint(data.displayName.toString());
-                      },
+                      onTap: () => Get.back(),
                     ),
                     ListTile(
-                      title: Text('Create Survery'),
-                      leading: Icon(Icons.favorite),
-                      onTap: () {},
-                    ),
+                        title: Text('Create Survery'),
+                        leading: Icon(Icons.favorite),
+                        onTap: () => Get.toNamed(Routes.CUSTOMER_TYPE)),
                     ListTile(
                       title: Text('Change Password'),
                       leading: Icon(Icons.lock),

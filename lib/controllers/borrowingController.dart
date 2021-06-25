@@ -277,6 +277,8 @@ class BorrowingController extends GetxController {
 
   void checkFormValidation() async {
     try {
+      print('customerID');
+
       EasyLoading.show(status: 'loading...');
       final isValid = formKey.currentState!.validate();
 
@@ -284,10 +286,21 @@ class BorrowingController extends GetxController {
         EasyLoading.showError('Some fields are required');
         return;
       }
-      formKey.currentState!.save();
+
+      if (selectedCustomerIDImagePath.value.isEmpty) {
+        EasyLoading.showError('Upload customer ID photo');
+        return;
+      }
+
+      if (selectedCustomerPhotoImagePath.value.isEmpty) {
+        EasyLoading.showError('Upload customer photo');
+        return;
+      }
 
       File customerImage = new File(selectedCustomerPhotoImagePath.value);
       File customerID = new File(selectedCustomerIDImagePath.value);
+
+      formKey.currentState!.save();
 
       String customerPhotoImageName = selectedCustomerPhotoImagePath
           .substring(selectedCustomerPhotoImagePath.lastIndexOf("/"),

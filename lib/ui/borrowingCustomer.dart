@@ -16,6 +16,16 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
   Widget build(BuildContext context) {
     // BorrowingController controller = Get.find<BorrowingController>();
     // surnameController.clear();
+
+    final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+      backgroundColor: Colors.black,
+      primary: Colors.black87,
+      minimumSize: Size(40, 36),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(2.0)),
+      ),
+    );
     List<Map<String, dynamic>> values = [
       {
         'data': '1',
@@ -124,11 +134,15 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     // Drop down button
                     Text('Customer ID Type'),
                     DropdownButtonFormField(
-                      hint: Text('Select customer ID type'),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      hint: Text(
+                        'Select customer ID type',
+                      ),
                       items: List.generate(values.length, (index) {
                         return DropdownMenuItem(
                           value: values[index],
-                          child: Text(values[index]['name']),
+                          child: Text(values[index]['name'],
+                              style: Theme.of(context).textTheme.headline5),
                         );
                       }),
                       onChanged: (Map<String, dynamic>? value) {
@@ -208,6 +222,8 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       height: SPACING + 10,
                     ),
                     DateTimePicker(
+                        autovalidate: true,
+                        style: Theme.of(context).textTheme.headline5,
                         type: DateTimePickerType.date,
                         dateMask: 'd MMM, yyyy',
                         controller: controller.dateOfBirthController,
@@ -225,7 +241,6 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                         //   }
                         //   return true;
                         // },
-
                         onChanged: controller.dateOfBirthChanged,
                         validator: (value) =>
                             controller.validateDateOfBirth(value!),
@@ -238,6 +253,8 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
 
                     Text('Gender'),
                     DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: Theme.of(context).textTheme.headline5,
                       hint: Text('Select Gender'),
                       items: List.generate(genders.length, (index) {
                         return DropdownMenuItem(
@@ -260,6 +277,8 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     ),
                     Text('Marital Status'),
                     DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: Theme.of(context).textTheme.headline5,
                       hint: Text('Select Marital Status'),
                       items: List.generate(maritalStatus.length, (index) {
                         return DropdownMenuItem(
@@ -301,19 +320,27 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     Row(
                       children: [
                         TextButton(
+                            style: flatButtonStyle,
                             onPressed: () {
                               controller.getCustomerIDImage(ImageSource.camera);
                             },
-                            child: Text('Camera')),
+                            child: Text(
+                              'Camera',
+                              style: TextStyle(color: Colors.white),
+                            )),
                         SizedBox(
                           width: 10,
                         ),
                         TextButton(
+                            style: flatButtonStyle,
                             onPressed: () {
                               controller
                                   .getCustomerIDImage(ImageSource.gallery);
                             },
-                            child: Text('Gallery')),
+                            child: Text(
+                              'Gallery',
+                              style: TextStyle(color: Colors.white),
+                            )),
                       ],
                     ),
                     SizedBox(
@@ -352,20 +379,28 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     Row(
                       children: [
                         TextButton(
+                            style: flatButtonStyle,
                             onPressed: () {
                               controller
                                   .getCustomerPhotoImage(ImageSource.camera);
                             },
-                            child: Text('Camera')),
+                            child: Text(
+                              'Camera',
+                              style: TextStyle(color: Colors.white),
+                            )),
                         SizedBox(
                           width: 10,
                         ),
                         TextButton(
+                            style: flatButtonStyle,
                             onPressed: () {
                               controller
                                   .getCustomerPhotoImage(ImageSource.gallery);
                             },
-                            child: Text('Gallery')),
+                            child: Text(
+                              'Gallery',
+                              style: TextStyle(color: Colors.white),
+                            )),
                       ],
                     ),
                     SizedBox(
@@ -431,6 +466,8 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     ),
                     Text('Alternative Contact Relationship'),
                     DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: Theme.of(context).textTheme.headline5,
                       hint: Text('Select alternative contact relationship'),
                       items:
                           List.generate(contactRelationships.length, (index) {
@@ -657,6 +694,8 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     Text('Payment Frequency'),
 
                     DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: Theme.of(context).textTheme.headline5,
                       hint: Text('Select Payment Plan'),
                       items: List.generate(paymentTypes.length, (index) {
                         return DropdownMenuItem(

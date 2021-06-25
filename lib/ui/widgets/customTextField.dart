@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:survey/themes/themes.dart';
 
 class CustomTextfieldWidget extends StatelessWidget {
   final IconData? fontIcon;
@@ -45,7 +44,8 @@ class CustomTextfieldWidget extends StatelessWidget {
       onSaved: onSaved,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: Theme.of(context).textTheme.bodyText1,
+      style: Theme.of(context).textTheme.headline5,
+
       // textInputAction: TextInputAction.next,
       keyboardType: keyboardType,
       //autofillHints: [AutofillHints.organizationName],
@@ -54,11 +54,13 @@ class CustomTextfieldWidget extends StatelessWidget {
       enableInteractiveSelection: true,
       // obscureText: obscureText,
       decoration: InputDecoration(
-        labelStyle: Theme.of(context).textTheme.bodyText1,
+        labelStyle: Theme.of(context).textTheme.bodyText2,
         labelText: labelText,
         filled: false,
         hintText: hintText,
+        hintStyle: Theme.of(context).textTheme.subtitle1,
         errorText: errorText,
+        errorStyle: Theme.of(context).textTheme.subtitle2,
         enabledBorder:
             UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
         focusedBorder:

@@ -36,22 +36,30 @@ class Themes {
       // Big text
       headline4: TextStyle(
           fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
-      headline5: TextStyle(
-          fontSize: 14.0, fontWeight: FontWeight.bold, color: Colors.black),
-      headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-      // Lable Text
-      bodyText1:
-          TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.black),
+      // Form field text
+      headline5: TextStyle(fontSize: 14.0, color: Colors.black),
+      headline6: TextStyle(
+          fontSize: 12.0, fontStyle: FontStyle.italic, color: Colors.black),
+      // label Text
+      bodyText1: TextStyle(
+          fontSize: 14.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Hind',
+          color: Colors.black),
       // Coloured label text
       bodyText2: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 14.0,
           fontFamily: 'Hind',
           color: HexColor('#E6284A')),
-      subtitle1: TextStyle(
-          fontSize: 14.0, fontWeight: FontWeight.bold, color: Colors.black),
-      subtitle2:
-          TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.black),
+      subtitle1:
+          TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.black54),
+      // error text
+      subtitle2: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 10.0,
+          fontFamily: 'Hind',
+          color: HexColor('#E6284A')),
     ),
     // Theme for TextButton
     textButtonTheme: TextButtonThemeData(
@@ -91,12 +99,12 @@ class Themes {
     primaryColor: Colors.orange,
 
     // Theme for TextButton
-    textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            backgroundColor: Colors.orange[500])),
+    // textButtonTheme: TextButtonThemeData(
+    //     style: TextButton.styleFrom(
+    //         shape: RoundedRectangleBorder(
+    //           borderRadius: BorderRadius.circular(15),
+    //         ),
+    //         backgroundColor: Colors.orange[500])),
 
     textTheme: TextTheme(
       // App bar text

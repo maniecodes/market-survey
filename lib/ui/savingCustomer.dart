@@ -33,7 +33,10 @@ class SavingCustomerPage extends GetView<SavingController> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0.0,
-        title: Text('Saving Customer'),
+        title: Text(
+          'Saving Customer',
+          style: Theme.of(context).textTheme.headline1,
+        ),
       ),
       body: SafeArea(
         bottom: false,
@@ -79,18 +82,15 @@ class SavingCustomerPage extends GetView<SavingController> {
                     SizedBox(
                       height: SPACING + 10,
                     ),
-
-                    SizedBox(
-                      height: SPACING + 10,
-                    ),
-
                     Text('Gender'),
                     DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       hint: Text('Select Gender'),
                       items: List.generate(genders.length, (index) {
                         return DropdownMenuItem(
                           value: genders[index],
-                          child: Text(genders[index].toString()),
+                          child: Text(genders[index].toString(),
+                              style: Theme.of(context).textTheme.headline5),
                         );
                       }),
                       onChanged: (value) {
@@ -154,12 +154,14 @@ class SavingCustomerPage extends GetView<SavingController> {
 
                     Text('Alternative Contact Relationship'),
                     DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       hint: Text('Select alternative contact relationship'),
                       items:
                           List.generate(contactRelationships.length, (index) {
                         return DropdownMenuItem(
                           value: contactRelationships[index],
-                          child: Text(contactRelationships[index].toString()),
+                          child: Text(contactRelationships[index].toString(),
+                              style: Theme.of(context).textTheme.headline5),
                         );
                       }),
                       onChanged: (value) {
@@ -175,11 +177,13 @@ class SavingCustomerPage extends GetView<SavingController> {
                     Text('Payment Frequency'),
 
                     DropdownButtonFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       hint: Text('Select Payment Plan'),
                       items: List.generate(paymentTypes.length, (index) {
                         return DropdownMenuItem(
                           value: paymentTypes[index],
-                          child: Text(paymentTypes[index].toString()),
+                          child: Text(paymentTypes[index].toString(),
+                              style: Theme.of(context).textTheme.headline5),
                         );
                       }),
                       onChanged: (value) {

@@ -11,7 +11,7 @@ class CustomPasswordfieldWidget extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
 //final FocusNode? currentFocusNode;
-final Function()? onTap;
+  final Function()? onTap;
   final Function(String)? onChanged;
   final void Function(String?)? onSaved;
   final Function(String)? onSubmitted;
@@ -41,14 +41,13 @@ final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
       controller: controller,
       //  focusNode: currentFocusNode,
       onChanged: onChanged,
       onSaved: onSaved,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: Theme.of(context).textTheme.bodyText1,
+      style: Theme.of(context).textTheme.headline5,
       // textInputAction: TextInputAction.next,
       keyboardType: keyboardType,
       //autofillHints: [AutofillHints.organizationName],
@@ -57,7 +56,7 @@ final Function()? onTap;
       enableInteractiveSelection: true,
       obscureText: obscureText,
       decoration: InputDecoration(
-        labelStyle: Theme.of(context).textTheme.bodyText1,
+        labelStyle: Theme.of(context).textTheme.bodyText2,
         labelText: labelText,
         filled: false,
         hintText: hintText,
