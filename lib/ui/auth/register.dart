@@ -146,7 +146,7 @@ class RegistrationPage extends GetView<SignUpFormController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
-                              onTap: () => Get.toNamed(Routes.LOGIN),
+                              onTap: () => Get.back(),
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Center(

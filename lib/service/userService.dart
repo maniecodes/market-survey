@@ -12,6 +12,7 @@ class UserService {
         "lastName": user.lastName,
         "phone": user.phone,
         "email": user.email,
+        "role": user.role
       });
       return true;
     } catch (e) {

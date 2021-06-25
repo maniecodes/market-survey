@@ -6,8 +6,15 @@ class UserModel {
   late String lastName;
   String? phone;
   String? email;
+  int? role;
 
-  UserModel({this.uid, required this.firstName, required this.lastName, this.phone, this.email});
+  UserModel(
+      {this.uid,
+      required this.firstName,
+      required this.lastName,
+      this.phone,
+      this.role,
+      this.email});
 
   UserModel.fromDocumentSnapshot({required DocumentSnapshot documentSnapshot}) {
     uid = documentSnapshot.id;
@@ -15,5 +22,6 @@ class UserModel {
     lastName = documentSnapshot['lastName'];
     phone = documentSnapshot['phone'];
     email = documentSnapshot['email'];
+    role = documentSnapshot['role'];
   }
 }

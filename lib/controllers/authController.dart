@@ -142,12 +142,12 @@ class AuthController extends GetxController {
         User user = _authResult.user!;
         if (_authResult.user != null) {
           UserModel _newUser = UserModel(
-            uid: _authResult.user!.uid,
-            firstName: firstName,
-            lastName: lastName,
-            phone: phone,
-            email: _authResult.user!.email,
-          );
+              uid: _authResult.user!.uid,
+              firstName: firstName,
+              lastName: lastName,
+              phone: phone,
+              email: _authResult.user!.email,
+              role: 1);
 
           if (await _userService.createNewUser(_newUser)) {
             user = _auth.currentUser!;
@@ -157,12 +157,6 @@ class AuthController extends GetxController {
             EasyLoading.dismiss();
             update();
           }
-
-          // Get.snackbar('Yeah! User Created Successfully', 'Go To Login',
-          //     snackPosition: SnackPosition.TOP,
-          //     duration: Duration(seconds: 7),
-          //     backgroundColor: HexColor('#4BB543'),
-          //     colorText: Get.theme.snackBarTheme.actionTextColor);
         }
       } on FirebaseAuthException catch (error) {
         EasyLoading.dismiss();
@@ -189,7 +183,7 @@ class AuthController extends GetxController {
   // Sign out
   void signOut() async {
     await _authService.signOutUser();
-    Get.find<UserController>().clear();
+    Get.reset();
     Get.offAllNamed(Routes.LOGIN);
   }
 }
