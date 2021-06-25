@@ -5,27 +5,19 @@ import 'package:survey/routes/routes.dart';
 import 'package:survey/ui/widgets/customPasswordField.dart';
 import 'package:survey/ui/widgets/customWidgets.dart';
 
-class RegistrationPage extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class RegistrationPage extends GetView<SignUpFormController> {
   static const double SPACING = 10.0;
 
   @override
   Widget build(BuildContext context) {
-    SignUpFormController _signUpFormCtrl = Get.find<SignUpFormController>();
     return Scaffold(
-      key: _scaffoldKey,
+      key: controller.registrationScaffoldKey,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorLight,
         elevation: 0.0,
         title: Text('Sign up', style: Theme.of(context).textTheme.headline1),
         leading: GestureDetector(
-          onTap: () => Get.toNamed(Routes.LOGIN),
+          onTap: () => Get.back(),
           child: Icon(
             Icons.arrow_back,
             color: Theme.of(context).primaryColorDark,
@@ -41,7 +33,7 @@ class RegistrationPage extends StatelessWidget {
           child: SingleChildScrollView(
             padding: EdgeInsets.only(bottom: 15),
             child: Form(
-              key: _formKey,
+              key: controller.registrationFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -52,14 +44,16 @@ class RegistrationPage extends StatelessWidget {
                         Obx(() {
                           return CustomTextfieldWidget(
                             labelText: 'First Name',
-                            controller: firstNameController,
-                            onChanged: _signUpFormCtrl.firstNameChanged,
+                            controller: controller.firstNameController,
+                            onChanged: controller.firstNameChanged,
                             onSubmitted: (value) =>
-                                firstNameController.text = value,
+                                controller.firstNameController.text = value,
                             hintText: 'Enter your firstname',
                             keyboardType: TextInputType.name,
                             //prefixIcon: Icons.account_balance_rounded,
-                            errorText: _signUpFormCtrl.fisrtNameErrorText.value,
+                            errorText: controller.fisrtNameErrorText.value,
+                            validator: (value) =>
+                                controller.validateFirstName(value!),
                           );
                         }),
                         SizedBox(
@@ -68,14 +62,16 @@ class RegistrationPage extends StatelessWidget {
                         Obx(() {
                           return CustomTextfieldWidget(
                             labelText: 'Last Name',
-                            controller: lastNameController,
-                            onChanged: _signUpFormCtrl.lastNameChanged,
+                            controller: controller.lastNameController,
+                            onChanged: controller.lastNameChanged,
                             onSubmitted: (value) =>
-                                emailController.text = value,
+                                controller.emailController.text = value,
                             hintText: 'Enter your lastname',
                             keyboardType: TextInputType.name,
                             //prefixIcon: Icons.account_balance_rounded,
-                            errorText: _signUpFormCtrl.lastNameErrorText.value,
+                            errorText: controller.lastNameErrorText.value,
+                            validator: (value) =>
+                                controller.validateLastName(value!),
                           );
                         }),
                         SizedBox(
@@ -84,14 +80,16 @@ class RegistrationPage extends StatelessWidget {
                         Obx(() {
                           return CustomTextfieldWidget(
                             labelText: 'Phone',
-                            controller: phoneController,
-                            onChanged: _signUpFormCtrl.phoneChanged,
+                            controller: controller.phoneController,
+                            onChanged: controller.phoneChanged,
                             onSubmitted: (value) =>
-                                phoneController.text = value,
+                                controller.phoneController.text = value,
                             hintText: 'Enter your phone number',
                             keyboardType: TextInputType.number,
                             //prefixIcon: Icons.format_list_numbered,
-                            errorText: _signUpFormCtrl.phoneErrorText.value,
+                            errorText: controller.phoneErrorText.value,
+                            validator: (value) =>
+                                controller.validatePhoneNumber(value!),
                           );
                         }),
                         SizedBox(
@@ -100,14 +98,16 @@ class RegistrationPage extends StatelessWidget {
                         Obx(() {
                           return CustomTextfieldWidget(
                             labelText: 'Email',
-                            controller: emailController,
-                            onChanged: _signUpFormCtrl.emailChanged,
+                            controller: controller.emailController,
+                            onChanged: controller.emailChanged,
                             onSubmitted: (value) =>
-                                emailController.text = value,
+                                controller.emailController.text = value,
                             hintText: 'Enter your email',
                             keyboardType: TextInputType.emailAddress,
                             //prefixIcon: Icons.email,
-                            errorText: _signUpFormCtrl.emailErrorText.value,
+                            errorText: controller.emailErrorText.value,
+                            validator: (value) =>
+                                controller.validateEmail(value!),
                           );
                         }),
                         SizedBox(
@@ -115,16 +115,22 @@ class RegistrationPage extends StatelessWidget {
                         ),
                         Obx(() {
                           return CustomPasswordfieldWidget(
+                            onTap: () {
+                              controller.showPassword.value =
+                                  !controller.showPassword.value;
+                            },
                             labelText: 'Password',
-                            controller: passwordController,
-                            onChanged: _signUpFormCtrl.passwordChanged,
+                            controller: controller.passwordController,
+                            onChanged: controller.passwordChanged,
                             onSubmitted: (value) =>
-                                passwordController.text = value,
+                                controller.passwordController.text = value,
                             hintText: 'Enter your passowrd',
                             keyboardType: TextInputType.name,
                             //prefixIcon: Icons.security,
-                            errorText: _signUpFormCtrl.passwordErrorText.value,
-                            obscureText: true,
+                            errorText: controller.passwordErrorText.value,
+                            obscureText: controller.showPassword.value,
+                            validator: (value) =>
+                                controller.validatePassword(value!),
                           );
                         }),
                         SizedBox(
@@ -132,7 +138,7 @@ class RegistrationPage extends StatelessWidget {
                         ),
                         CustomButtonWidget(
                             buttonName: 'Sign Up',
-                            onPressed: _signUpFormCtrl.submitFunction),
+                            onPressed: controller.checkFormValidation),
                         SizedBox(
                           height: 20,
                         ),
@@ -152,7 +158,7 @@ class RegistrationPage extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () => Get.toNamed(Routes.LOGIN),
+                              onTap: () => Get.back(),
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Center(

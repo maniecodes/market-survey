@@ -5,17 +5,11 @@ import 'package:survey/routes/routes.dart';
 import 'package:survey/ui/widgets/customPasswordField.dart';
 import 'package:survey/ui/widgets/customWidgets.dart';
 
-class LoginPage extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
+class LoginPage extends GetView<LoginFormController> {
   @override
   Widget build(BuildContext context) {
-    LoginFormController _loginFormCtrl = Get.find();
     return Scaffold(
-      key: _scaffoldKey,
+      key: controller.loginScaffoldKey,
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.only(left: 30, right: 30),
@@ -24,7 +18,7 @@ class LoginPage extends StatelessWidget {
           child: Center(
             child: SingleChildScrollView(
               child: Form(
-                key: _formKey,
+                key: controller.loginFormKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -43,15 +37,16 @@ class LoginPage extends StatelessWidget {
                           Obx(() {
                             return CustomTextfieldWidget(
                               labelText: 'Email',
-                              controller: emailController,
-                              onChanged: _loginFormCtrl.emailChanged,
+                              controller: controller.emailController,
+                              onChanged: controller.emailChanged,
                               onSubmitted: (value) =>
-                                  emailController.text = value,
+                                  controller.emailController.text = value,
                               hintText: 'Enter your email',
                               keyboardType: TextInputType.emailAddress,
                               //prefixIcon: Icons.email,
-                              errorText: _loginFormCtrl.emailErrorText.value,
-                              
+                              errorText: controller.emailErrorText.value,
+                              validator: (value) =>
+                                  controller.validateEmail(value!),
                             );
                           }),
                           SizedBox(
@@ -59,17 +54,23 @@ class LoginPage extends StatelessWidget {
                           ),
                           Obx(() {
                             return CustomPasswordfieldWidget(
+                              onTap: () {
+                                controller.showPassword.value =
+                                    !controller.showPassword.value;
+                              },
                               labelText: 'Password',
-                              controller: passwordController,
-                              onChanged: _loginFormCtrl.passwordChanged,
+                              controller: controller.passwordController,
+                              onChanged: controller.passwordChanged,
                               onSubmitted: (value) =>
-                                  passwordController.text = value,
+                                  controller.passwordController.text = value,
                               hintText: 'Enter your passowrd',
                               keyboardType: TextInputType.name,
                               fontIcon: Icons.remove_red_eye,
                               //prefixIcon: Icons.security,
-                              errorText: _loginFormCtrl.passwordErrorText.value,
-                              obscureText: true,
+                              errorText: controller.passwordErrorText.value,
+                              obscureText: controller.showPassword.value,
+                              validator: (value) =>
+                                  controller.validatePassword(value!),
                             );
                           }),
                           SizedBox(
@@ -92,7 +93,7 @@ class LoginPage extends StatelessWidget {
                           ),
                           CustomButtonWidget(
                             buttonName: 'Login',
-                            onPressed: _loginFormCtrl.submitFunction,
+                            onPressed: controller.checkFormValidation,
                           ),
                           SizedBox(
                             height: 20,

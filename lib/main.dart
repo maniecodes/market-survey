@@ -45,11 +45,11 @@ void configLoading() {
     ..loadingStyle = EasyLoadingStyle.custom
     // ..indicatorSize = 45.0
     ..radius = 10.0
-    // ..progressColor = Colors.yellow
-    ..backgroundColor = Colors.grey
-    ..indicatorColor = HexColor('#64DEE0')
-    ..textColor = HexColor('#64DEE0')
-    // ..maskColor = Colors.red
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.black87
+    ..indicatorColor = HexColor('#E6284A')
+    ..textColor = Colors.white
+    ..maskColor = Colors.red
     ..userInteractions = false
     ..dismissOnTap = false
     ..animationStyle = EasyLoadingAnimationStyle.scale;

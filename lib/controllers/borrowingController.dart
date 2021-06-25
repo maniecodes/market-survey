@@ -19,8 +19,8 @@ class BorrowingController extends GetxController {
   AuthController _auth = AuthController();
   BorrowingService _borrowingService = BorrowingService();
   final customerType = 'Borrowing';
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   late TextEditingController surnameController,
       otherNamesController,
       customerTypeController,

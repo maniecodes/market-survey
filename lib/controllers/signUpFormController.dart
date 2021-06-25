@@ -1,15 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:survey/controllers/controllers.dart';
 
 class SignUpFormController extends GetxController {
   final AuthController _authController = Get.find();
+  GlobalKey<FormState> registrationFormKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> registrationScaffoldKey = GlobalKey<ScaffoldState>();
+  late TextEditingController firstNameController,
+      lastNameController,
+      phoneController,
+      emailController,
+      passwordController;
 
   RxString firstName = ''.obs;
   RxString lastName = ''.obs;
   RxString email = ''.obs;
   RxString password = ''.obs;
   RxString phone = ''.obs;
+  RxBool showPassword = true.obs;
 
   RxnString fisrtNameErrorText = RxnString(null);
   RxnString lastNameErrorText = RxnString(null);
@@ -19,62 +29,59 @@ class SignUpFormController extends GetxController {
   Rxn<Function> submitFunc = Rxn<Function>(null);
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    debounce(firstName, firstNameValidations,
-        time: Duration(microseconds: 400));
-    debounce(lastName, lastNameValidations, time: Duration(microseconds: 400));
-    debounce(phone, phoneNameValidations, time: Duration(microseconds: 400));
-    debounce(email, validations, time: Duration(microseconds: 400));
-    debounce(password, passwordValidations, time: Duration(microseconds: 400));
+
+    firstNameController = TextEditingController();
+    lastNameController = TextEditingController();
+    phoneController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
   }
 
-  void lastNameValidations(String val) async {
-    lastNameErrorText.value = null;
-    submitFunc.value = null;
-    if (val.isNotEmpty) {
-      submitFunc.value = submitFunc;
-      lastNameErrorText.value = null;
-      return;
+  String? validateFirstName(String val) {
+    if (val.isEmpty) {
+      return "First name is required";
     }
-    lastNameErrorText.value = "Last name is required";
+    return null;
   }
 
-  void firstNameValidations(String val) async {
-    fisrtNameErrorText.value = null;
-    submitFunc.value = null;
-    if (val.isNotEmpty) {
-      submitFunc.value = submitFunc;
-      fisrtNameErrorText.value = null;
-      return;
+  String? validateLastName(String val) {
+    if (val.isEmpty) {
+      return "Last name is required";
     }
-    fisrtNameErrorText.value = "First name is required";
+    return null;
   }
 
-  void phoneNameValidations(String val) async {
-    phoneErrorText.value = null;
-    submitFunc.value = null;
-    if (val.isNotEmpty) {
-      if (val.length < 11) {
-        phoneErrorText.value = "Must be at least 11 characters in length";
-        return;
+  String? validatePhoneNumber(String val) {
+    if (val.isEmpty) {
+      return "Phone is required";
+    }
+    if (val.length < 11) {
+      return "Must be at least 11 characters in length";
+    }
+    return null;
+  }
+
+  String? validateEmail(String val) {
+    if (val.isEmpty || !EmailValidator.validate(val)) {
+      return "Invalid email address";
+    }
+    return null;
+  }
+
+  String? validatePassword(String val) {
+    String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])';
+    RegExp regExp = new RegExp(pattern);
+    if (val.isEmpty) {
+      return "Password is required";
+    }
+    if (!regExp.hasMatch(val)) {
+      if (val.length < 8) {
+        return "Must be at least 8 characters in length";
       }
-      submitFunc.value = submitFunc;
-      phoneErrorText.value = null;
-      return;
+      return "Must contain at least one upper case, lower case, digit. ";
     }
-    phoneErrorText.value = "Phone number is required";
-  }
-
-  void validations(String val) async {
-    emailErrorText.value = null;
-    submitFunc.value = null;
-    if (val.isNotEmpty && EmailValidator.validate(val)) {
-      submitFunc.value = submitFunc;
-      emailErrorText.value = null;
-      return;
-    }
-    emailErrorText.value = "Invalid email address";
   }
 
   void passwordValidations(String val) async {
@@ -100,17 +107,36 @@ class SignUpFormController extends GetxController {
   }
 
   void firstNameChanged(String val) => firstName.value = val;
-
   void lastNameChanged(String val) => lastName.value = val;
-
   void phoneChanged(String val) => phone.value = val;
-
   void emailChanged(String val) => email.value = val;
-
   void passwordChanged(String val) => password.value = val;
+  void passwordVisibility(bool val) => showPassword.value = !showPassword.value;
 
-  submitFunction() async => await _authController.register(firstName.value,
-      lastName.value, phone.value, email.value, password.value);
+  void checkFormValidation() async {
+    try {
+      EasyLoading.show(status: "loading...");
+      final isValid = registrationFormKey.currentState!.validate();
+
+      if (!isValid) {
+        EasyLoading.showError('Some fields are required');
+        return;
+      }
+      registrationFormKey.currentState!.save();
+      await _authController.register(firstName.value, lastName.value,
+          phone.value, email.value, password.value);
+    } catch (error) {
+      EasyLoading.dismiss();
+      Get.snackbar("Could not save", error.toString(),
+          snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 7),
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white);
+    }
+  }
+
+  // submitFunction() async => await _authController.register(firstName.value,
+  //     lastName.value, phone.value, email.value, password.value);
 
   @override
   void onClose() {

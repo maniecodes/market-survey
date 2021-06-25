@@ -109,18 +109,18 @@ class AuthController extends GetxController {
           EasyLoading.showSuccess('Login Successful!');
           update();
         }
-      } on SocketException catch (error) {
+      } on FirebaseAuthException catch (error) {
         EasyLoading.dismiss();
-        Get.snackbar("Error", error.message.toString(),
+        Get.snackbar("Could not sign in", error.message.toString(),
             snackPosition: SnackPosition.TOP,
             duration: Duration(seconds: 7),
             borderWidth: 1,
             borderColor: Colors.grey,
             backgroundColor: HexColor('#E6284A'),
             colorText: Colors.white);
-      } on FirebaseAuthException catch (error) {
+      } catch (error) {
         EasyLoading.dismiss();
-        Get.snackbar("Could not sign in", error.message.toString(),
+        Get.snackbar("Could not sign in", error.toString(),
             snackPosition: SnackPosition.TOP,
             duration: Duration(seconds: 7),
             borderWidth: 1,
@@ -152,17 +152,27 @@ class AuthController extends GetxController {
           if (await _userService.createNewUser(_newUser)) {
             user = _auth.currentUser!;
             user.updateDisplayName(lastName + ' ' + firstName);
+            EasyLoading.showSuccess("Account created");
             await user.reload();
             EasyLoading.dismiss();
             update();
           }
 
-          Get.snackbar('Yeah! User Created Successfully', 'Go To Login',
-              snackPosition: SnackPosition.TOP,
-              duration: Duration(seconds: 7),
-              backgroundColor: Colors.lightGreen,
-              colorText: Get.theme.snackBarTheme.actionTextColor);
+          // Get.snackbar('Yeah! User Created Successfully', 'Go To Login',
+          //     snackPosition: SnackPosition.TOP,
+          //     duration: Duration(seconds: 7),
+          //     backgroundColor: HexColor('#4BB543'),
+          //     colorText: Get.theme.snackBarTheme.actionTextColor);
         }
+      } on FirebaseAuthException catch (error) {
+        EasyLoading.dismiss();
+        Get.snackbar("Error creating account", error.message.toString(),
+            snackPosition: SnackPosition.TOP,
+            duration: Duration(seconds: 7),
+            borderWidth: 1,
+            borderColor: Colors.grey,
+            backgroundColor: HexColor('#E6284A'),
+            colorText: Colors.white);
       } catch (error) {
         EasyLoading.dismiss();
         Get.snackbar("Error creating account", error.toString(),

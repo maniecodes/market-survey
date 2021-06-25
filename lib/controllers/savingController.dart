@@ -10,8 +10,8 @@ class SavingController extends GetxController {
   AuthController _auth = AuthController();
   SavingService _savingService = SavingService();
   final customerType = 'Saving';
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   late TextEditingController surnameController,
       otherNamesController,
       customerTypeController,

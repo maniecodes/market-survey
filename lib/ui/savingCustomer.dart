@@ -209,8 +209,8 @@ class SavingCustomerPage extends GetView<SavingController> {
                     CustomButtonWidget(
                         buttonName: 'Submit',
                         onPressed: _authController.connectionStatus.value != 0
-                            ? controller.checkFormValidation
-                            : null),
+                            ? null
+                            : controller.checkFormValidation),
                     SizedBox(
                       height: 20,
                     ),

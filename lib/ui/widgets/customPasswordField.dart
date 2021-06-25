@@ -11,6 +11,7 @@ class CustomPasswordfieldWidget extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
 //final FocusNode? currentFocusNode;
+final Function()? onTap;
   final Function(String)? onChanged;
   final void Function(String?)? onSaved;
   final Function(String)? onSubmitted;
@@ -26,6 +27,7 @@ class CustomPasswordfieldWidget extends StatelessWidget {
       required this.labelText,
       required this.obscureText,
       required this.controller,
+      this.onTap,
       this.initialValue,
       //   required this.currentFocusNode,
       this.onChanged,
@@ -39,6 +41,7 @@ class CustomPasswordfieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       controller: controller,
       //  focusNode: currentFocusNode,
       onChanged: onChanged,
@@ -63,6 +66,7 @@ class CustomPasswordfieldWidget extends StatelessWidget {
         // icon: Padding(
         //     padding: EdgeInsets.only(top: 15.0), child: Icon(prefixIcon)),
         suffixIcon: GestureDetector(
+          onTap: onTap,
           child: Icon(
             obscureText ? Icons.visibility_off : Icons.visibility,
             color: Themes().lightTheme.dividerColor,
