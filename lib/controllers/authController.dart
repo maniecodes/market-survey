@@ -182,6 +182,7 @@ class AuthController extends GetxController {
 
   // Sign out
   void signOut() async {
+    print('here');
     await _authService.signOutUser();
     Get.reset();
     Get.offAllNamed(Routes.LOGIN);

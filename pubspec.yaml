@@ -32,6 +32,7 @@ dependencies:
   intl: ^0.17.0
   date_time_format: ^2.0.1
   connectivity: ^3.0.6
+  awesome_notifications: any
   
 
 dev_dependencies:

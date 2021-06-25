@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:survey/controllers/controllers.dart';
 import 'package:survey/models/survey.dart';
 import 'package:date_time_format/date_time_format.dart';
 
 class SurveyCard extends StatelessWidget {
-  final String uid;
   final SurveyModel survey;
-  final dynamic name;
   final GestureDragCancelCallback onTap;
-  const SurveyCard(
-      {Key? key,
-      required this.uid,
-      required this.survey,
-      required this.name,
-      required this.onTap})
+  const SurveyCard({Key? key, required this.survey, required this.onTap})
       : super(key: key);
 
   @override
@@ -20,80 +15,94 @@ class SurveyCard extends StatelessWidget {
     String createdDate = DateTime.parse('${survey.createdAt!.toDate()}')
         .relative(appendIfAfter: 'ago');
 
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 5, 8, 2),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-              color: Colors.grey.shade300,
-              width: 1,
-            ),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: Colors.grey.shade100,
-                offset: Offset(1, 1),
-                blurRadius: 2,
-                spreadRadius: .2,
-              )
-            ],
-            borderRadius: BorderRadius.circular(5),
-          ),
+    return GetX<UserController>(
+      initState: (_) async {
+        Get.find<UserController>().updatedUser =
+            await _.controller!.getUserDetailsById(survey.uid);
+        print('new user');
+        print(Get.find<UserController>().updatedUser.firstName);
+      },
+      builder: (UserController controller) {
+        return InkWell(
+          onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Text(
-                      "Registration recieved from $name for customer ${survey.surname} ${survey.otherNames}",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12.0,
-                          color: Colors.black)),
+            padding: const EdgeInsets.fromLTRB(8, 5, 8, 2),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.grey.shade300,
+                  width: 1,
                 ),
-                Row(
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: Colors.grey.shade100,
+                    offset: Offset(1, 1),
+                    blurRadius: 2,
+                    spreadRadius: .2,
+                  )
+                ],
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      'submitted ',
-                      style: TextStyle(fontSize: 12.0, color: Colors.black54),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(
+                          "Registration recieved from ${controller.updatedUser.firstName} for customer ${survey.surname} ${survey.otherNames}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12.0,
+                              color: Colors.black)),
                     ),
-                    Icon(
-                      Icons.timeline,
-                      color: Colors.black54,
-                      size: 10.0,
-                    ),
-                    SizedBox(
-                      width: 2,
-                    ),
-                    Text(
-                      ' $createdDate',
-                      style: TextStyle(fontSize: 12.0, color: Colors.black54),
-                    ),
-                    SizedBox(
-                      width: 2,
-                    ),
-                    Text(
-                      'by',
-                      style: TextStyle(fontSize: 12.0, color: Colors.black54),
-                    ),
-                    SizedBox(
-                      width: 2,
-                    ),
-                    Text(
-                      '$name',
-                      style: TextStyle(fontSize: 12.0, color: Colors.black54),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'submitted ',
+                          style:
+                              TextStyle(fontSize: 12.0, color: Colors.black54),
+                        ),
+                        Icon(
+                          Icons.timeline,
+                          color: Colors.black54,
+                          size: 10.0,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          ' $createdDate',
+                          style:
+                              TextStyle(fontSize: 12.0, color: Colors.black54),
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          'by',
+                          style:
+                              TextStyle(fontSize: 12.0, color: Colors.black54),
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          '${controller.updatedUser.firstName}',
+                          style:
+                              TextStyle(fontSize: 12.0, color: Colors.black54),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

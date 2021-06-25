@@ -66,8 +66,8 @@ class SurveyModel {
 
   SurveyModel.fromDocumentSnapshot(
       {required DocumentSnapshot documentSnapshot}) {
-    id = documentSnapshot['id'];
-    uid = documentSnapshot.id;
+    uid = documentSnapshot['uid'];
+    id = documentSnapshot.id;
     surname = documentSnapshot['surname'];
     otherNames = documentSnapshot['otherNames'];
     customerType = documentSnapshot['customerType'];

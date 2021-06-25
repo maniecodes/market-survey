@@ -23,6 +23,8 @@ class UserService {
 
   Future<UserModel> getUser(String uid) async {
     print('got inside here');
+    print(uid);
+    print('my new uid');
     DocumentSnapshot _doc = await _firestore.collection("users").doc(uid).get();
     print('user service');
     print(_doc.data());
