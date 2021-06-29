@@ -20,7 +20,7 @@ class UserController extends GetxController {
 
   getUserDetailsById(String? uid) async {
     try {
-      _updatedUserModel.value = await _userService.getUser(uid!);
+      return _userService.getUser(uid!);
     } catch (e) {
       print('got here na');
       print(e.toString());

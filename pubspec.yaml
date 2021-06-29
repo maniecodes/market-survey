@@ -33,6 +33,8 @@ dependencies:
   date_time_format: ^2.0.1
   connectivity: ^3.0.6
   awesome_notifications: any
+  firebase_messaging: ^10.0.2
+  flutter_local_notifications: ^6.0.0
   
 
 dev_dependencies:

@@ -1,3 +1,5 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,9 +16,28 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   Get.put<ThemeController>(ThemeController(), permanent: true);
+  // AwesomeNotifications().initialize(
+  //     'resource://drawable/res_app_icon',
+  //     [
+  //       NotificationChannel(
+  //           channelKey: 'basic_channel',
+  //           channelName: 'Basic notifications',
+  //           channelDescription: 'Notification channel for basic tests',
+  //           defaultColor: Color(0xFF9D50DD),
+  //           ledColor: Colors.white),
+  //     ],
+  //     debug: true);
   runApp(App());
   configLoading();
+}
+
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print('background handler');
+  print(message.data.toString());
+  print(message.notification!.title);
 }
 
 class App extends StatelessWidget {

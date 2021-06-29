@@ -34,7 +34,7 @@ class SavingCustomerPage extends GetView<SavingController> {
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0.0,
         title: Text(
-          'Saving Customer',
+          'Target Saving Customer',
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
@@ -51,6 +51,22 @@ class SavingCustomerPage extends GetView<SavingController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    CustomTextfieldWidget(
+                        // initialValue: controller.surname.value,
+                        labelText: 'Card No',
+                        controller: controller.cardNoController,
+                        onChanged: controller.cardNoChanged,
+                        onSubmitted: (value) =>
+                            controller.cardNoController.text = value,
+                        hintText: 'Enter customer card number',
+                        keyboardType: TextInputType.name,
+                        //prefixIcon: Icons.account_balance_rounded,
+                        errorText: controller.cardNoErrorText.value,
+                        validator: (value) =>
+                            controller.validateCardNo(value!)),
+                    SizedBox(
+                      height: SPACING + 10,
+                    ),
                     CustomTextfieldWidget(
                         // initialValue: controller.surname.value,
                         labelText: 'Customer Surname',

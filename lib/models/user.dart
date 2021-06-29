@@ -7,6 +7,7 @@ class UserModel {
   String? phone;
   String? email;
   int? role;
+  String? token;
 
   UserModel(
       {this.uid,
@@ -14,7 +15,8 @@ class UserModel {
       required this.lastName,
       this.phone,
       this.role,
-      this.email});
+      this.email,
+      this.token});
 
   UserModel.fromDocumentSnapshot({required DocumentSnapshot documentSnapshot}) {
     uid = documentSnapshot.id;
@@ -23,5 +25,6 @@ class UserModel {
     phone = documentSnapshot['phone'];
     email = documentSnapshot['email'];
     role = documentSnapshot['role'];
+    token = documentSnapshot['token'];
   }
 }

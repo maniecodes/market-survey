@@ -84,7 +84,7 @@ class SignUpFormController extends GetxController {
     }
   }
 
-  void passwordValidations(String val) async {
+  void passwordValidations(String val)  {
     passwordErrorText.value = null;
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])';
     RegExp regExp = new RegExp(pattern);

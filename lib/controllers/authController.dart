@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,6 +14,7 @@ import 'package:survey/utils/hexColor.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   final AuthService _authService = AuthService();
   final UserService _userService = UserService();
   var connectionStatus = 0.obs;
@@ -137,25 +139,33 @@ class AuthController extends GetxController {
     if (isNetworkConnected()) {
       EasyLoading.show(status: 'loading...');
       try {
-        UserCredential _authResult =
-            await _authService.registerUser(email, password);
-        User user = _authResult.user!;
-        if (_authResult.user != null) {
-          UserModel _newUser = UserModel(
-              uid: _authResult.user!.uid,
-              firstName: firstName,
-              lastName: lastName,
-              phone: phone,
-              email: _authResult.user!.email,
-              role: 1);
+        // Get the token for this device
+        String? fcmToken = await _fcm.getToken();
 
-          if (await _userService.createNewUser(_newUser)) {
-            user = _auth.currentUser!;
-            user.updateDisplayName(lastName + ' ' + firstName);
-            EasyLoading.showSuccess("Account created");
-            await user.reload();
-            EasyLoading.dismiss();
-            update();
+        print('my token');
+
+        if (fcmToken != null) {
+          UserCredential _authResult =
+              await _authService.registerUser(email, password);
+          User user = _authResult.user!;
+          if (_authResult.user != null) {
+            UserModel _newUser = UserModel(
+                uid: _authResult.user!.uid,
+                firstName: firstName,
+                lastName: lastName,
+                phone: phone,
+                email: _authResult.user!.email,
+                token: fcmToken,
+                role: 1);
+
+            if (await _userService.createNewUser(_newUser)) {
+              user = _auth.currentUser!;
+              user.updateDisplayName(lastName + ' ' + firstName);
+              EasyLoading.showSuccess("Account created");
+              await user.reload();
+              EasyLoading.dismiss();
+              update();
+            }
           }
         }
       } on FirebaseAuthException catch (error) {
@@ -186,5 +196,6 @@ class AuthController extends GetxController {
     await _authService.signOutUser();
     Get.reset();
     Get.offAllNamed(Routes.LOGIN);
+    update();
   }
 }

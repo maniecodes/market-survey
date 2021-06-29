@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:survey/models/survey.dart';
 
 class SurveyDetail extends StatelessWidget {
-  final SurveyModel data = Get.arguments;
+  dynamic data = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +19,13 @@ class SurveyDetail extends StatelessWidget {
             width: double.infinity,
             child: ListView(
               children: [
+                ListTile(
+                  // leading: Text('1.'),
+                  title: Text(
+                    'Customer Card Number',
+                  ),
+                  subtitle: Text('${data.cardNo}'),
+                ),
                 ListTile(
                   // leading: Text('1.'),
                   title: Text(
@@ -65,7 +71,7 @@ class SurveyDetail extends StatelessWidget {
                     ? ListTile(
                         // leading: Text('6.'),
                         title: Text(
-                          'Customer Other Number',
+                          'Customer Phone Number',
                         ),
                         subtitle: Text('${data.otherNumber}'),
                       )
@@ -168,31 +174,13 @@ class SurveyDetail extends StatelessWidget {
                             Text('${data.alternativeContactRelationship}'),
                       )
                     : SizedBox(),
-                data.phoneType != null
+                data.collectionPoint != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
-                          'Customer Phone Type',
+                          'Collection Point',
                         ),
-                        subtitle: Text('${data.phoneType}'),
-                      )
-                    : SizedBox(),
-                data.deviceSerial != null
-                    ? ListTile(
-                        // leading: Text('8.'),
-                        title: Text(
-                          'Customer Device Serial Number',
-                        ),
-                        subtitle: Text('${data.deviceSerial}'),
-                      )
-                    : SizedBox(),
-                data.serviceCenter != null
-                    ? ListTile(
-                        // leading: Text('8.'),
-                        title: Text(
-                          'Serive Center',
-                        ),
-                        subtitle: Text('${data.serviceCenter}'),
+                        subtitle: Text('${data.collectionPoint}'),
                       )
                     : SizedBox(),
                 data.paymentPlan != null
@@ -204,22 +192,13 @@ class SurveyDetail extends StatelessWidget {
                         subtitle: Text('${data.paymentPlan}'),
                       )
                     : SizedBox(),
-                data.sellingDSR != null
+                data.salesAgent != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
-                          'Are you the selling DSR',
+                          'Sales Agent',
                         ),
-                        subtitle: Text('${data.sellingDSR}'),
-                      )
-                    : SizedBox(),
-                data.dsrName != null
-                    ? ListTile(
-                        // leading: Text('8.'),
-                        title: Text(
-                          'Name of the DSR',
-                        ),
-                        subtitle: Text('${data.dsrName}'),
+                        subtitle: Text('${data.salesAgent}'),
                       )
                     : SizedBox(),
                 data.responserLocation != null

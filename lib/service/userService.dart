@@ -12,6 +12,7 @@ class UserService {
         "lastName": user.lastName,
         "phone": user.phone,
         "email": user.email,
+        "token": user.token,
         "role": user.role
       });
       return true;
@@ -22,12 +23,12 @@ class UserService {
   }
 
   Future<UserModel> getUser(String uid) async {
-    print('got inside here');
-    print(uid);
-    print('my new uid');
+    // print('got inside here');
+    // print(uid);
+    // print('my new uid');
     DocumentSnapshot _doc = await _firestore.collection("users").doc(uid).get();
-    print('user service');
-    print(_doc.data());
+    // print('user service');
+    // print(_doc.data());
     return UserModel.fromDocumentSnapshot(documentSnapshot: _doc);
   }
 }

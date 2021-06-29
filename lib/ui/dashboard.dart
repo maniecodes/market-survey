@@ -4,9 +4,14 @@ import 'package:get/get.dart';
 import 'package:survey/controllers/controllers.dart';
 import 'package:survey/ui/home.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
+  @override
+  _DashboardPageState createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(

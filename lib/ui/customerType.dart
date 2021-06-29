@@ -55,7 +55,7 @@ class CustomerTypePage extends StatelessWidget {
                             color: Colors.black,
                           ),
                           Text(
-                            'Total Borrowing Customer',
+                            'Target Saving Customers',
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ],
@@ -84,7 +84,7 @@ class CustomerTypePage extends StatelessWidget {
                             color: Colors.black,
                           ),
                           Text(
-                            'Total Saving Customer',
+                            'Credit Sale Customers',
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ],

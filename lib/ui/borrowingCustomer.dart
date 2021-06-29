@@ -39,6 +39,12 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
         'label': 'Driver license ID Number',
         'hint': 'Enter Driver license ID Number'
       },
+      {
+        'data': '3',
+        'name': 'Voters Card',
+        'label': 'Voters Card Number',
+        'hint': 'Enter Voters Card Number'
+      },
     ];
 
     List genders = ["Male", "Female"];
@@ -85,7 +91,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0.0,
-        title: Text('Borrowing Customer'),
+        title: Text('Credit Sale Customer'),
       ),
       body: SafeArea(
         bottom: false,
@@ -100,6 +106,19 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                     CustomTextfieldWidget(
+                        // initialValue: controller.surname.value,
+                        labelText: 'Card No',
+                        controller: controller.cardNoController,
+                        onChanged: controller.cardNoChanged,
+                        onSubmitted: (value) =>
+                            controller.cardNoController.text = value,
+                        hintText: 'Enter customer card number',
+                        keyboardType: TextInputType.name,
+                        //prefixIcon: Icons.account_balance_rounded,
+                        errorText: controller.cardNoErrorText.value,
+                        validator: (value) =>
+                            controller.validateCardNo(value!)),
                     CustomTextfieldWidget(
                         // initialValue: controller.surname.value,
                         labelText: 'Customer Surname',
@@ -192,7 +211,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     }),
 
                     CustomTextfieldWidget(
-                      labelText: 'BVN (Optional)',
+                      labelText: 'BVN',
                       controller: controller.bvnController,
                       onChanged: controller.bvnChanged,
                       onSubmitted: (value) =>
@@ -208,12 +227,12 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       height: SPACING + 10,
                     ),
                     CustomTextfieldWidget(
-                      labelText: 'Customers Other Number - (Optional)',
+                      labelText: 'Customers Phone Number - (Optional)',
                       controller: controller.otherNumberController,
                       onChanged: controller.otherNumberChanged,
                       onSubmitted: (value) =>
                           controller.otherNumberController.text = value,
-                      hintText: 'Enter customer other number',
+                      hintText: 'Enter customer phone number',
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.otherNumberErrorText.value,
@@ -485,44 +504,44 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     SizedBox(
                       height: SPACING + 10,
                     ),
+                    // CustomTextfieldWidget(
+                    //   labelText: "Type of phone",
+                    //   controller: controller.phoneTypeController,
+                    //   onChanged: controller.phoneTypeChanged,
+                    //   onSubmitted: (value) =>
+                    //       controller.phoneTypeController.text = value,
+                    //   hintText: 'Enter type of phone model',
+                    //   keyboardType: TextInputType.name,
+                    //   //prefixIcon: Icons.account_balance_rounded,
+                    //   errorText: controller.phoneTypeErrorText.value,
+                    // ),
+                    // SizedBox(
+                    //   height: SPACING + 10,
+                    // ),
+                    // CustomTextfieldWidget(
+                    //   labelText: "Device Serial Number",
+                    //   controller: controller.deviceSerialController,
+                    //   onChanged: controller.deviceSerialChanged,
+                    //   onSubmitted: (value) =>
+                    //       controller.deviceSerialController.text = value,
+                    //   hintText: 'Enter device serial number',
+                    //   keyboardType: TextInputType.name,
+                    //   //prefixIcon: Icons.account_balance_rounded,
+                    //   errorText: controller.deviceSerialErrorText.value,
+                    // ),
+                    // SizedBox(
+                    //   height: SPACING + 10,
+                    // ),
                     CustomTextfieldWidget(
-                      labelText: "Type of phone",
-                      controller: controller.phoneTypeController,
-                      onChanged: controller.phoneTypeChanged,
+                      labelText: "Collection Point",
+                      controller: controller.collectionPointController,
+                      onChanged: controller.collectionPointChanged,
                       onSubmitted: (value) =>
-                          controller.phoneTypeController.text = value,
-                      hintText: 'Enter type of phone model',
+                          controller.collectionPointController.text = value,
+                      hintText: 'Enter collection point',
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
-                      errorText: controller.phoneTypeErrorText.value,
-                    ),
-                    SizedBox(
-                      height: SPACING + 10,
-                    ),
-                    CustomTextfieldWidget(
-                      labelText: "Device Serial Number",
-                      controller: controller.deviceSerialController,
-                      onChanged: controller.deviceSerialChanged,
-                      onSubmitted: (value) =>
-                          controller.deviceSerialController.text = value,
-                      hintText: 'Enter device serial number',
-                      keyboardType: TextInputType.name,
-                      //prefixIcon: Icons.account_balance_rounded,
-                      errorText: controller.deviceSerialErrorText.value,
-                    ),
-                    SizedBox(
-                      height: SPACING + 10,
-                    ),
-                    CustomTextfieldWidget(
-                      labelText: "Service Center",
-                      controller: controller.serviceCenterController,
-                      onChanged: controller.serviceCenterChanged,
-                      onSubmitted: (value) =>
-                          controller.serviceCenterController.text = value,
-                      hintText: 'Enter service center',
-                      keyboardType: TextInputType.name,
-                      //prefixIcon: Icons.account_balance_rounded,
-                      errorText: controller.serviceCenterErrorText.value,
+                      errorText: controller.collectionPointErrorText.value,
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -530,164 +549,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     // Text(
                     //     'Have you ever taken a loan before? From what type of organization? (Select all that apply)'),
                     // Padding(
-                    //   padding: const EdgeInsets.only(top: 8),
-                    //   child: Container(
-                    //     decoration: BoxDecoration(
-                    //       color: Theme.of(context)
-                    //           .primaryColor
-                    //           .withOpacity(.4),
-                    //       border: Border.all(
-                    //         color: Theme.of(context).primaryColor,
-                    //         width: 2,
-                    //       ),
-                    //     ),
-                    //     child: Column(
-                    //       children: <Widget>[
-                    //         MultiSelectBottomSheetField(
-                    //           initialChildSize: 0.4,
-                    //           listType: MultiSelectListType.CHIP,
-                    //           searchable: true,
-                    //           buttonText: Text("List of loans"),
-                    //           title: Text("List of loans"),
-                    //           items: _items,
-                    //           onConfirm: (values) {
-                    //             _selectedAnimals2 = values;
-                    //           },
-                    //           chipDisplay: MultiSelectChipDisplay(
-                    //             onTap: (value) {
-                    //               // setState(() {
-                    //               //   _selectedAnimals2.remove(value);
-                    //               // });
-                    //             },
-                    //           ),
-                    //         ),
-                    //         _selectedAnimals2.isEmpty
-                    //             ? Container(
-                    //                 padding: EdgeInsets.all(10),
-                    //                 alignment: Alignment.centerLeft,
-                    //                 child: Text(
-                    //                   "None selected",
-                    //                   style:
-                    //                       TextStyle(color: Colors.black54),
-                    //                 ))
-                    //             : Container(),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-
-                    // SizedBox(
-                    //   height: SPACING + 10,
-                    // ),
-                    // CustomTextfieldWidget(
-                    //   labelText:
-                    //       "For what purpose do you plan to use your device? (Select all that apply)",
-                    //   controller: firstNameController,
-                    //   onChanged: null,
-                    //   onSubmitted: (value) =>
-                    //       firstNameController.text = value,
-                    //   hintText:
-                    //       'For what purpose do you plan to use your device? ',
-                    //   keyboardType: TextInputType.name,
-                    //   //prefixIcon: Icons.account_balance_rounded,
-                    //   errorText: null,
-                    //
-                    // ),
-                    // SizedBox(
-                    //   height: SPACING + 10,
-                    // ),
-                    // CustomTextfieldWidget(
-                    //   labelText: "What is your primary source of income?",
-                    //   controller: firstNameController,
-                    //   onChanged: null,
-                    //   onSubmitted: (value) =>
-                    //       firstNameController.text = value,
-                    //   hintText: 'Enter primary source of income',
-                    //   keyboardType: TextInputType.name,
-                    //   //prefixIcon: Icons.account_balance_rounded,
-                    //   errorText: null,
-                    //
-                    // ),
-                    // SizedBox(
-                    //   height: SPACING + 10,
-                    // ),
-                    // CustomTextfieldWidget(
-                    //   labelText:
-                    //       "How much did you spend on phone airtime and data in the last seven days",
-                    //   controller: firstNameController,
-                    //   onChanged: null,
-                    //   onSubmitted: (value) =>
-                    //       firstNameController.text = value,
-                    //   hintText:
-                    //       'Enter how much you spend on airtime and data',
-                    //   keyboardType: TextInputType.name,
-                    //   //prefixIcon: Icons.account_balance_rounded,
-                    //   errorText: null,
-                    //
-                    // ),
-                    // SizedBox(
-                    //   height: SPACING + 10,
-                    // ),
-                    // CustomTextfieldWidget(
-                    //   labelText:
-                    //       "How many people financially depend on you for their livelihood?",
-                    //   controller: firstNameController,
-                    //   onChanged: null,
-                    //   onSubmitted: (value) =>
-                    //       firstNameController.text = value,
-                    //   hintText: '',
-                    //   keyboardType: TextInputType.name,
-                    //   //prefixIcon: Icons.account_balance_rounded,
-                    //   errorText: null,
-                    //
-                    // ),
-                    // SizedBox(
-                    //   height: SPACING + 10,
-                    // ),
-                    // CustomTextfieldWidget(
-                    //   labelText:
-                    //       "Which of the following items do you currently have at home? (Select all that apply)",
-                    //   controller: firstNameController,
-                    //   onChanged: null,
-                    //   onSubmitted: (value) =>
-                    //       firstNameController.text = value,
-                    //   hintText: '',
-                    //   keyboardType: TextInputType.name,
-                    //   //prefixIcon: Icons.account_balance_rounded,
-                    //   errorText: null,
-                    //
-                    // ),
-                    // SizedBox(
-                    //   height: SPACING + 10,
-                    // ),
-                    // CustomTextfieldWidget(
-                    //   labelText: "Are you purchasing for personal use?",
-                    //   controller: firstNameController,
-                    //   onChanged: null,
-                    //   onSubmitted: (value) =>
-                    //       firstNameController.text = value,
-                    //   hintText: '',
-                    //   keyboardType: TextInputType.name,
-                    //   //prefixIcon: Icons.account_balance_rounded,
-                    //   errorText: null,
-                    //
-                    // ),
-                    // SizedBox(
-                    //   height: SPACING + 10,
-                    // ),
-                    // CustomTextfieldWidget(
-                    //   labelText: "What plan do you want to subscribe to?",
-                    //   controller: firstNameController,
-                    //   onChanged: null,
-                    //   onSubmitted: (value) =>
-                    //       firstNameController.text = value,
-                    //   hintText:
-                    //       'Enter how much you spend on airtime and data',
-                    //   keyboardType: TextInputType.name,
-                    //   //prefixIcon: Icons.account_balance_rounded,
-                    //   errorText: null,
-                    //
-                    // ),
+                    
                     SizedBox(
                       height: SPACING + 10,
                     ),
@@ -711,30 +573,30 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     SizedBox(
                       height: SPACING + 10,
                     ),
+                    // CustomTextfieldWidget(
+                    //   labelText: "Are you the selling DSR",
+                    //   controller: controller.sellingDSRController,
+                    //   onChanged: controller.sellingDSRChanged,
+                    //   onSubmitted: (value) =>
+                    //       controller.sellingDSRController.text = value,
+                    //   hintText: '',
+                    //   keyboardType: TextInputType.name,
+                    //   //prefixIcon: Icons.account_balance_rounded,
+                    //   errorText: controller.sellingDSRErrorText.value,
+                    // ),
+                    // SizedBox(
+                    //   height: SPACING + 10,
+                    // ),
                     CustomTextfieldWidget(
-                      labelText: "Are you the selling DSR",
-                      controller: controller.sellingDSRController,
-                      onChanged: controller.sellingDSRChanged,
+                      labelText: "Sales Agent",
+                      controller: controller.salesAgentController,
+                      onChanged: controller.salesAgentChanged,
                       onSubmitted: (value) =>
-                          controller.sellingDSRController.text = value,
+                          controller.salesAgentController.text = value,
                       hintText: '',
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
-                      errorText: controller.sellingDSRErrorText.value,
-                    ),
-                    SizedBox(
-                      height: SPACING + 10,
-                    ),
-                    CustomTextfieldWidget(
-                      labelText: "Name of the DSR",
-                      controller: controller.dsrNameController,
-                      onChanged: controller.dsrNameChanged,
-                      onSubmitted: (value) =>
-                          controller.dsrNameController.text = value,
-                      hintText: '',
-                      keyboardType: TextInputType.name,
-                      //prefixIcon: Icons.account_balance_rounded,
-                      errorText: controller.dsrNameErrorText.value,
+                      errorText: controller.salesAgentErrorText.value,
                     ),
                     SizedBox(
                       height: SPACING + 10,

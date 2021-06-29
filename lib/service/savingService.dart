@@ -10,6 +10,7 @@ class SavingService {
       await _firestore.collection("surveys").doc().set({
         "id": Uuid().generateV4(),
         "uid": data.uid,
+        "cardNo": data.cardNo,
         "customerType": data.customerType,
         "surname": data.surname,
         "otherNames": data.otherNames,

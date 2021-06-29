@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class SurveyModel {
   String? id;
   late String uid;
+  late String cardNo;
   late String surname;
   String? otherNames;
   String? customerTypeLabel;
@@ -19,12 +20,9 @@ class SurveyModel {
   String? alternativePhone;
   String? alternativeSecondPhone;
   String? alternativeContactRelationship;
-  String? phoneType;
-  String? serviceCenter;
+  String? collectionPoint;
   String? paymentPlan;
-  String? deviceSerial;
-  String? sellingDSR;
-  String? dsrName;
+  String? salesAgent;
   String? responserLocation;
   String? customerImageUrl;
   String? customerImageName;
@@ -36,6 +34,7 @@ class SurveyModel {
       {this.id,
       required this.uid,
       required this.surname,
+      required this.cardNo,
       this.otherNames,
       this.customerTypeLabel,
       this.customerTypeID,
@@ -51,12 +50,9 @@ class SurveyModel {
       this.alternativePhone,
       this.alternativeSecondPhone,
       this.alternativeContactRelationship,
-      this.phoneType,
-      this.serviceCenter,
+      this.collectionPoint,
       this.paymentPlan,
-      this.deviceSerial,
-      this.sellingDSR,
-      this.dsrName,
+      this.salesAgent,
       this.responserLocation,
       this.customerImageUrl,
       this.customerIDImageName,
@@ -68,6 +64,7 @@ class SurveyModel {
       {required DocumentSnapshot documentSnapshot}) {
     uid = documentSnapshot['uid'];
     id = documentSnapshot.id;
+    cardNo = documentSnapshot['cardNo'];
     surname = documentSnapshot['surname'];
     otherNames = documentSnapshot['otherNames'];
     customerType = documentSnapshot['customerType'];
@@ -90,11 +87,9 @@ class SurveyModel {
       maritalStatus = documentSnapshot['maritalStatus'];
       alternativePhone = documentSnapshot['alternativePhone'];
       alternativeSecondPhone = documentSnapshot['alternativeSecondPhone'];
-      phoneType = documentSnapshot['phoneType'];
-      deviceSerial = documentSnapshot['deviceSerial'];
-      serviceCenter = documentSnapshot['serviceCenter'];
-      sellingDSR = documentSnapshot['sellingDSR'];
-      dsrName = documentSnapshot['dsrName'];
+      collectionPoint = documentSnapshot['collectionPoint'];
+      paymentPlan = documentSnapshot['paymentPlan'];
+      salesAgent = documentSnapshot['salesAgent'];
       customerImageUrl = documentSnapshot['customerImageUrl'];
       customerIDImageName = documentSnapshot['customerIDImageName'];
       customerIDImageUrl = documentSnapshot['customerIDImageUrl'];

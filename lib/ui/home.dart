@@ -98,8 +98,11 @@ class HomePage extends GetWidget<AuthController> {
                         return SurveyCard(
                             survey: survey,
                             onTap: () async {
-                              Get.toNamed(Routes.VIEW_SURVERY,
-                                  arguments: survey);
+                              Get.toNamed(Routes.VIEW_SURVERY, arguments: [
+                                survey,
+                                await Get.find<UserController>()
+                                    .getUserDetailsById(survey.uid)
+                              ]);
                             });
                       },
                     );
@@ -132,7 +135,6 @@ class HomePage extends GetWidget<AuthController> {
                         // print(survey.createdAt.toDate().toString());
                         return SurveyCard(
                             // uid: controller.getUser.uid,
-                            // name: Get.find<UserController>().user.firstName,
                             survey: survey,
                             onTap: () async {
                               Get.toNamed(Routes.VIEW_SURVERY,

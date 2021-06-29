@@ -12,7 +12,8 @@ class SavingController extends GetxController {
   final customerType = 'Saving';
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  late TextEditingController surnameController,
+  late TextEditingController cardNoController,
+      surnameController,
       otherNamesController,
       customerTypeController,
       addressController,
@@ -23,6 +24,7 @@ class SavingController extends GetxController {
   RxBool isCustomerType = false.obs;
 
   RxString customerTypeHintText = ''.obs;
+  RxString cardNo = ''.obs;
   RxString surname = ''.obs;
   RxString otherNames = ''.obs;
   RxString gender = ''.obs;
@@ -33,6 +35,7 @@ class SavingController extends GetxController {
   RxString paymentPlan = ''.obs;
   RxString responserLocation = ''.obs;
 
+  RxnString cardNoErrorText = RxnString(null);
   RxnString surnameErrorText = RxnString(null);
   RxnString otherNamesErrorText = RxnString(null);
   RxnString customerTypeErrorText = RxnString(null);
@@ -45,6 +48,7 @@ class SavingController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    cardNoController = TextEditingController();
     surnameController = TextEditingController();
     otherNamesController = TextEditingController();
     customerTypeController = TextEditingController();
@@ -77,6 +81,14 @@ class SavingController extends GetxController {
     return null;
   }
 
+  String? validateCardNo(String value) {
+    if (value.isEmpty) {
+      return "Card number are required";
+    }
+    return null;
+  }
+
+  void cardNoChanged(String val) => cardNo.value = val;
   void surnameChanged(String val) => surname.value = val;
   void otherNamesChanged(String val) => otherNames.value = val;
   void customerTypeChanged(bool val) => isCustomerType.value = val;
@@ -105,6 +117,7 @@ class SavingController extends GetxController {
 
       SurveyModel data = SurveyModel(
         uid: _auth.getUser.uid,
+        cardNo: cardNo.value,
         surname: surname.value,
         otherNames: otherNames.value,
         customerType: customerType,

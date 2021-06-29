@@ -21,7 +21,8 @@ class BorrowingController extends GetxController {
   final customerType = 'Borrowing';
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  late TextEditingController surnameController,
+  late TextEditingController cardNoController,
+      surnameController,
       otherNamesController,
       customerTypeController,
       bvnController,
@@ -32,11 +33,9 @@ class BorrowingController extends GetxController {
       alternativeOtherNameController,
       alternativePhoneController,
       alternativeSecondPhoneController,
-      phoneTypeController,
-      deviceSerialController,
-      serviceCenterController,
-      sellingDSRController,
-      dsrNameController,
+      collectionPointController,
+      paymentPlanController,
+      salesAgentController,
       responderLocationController;
 
   RxBool isCustomerType = false.obs;
@@ -47,6 +46,7 @@ class BorrowingController extends GetxController {
   RxString selectedCustomerPhotoImagePath = ''.obs;
   RxString selectedCustomerPhotoImageSize = ''.obs;
 
+  RxString cardNo = ''.obs;
   RxString surname = ''.obs;
   RxString otherNames = ''.obs;
   RxString customerTypeLabel = ''.obs;
@@ -62,14 +62,12 @@ class BorrowingController extends GetxController {
   RxString alternativePhone = ''.obs;
   RxString alternativeSecondPhone = ''.obs;
   RxString alternativeContactRelationship = ''.obs;
-  RxString phoneType = ''.obs;
-  RxString serviceCenter = ''.obs;
+  RxString collectionPoint = ''.obs;
   RxString paymentPlan = ''.obs;
-  RxString deviceSerial = ''.obs;
-  RxString sellingDSR = ''.obs;
-  RxString dsrName = ''.obs;
+  RxString salesAgent = ''.obs;
   RxString responserLocation = ''.obs;
 
+  RxnString cardNoErrorText = RxnString(null);
   RxnString surnameErrorText = RxnString(null);
   RxnString otherNamesErrorText = RxnString(null);
   RxnString customerTypeErrorText = RxnString(null);
@@ -81,12 +79,9 @@ class BorrowingController extends GetxController {
   RxnString alternativeOtherNameErrorText = RxnString(null);
   RxnString alternativePhoneErrorText = RxnString(null);
   RxnString alternativeSecondPhoneErrorText = RxnString(null);
-  RxnString phoneTypeErrorText = RxnString(null);
-  RxnString serviceCenterErrorText = RxnString(null);
+  RxnString collectionPointErrorText = RxnString(null);
   RxnString paymentPlanErrorText = RxnString(null);
-  RxnString deviceSerialErrorText = RxnString(null);
-  RxnString sellingDSRErrorText = RxnString(null);
-  RxnString dsrNameErrorText = RxnString(null);
+  RxnString salesAgentErrorText = RxnString(null);
   RxnString responserLocationErrorText = RxnString(null);
   // Rxn<Function> submitFunc = Rxn<Function>(null);
 
@@ -95,6 +90,7 @@ class BorrowingController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    cardNoController = TextEditingController();
     surnameController = TextEditingController();
     otherNamesController = TextEditingController();
     customerTypeController = TextEditingController();
@@ -106,11 +102,9 @@ class BorrowingController extends GetxController {
     alternativeOtherNameController = TextEditingController();
     alternativePhoneController = TextEditingController();
     alternativeSecondPhoneController = TextEditingController();
-    phoneTypeController = TextEditingController();
-    deviceSerialController = TextEditingController();
-    serviceCenterController = TextEditingController();
-    sellingDSRController = TextEditingController();
-    dsrNameController = TextEditingController();
+    collectionPointController = TextEditingController();
+    paymentPlanController = TextEditingController();
+    salesAgentController = TextEditingController();
     responderLocationController = TextEditingController();
   }
 
@@ -129,7 +123,7 @@ class BorrowingController extends GetxController {
   }
 
   String? validateBVN(String value) {
-    if (value.isNotEmpty && (value.length != 10)) {
+    if (value.isEmpty && (value.length != 10)) {
       return "Wrong BVN number";
     }
     return null;
@@ -161,6 +155,13 @@ class BorrowingController extends GetxController {
   String? validateotherNames(String value) {
     if (value.isEmpty) {
       return "Other names are required";
+    }
+    return null;
+  }
+
+  String? validateCardNo(String value) {
+    if (value.isEmpty) {
+      return "Card No are required";
     }
     return null;
   }
@@ -199,6 +200,7 @@ class BorrowingController extends GetxController {
     }
   }
 
+  void cardNoChanged(String val) => cardNo.value = val;
   void surnameChanged(String val) => surname.value = val;
   void otherNamesChanged(String val) => otherNames.value = val;
   void customerTypeChanged(bool val) => isCustomerType.value = val;
@@ -217,12 +219,9 @@ class BorrowingController extends GetxController {
       alternativeSecondPhone.value = val;
   void alternativeContactRelationshipChanged(String val) =>
       alternativeContactRelationship.value = val;
-  void phoneTypeChanged(String val) => phoneType.value = val;
-  void serviceCenterChanged(String val) => serviceCenter.value = val;
+  void collectionPointChanged(String val) => collectionPoint.value = val;
   void paymentPlanChanged(String val) => paymentPlan.value = val;
-  void deviceSerialChanged(String val) => deviceSerial.value = val;
-  void sellingDSRChanged(String val) => sellingDSR.value = val;
-  void dsrNameChanged(String val) => dsrName.value = val;
+  void salesAgentChanged(String val) => salesAgent.value = val;
   void responserLocationChanged(String val) => responserLocation.value = val;
 
   void customerTypeLabelChanged(String val) => customerTypeLabel.value = val;
@@ -329,6 +328,7 @@ class BorrowingController extends GetxController {
 
         SurveyModel data = SurveyModel(
           uid: _auth.getUser.uid,
+          cardNo: cardNo.value,
           surname: surname.value,
           otherNames: otherNames.value,
           customerTypeLabel: customerTypeLabel.value,
@@ -345,12 +345,9 @@ class BorrowingController extends GetxController {
           alternativePhone: alternativePhone.value,
           alternativeSecondPhone: alternativeSecondPhone.value,
           alternativeContactRelationship: alternativeContactRelationship.value,
-          phoneType: phoneType.value,
-          deviceSerial: deviceSerial.value,
-          serviceCenter: serviceCenter.value,
+          collectionPoint: collectionPoint.value,
           paymentPlan: paymentPlan.value,
-          sellingDSR: sellingDSR.value,
-          dsrName: dsrName.value,
+          salesAgent: salesAgent.value,
           responserLocation: responserLocation.value,
           customerIDImageName: customerIDImageName,
           customerIDImageUrl: customerIDDownloadUrl,
@@ -389,11 +386,9 @@ class BorrowingController extends GetxController {
     alternativeOtherNameController.dispose();
     alternativePhoneController.dispose();
     alternativeSecondPhoneController.dispose();
-    phoneTypeController.dispose();
-    deviceSerialController.dispose();
-    serviceCenterController.dispose();
-    sellingDSRController.dispose();
-    dsrNameController.dispose();
+    collectionPointController.dispose();
+    paymentPlanController.dispose();
+    salesAgentController.dispose();
     responderLocationController.dispose();
     super.onClose();
   }
