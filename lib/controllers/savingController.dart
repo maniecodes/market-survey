@@ -12,6 +12,8 @@ class SavingController extends GetxController {
   final customerType = 'Saving';
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> extSavingformKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> extSavingscaffoldKey = GlobalKey<ScaffoldState>();
   late TextEditingController cardNoController,
       surnameController,
       otherNamesController,
@@ -19,7 +21,8 @@ class SavingController extends GetxController {
       addressController,
       alternativeSurnameController,
       alternativeOtherNameController,
-      responderLocationController;
+      responderLocationController,
+      amountController;
 
   RxBool isCustomerType = false.obs;
 
@@ -34,6 +37,7 @@ class SavingController extends GetxController {
   RxString alternativeContactRelationship = ''.obs;
   RxString paymentPlan = ''.obs;
   RxString responserLocation = ''.obs;
+  RxString amount = ''.obs;
 
   RxnString cardNoErrorText = RxnString(null);
   RxnString surnameErrorText = RxnString(null);
@@ -44,6 +48,7 @@ class SavingController extends GetxController {
   RxnString alternativeOtherNameErrorText = RxnString(null);
   RxnString paymentPlanErrorText = RxnString(null);
   RxnString responserLocationErrorText = RxnString(null);
+  RxnString amountErrorText = RxnString(null);
 
   @override
   void onInit() async {
@@ -56,35 +61,36 @@ class SavingController extends GetxController {
     alternativeSurnameController = TextEditingController();
     alternativeOtherNameController = TextEditingController();
     responderLocationController = TextEditingController();
+    amountController = TextEditingController();
   }
 
   String? validateGender(String value) {
-    if (value.isEmpty) {
-      return "Gender is required";
-    }
+    if (value.isEmpty) return "Gender is required";
     return null;
   }
 
   String? validateSurname(String value) {
     print(value);
-    if (value.isEmpty) {
-      return "Surname is requried";
-    }
+    if (value.isEmpty) return "Surname is requried";
+
     print('here');
     return null;
   }
 
   String? validateotherNames(String value) {
-    if (value.isEmpty) {
-      return "Other names are required";
-    }
+    if (value.isEmpty) return "Other names are required";
     return null;
   }
 
   String? validateCardNo(String value) {
-    if (value.isEmpty) {
-      return "Card number are required";
-    }
+    if (value.isEmpty) return "Card No are required";
+
+    if (value.length != 9) return "Wrong card number";
+    return null;
+  }
+
+  String? validateAmount(String value) {
+    if (value.isEmpty) return "Amount is required";
     return null;
   }
 
@@ -103,6 +109,64 @@ class SavingController extends GetxController {
   void responserLocationChanged(String val) => responserLocation.value = val;
   void customerTypeHintTextChanged(String val) =>
       customerTypeHintText.value = val;
+  void amountChanged(String val) => amount.value = val;
+
+  void submitForm() async {
+    try {
+      EasyLoading.show(status: 'loading...');
+      final isValid = extSavingformKey.currentState!.validate();
+      if (!isValid) {
+        EasyLoading.showError('Some fields are required');
+        return;
+      }
+
+      extSavingformKey.currentState!.save();
+      SurveyModel data = SurveyModel(
+        uid: _auth.getUser.uid,
+        cardNo: cardNo.value,
+        amount: double.parse(amount.value),
+        surname: "",
+        otherNames: "",
+        customerTypeLabel: "",
+        customerTypeID: "",
+        customerType: "",
+        bvn: "",
+        otherNumber: "",
+        dateOfBirth: "",
+        gender: "",
+        maritalStatus: "",
+        address: "",
+        alternativeSurname: "",
+        alternativeOtherName: "",
+        alternativePhone: "",
+        alternativeSecondPhone: "",
+        alternativeContactRelationship: "",
+        collectionPoint: "",
+        paymentPlan: "",
+        salesAgent: "",
+        responserLocation: "",
+        customerIDImageName: "",
+        customerIDImageUrl: "",
+        customerImageName: "",
+        customerImageUrl: "",
+      );
+      if (await _savingService.createSurvery(data)) {
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess('Entry submitted!');
+
+        Get.offAllNamed(Routes.DASHBOARD);
+        update();
+      }
+      EasyLoading.dismiss();
+    } catch (error) {
+      EasyLoading.dismiss();
+      Get.snackbar("Error!!! Try again", error.toString(),
+          snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 7),
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white);
+    }
+  }
 
   void checkFormValidation() async {
     try {
@@ -118,6 +182,7 @@ class SavingController extends GetxController {
       SurveyModel data = SurveyModel(
         uid: _auth.getUser.uid,
         cardNo: cardNo.value,
+        amount: null,
         surname: surname.value,
         otherNames: otherNames.value,
         customerType: customerType,

@@ -9,4 +9,6 @@ abstract class Routes {
   static const CUSTOMER_TYPE = "/customer-type";
   static const SAVING_CUSTOMER = "/saving-customer";
   static const BORROWING_CUSTOMER = "/borrowing-customer";
+  static const EXT_SAVING_CUSTOMER = "/ext-saving-customer";
+  static const EXT_BORROWING_CUSTOMER = "/ext-borrowing-customer";
 }

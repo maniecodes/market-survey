@@ -6,6 +6,8 @@ import 'package:survey/ui/auth/register.dart';
 import 'package:survey/ui/borrowingCustomer.dart';
 import 'package:survey/ui/customerType.dart';
 import 'package:survey/ui/dashboard.dart';
+import 'package:survey/ui/extSaleCustomer.dart';
+import 'package:survey/ui/extSavingCustomer.dart';
 import 'package:survey/ui/savingCustomer.dart';
 import 'package:survey/ui/surveyDetail.dart';
 
@@ -43,6 +45,15 @@ class AppPages {
     GetPage(
       name: Routes.VIEW_SURVERY,
       page: () => SurveyDetail(),
-    )
+    ),
+    GetPage(
+      name: Routes.EXT_BORROWING_CUSTOMER,
+      page: () => ExtSaleCustomerPage(),
+      binding: BorrowingBinding(),
+    ),
+    GetPage(
+        name: Routes.EXT_SAVING_CUSTOMER,
+        page: () => ExtSavingCustomerPage(),
+        binding: SavingBinding())
   ];
 }

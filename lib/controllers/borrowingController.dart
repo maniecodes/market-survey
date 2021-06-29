@@ -21,6 +21,8 @@ class BorrowingController extends GetxController {
   final customerType = 'Borrowing';
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> extSaleformKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> extSalescaffoldKey = GlobalKey<ScaffoldState>();
   late TextEditingController cardNoController,
       surnameController,
       otherNamesController,
@@ -36,7 +38,8 @@ class BorrowingController extends GetxController {
       collectionPointController,
       paymentPlanController,
       salesAgentController,
-      responderLocationController;
+      responderLocationController,
+      amountController;
 
   RxBool isCustomerType = false.obs;
 
@@ -66,6 +69,7 @@ class BorrowingController extends GetxController {
   RxString paymentPlan = ''.obs;
   RxString salesAgent = ''.obs;
   RxString responserLocation = ''.obs;
+  RxString amount = ''.obs;
 
   RxnString cardNoErrorText = RxnString(null);
   RxnString surnameErrorText = RxnString(null);
@@ -83,6 +87,7 @@ class BorrowingController extends GetxController {
   RxnString paymentPlanErrorText = RxnString(null);
   RxnString salesAgentErrorText = RxnString(null);
   RxnString responserLocationErrorText = RxnString(null);
+  RxnString amountErrorText = RxnString(null);
   // Rxn<Function> submitFunc = Rxn<Function>(null);
 
   RxBool surnameValidation = false.obs;
@@ -106,40 +111,33 @@ class BorrowingController extends GetxController {
     paymentPlanController = TextEditingController();
     salesAgentController = TextEditingController();
     responderLocationController = TextEditingController();
+    amountController = TextEditingController();
   }
 
   String? validateGender(String value) {
-    if (value.isEmpty) {
-      return "Gender is required";
-    }
+    if (value.isEmpty) return "Gender is required";
     return null;
   }
 
   String? validateDateOfBirth(String value) {
-    if (value.isEmpty) {
-      return "Date of birth is required";
-    }
+    if (value.isEmpty) return "Date of birth is required";
     return null;
   }
 
   String? validateBVN(String value) {
-    if (value.isEmpty && (value.length != 10)) {
-      return "Wrong BVN number";
-    }
+    if (value.isEmpty) return "BVN number is required";
+
+    if (value.length != 10) return "Wrong BVN number";
     return null;
   }
 
   String? validatecustomerTypeID(String value) {
-    if (value.isEmpty) {
-      return "ID number is required";
-    }
+    if (value.isEmpty) return "ID number is required";
     return null;
   }
 
   String? validatecustomerTypeLabel(String value) {
-    if (value.isEmpty) {
-      return "Select a customer ID type";
-    }
+    if (value.isEmpty) return "Select a customer ID type";
     return null;
   }
 
@@ -153,16 +151,19 @@ class BorrowingController extends GetxController {
   }
 
   String? validateotherNames(String value) {
-    if (value.isEmpty) {
-      return "Other names are required";
-    }
+    if (value.isEmpty) return "Other names are required";
     return null;
   }
 
   String? validateCardNo(String value) {
-    if (value.isEmpty) {
-      return "Card No are required";
-    }
+    if (value.isEmpty) return "Card No are required";
+
+    if (value.length != 9) return "Wrong card number";
+    return null;
+  }
+
+  String? validateAmount(String value) {
+    if (value.isEmpty) return "Amount is required";
     return null;
   }
 
@@ -223,56 +224,70 @@ class BorrowingController extends GetxController {
   void paymentPlanChanged(String val) => paymentPlan.value = val;
   void salesAgentChanged(String val) => salesAgent.value = val;
   void responserLocationChanged(String val) => responserLocation.value = val;
-
+  void amountChanged(String val) => amount.value = val;
   void customerTypeLabelChanged(String val) => customerTypeLabel.value = val;
   void customerTypeHintTextChanged(String val) =>
       customerTypeHintText.value = val;
 
-  // submitFunction() async {
-  //   if (surnameValidation.value) {
-  //     try {
-  //       BorrowingModel data = BorrowingModel(
-  //           uid: _auth.getUser.uid,
-  //           surname: surname.value,
-  //           otherNames: otherNames.value,
-  //           customerTypeLabel: customerTypeLabel.value,
-  //           customerTypeID: customerTypeID.value,
-  //           customerType: customerType,
-  //           bvn: bvn.value,
-  //           otherNumber: otherNumber.value,
-  //           dateOfBirth: dateOfBirth.value,
-  //           gender: gender.value,
-  //           maritalStatus: maritalStatus.value,
-  //           address: address.value,
-  //           alternativeSurname: alternativeSurname.value,
-  //           alternativeOtherName: alternativeOtherName.value,
-  //           alternativePhone: alternativePhone.value,
-  //           alternativeSecondPhone: alternativeSecondPhone.value,
-  //           alternativeContactRelationship:
-  //               alternativeContactRelationship.value,
-  //           phoneType: phoneType.value,
-  //           deviceSerial: deviceSerial.value,
-  //           serviceCenter: serviceCenter.value,
-  //           paymentPlan: paymentPlan.value,
-  //           sellingDSR: sellingDSR.value,
-  //           dsrName: dsrName.value,
-  //           responserLocation: responserLocation.value);
-  //       if (await _borrowingService.createSurvery(data)) {
-  //         EasyLoading.dismiss();
-  //         EasyLoading.showSuccess('Entry submitted!');
-  //         update();
-  //       }
-  //       EasyLoading.dismiss();
-  //     } catch (error) {
-  //       EasyLoading.dismiss();
-  //       Get.snackbar("Could not save", error.toString(),
-  //           snackPosition: SnackPosition.TOP,
-  //           duration: Duration(seconds: 7),
-  //           backgroundColor: Colors.redAccent,
-  //           colorText: Colors.white);
-  //     }
-  //   } else {}
-  // }
+  void submitForm() async {
+    try {
+      EasyLoading.show(status: 'loading...');
+      final isValid = extSaleformKey.currentState!.validate();
+
+      print(isValid);
+      if (!isValid) {
+        EasyLoading.showError('Some fields are required');
+        return;
+      }
+
+      extSaleformKey.currentState!.save();
+      print('got here');
+      SurveyModel data = SurveyModel(
+        uid: _auth.getUser.uid,
+        cardNo: cardNo.value,
+        amount: double.parse(amount.value),
+        surname: "",
+        otherNames: "",
+        customerTypeLabel: "",
+        customerTypeID: "",
+        customerType: "",
+        bvn: "",
+        otherNumber: "",
+        dateOfBirth: "",
+        gender: "",
+        maritalStatus: "",
+        address: "",
+        alternativeSurname: "",
+        alternativeOtherName: "",
+        alternativePhone: "",
+        alternativeSecondPhone: "",
+        alternativeContactRelationship: "",
+        collectionPoint: "",
+        paymentPlan: "",
+        salesAgent: "",
+        responserLocation: "",
+        customerIDImageName: "",
+        customerIDImageUrl: "",
+        customerImageName: "",
+        customerImageUrl: "",
+      );
+      if (await _borrowingService.createSurvery(data)) {
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess('Entry submitted!');
+
+        Get.offAllNamed(Routes.DASHBOARD);
+        update();
+      }
+      EasyLoading.dismiss();
+    } catch (error) {
+      EasyLoading.dismiss();
+      Get.snackbar("Error!!! Try again", error.toString(),
+          snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 7),
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white);
+    }
+  }
 
   void checkFormValidation() async {
     try {
@@ -329,6 +344,7 @@ class BorrowingController extends GetxController {
         SurveyModel data = SurveyModel(
           uid: _auth.getUser.uid,
           cardNo: cardNo.value,
+          amount: null,
           surname: surname.value,
           otherNames: otherNames.value,
           customerTypeLabel: customerTypeLabel.value,

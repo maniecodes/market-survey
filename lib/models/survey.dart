@@ -24,6 +24,7 @@ class SurveyModel {
   String? paymentPlan;
   String? salesAgent;
   String? responserLocation;
+  double? amount;
   String? customerImageUrl;
   String? customerImageName;
   String? customerIDImageUrl;
@@ -54,6 +55,7 @@ class SurveyModel {
       this.paymentPlan,
       this.salesAgent,
       this.responserLocation,
+      this.amount,
       this.customerImageUrl,
       this.customerIDImageName,
       this.customerIDImageUrl,
@@ -76,6 +78,7 @@ class SurveyModel {
         documentSnapshot['alternativeContactRelationship'];
     paymentPlan = documentSnapshot['paymentPlan'];
     responserLocation = documentSnapshot['responserLocation'];
+    amount = documentSnapshot['amount'];
     createdAt = documentSnapshot['createdAt'];
 
     if (documentSnapshot['customerType'] == 'Borrowing') {

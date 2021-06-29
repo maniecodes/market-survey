@@ -11,6 +11,7 @@ class SavingService {
         "id": Uuid().generateV4(),
         "uid": data.uid,
         "cardNo": data.cardNo,
+        "amount": data.amount,
         "customerType": data.customerType,
         "surname": data.surname,
         "otherNames": data.otherNames,
