@@ -56,7 +56,7 @@ class CustomerTypePage extends StatelessWidget {
                             color: Colors.black,
                           ),
                           Text(
-                            'Target Saving Customers',
+                            'Credit Sale Customers',
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ],
@@ -85,7 +85,7 @@ class CustomerTypePage extends StatelessWidget {
                             color: Colors.black,
                           ),
                           Text(
-                            'Credit Sale Customers',
+                            ' Target Saving Customers',
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ],
@@ -108,7 +108,7 @@ class CustomerTypePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () => Get.toNamed(Routes.EXT_SAVING_CUSTOMER),
+                    onTap: () => Get.toNamed(Routes.EXT_BORROWING_CUSTOMER),
                     child: Container(
                       height: 150,
                       width: 150,
@@ -129,7 +129,7 @@ class CustomerTypePage extends StatelessWidget {
                             color: Colors.black,
                           ),
                           Text(
-                            'Target Saving Customers',
+                            'Credit Sale Customers',
                             style: Theme.of(context).textTheme.headline6,
                           ),
                           Text(
@@ -141,7 +141,7 @@ class CustomerTypePage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Get.toNamed(Routes.EXT_BORROWING_CUSTOMER),
+                    onTap: () => Get.toNamed(Routes.EXT_SAVING_CUSTOMER),
                     child: Container(
                       height: 150,
                       width: 150,
@@ -162,7 +162,7 @@ class CustomerTypePage extends StatelessWidget {
                             color: Colors.black,
                           ),
                           Text(
-                            'Credit Sale Customers',
+                            'Target Saving Customers',
                             style: Theme.of(context).textTheme.headline6,
                           ),
                           Text(

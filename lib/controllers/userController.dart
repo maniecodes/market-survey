@@ -32,7 +32,7 @@ class UserController extends GetxController {
     try {
       isLoading(true);
       print('isloading');
-      print(_userService);
+    
       print(_auth.getUser.uid);
       _userModel.value = await _userService.getUser(_auth.getUser.uid);
       isLoading(false);

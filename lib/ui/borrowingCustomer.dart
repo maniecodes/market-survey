@@ -106,7 +106,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     CustomTextfieldWidget(
+                    CustomTextfieldWidget(
                         // initialValue: controller.surname.value,
                         labelText: 'Card No',
                         controller: controller.cardNoController,
@@ -227,7 +227,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       height: SPACING + 10,
                     ),
                     CustomTextfieldWidget(
-                      labelText: 'Customers Phone Number - (Optional)',
+                      labelText: 'Customers Phone Number',
                       controller: controller.otherNumberController,
                       onChanged: controller.otherNumberChanged,
                       onSubmitted: (value) =>
@@ -236,6 +236,8 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                       keyboardType: TextInputType.name,
                       //prefixIcon: Icons.account_balance_rounded,
                       errorText: controller.otherNumberErrorText.value,
+                      validator: (value) =>
+                          controller.validateOtherNumber(value!),
                     ),
                     SizedBox(
                       height: SPACING + 10,
@@ -549,7 +551,7 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     // Text(
                     //     'Have you ever taken a loan before? From what type of organization? (Select all that apply)'),
                     // Padding(
-                    
+
                     SizedBox(
                       height: SPACING + 10,
                     ),

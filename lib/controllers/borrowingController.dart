@@ -167,6 +167,11 @@ class BorrowingController extends GetxController {
     return null;
   }
 
+  String? validateOtherNumber(String value) {
+    if (value.isEmpty) return "Phone number is required";
+    return null;
+  }
+
   void getCustomerPhotoImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().getImage(source: imageSource);
     if (pickedFile != null) {

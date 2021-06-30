@@ -77,7 +77,7 @@ class LoginPage extends GetView<LoginFormController> {
                             height: 20,
                           ),
                           GestureDetector(
-                            onTap: null,
+                            onTap: () => Get.toNamed(Routes.FORGOT_PASSWORD),
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Container(

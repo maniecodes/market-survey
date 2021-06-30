@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:survey/controllers/controllers.dart';
 import 'package:survey/routes/routes.dart';
 import 'package:survey/themes/themes.dart';
@@ -47,15 +48,25 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeController.to.getThemeModeFromStore();
     // return Loading(
-    return GetMaterialApp(
-      initialBinding: AuthBinding(),
-      theme: Themes().lightTheme,
-      darkTheme: Themes().darkTheme,
-      themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: false,
-      getPages: AppPages.pages,
-      initialRoute: Routes.LOGIN,
-      builder: EasyLoading.init(),
+    return RefreshConfiguration(
+      footerTriggerDistance: 15,
+      dragSpeedRatio: 0.91,
+      enableLoadingWhenNoData: false,
+      enableRefreshVibrate: false,
+      enableLoadMoreVibrate: false,
+      shouldFooterFollowWhenNotFull: (state) {
+        return false;
+      },
+      child: GetMaterialApp(
+        initialBinding: AuthBinding(),
+        theme: Themes().lightTheme,
+        darkTheme: Themes().darkTheme,
+        themeMode: ThemeMode.system,
+        debugShowCheckedModeBanner: false,
+        getPages: AppPages.pages,
+        initialRoute: Routes.LOGIN,
+        builder: EasyLoading.init(),
+      ),
     );
   }
 }

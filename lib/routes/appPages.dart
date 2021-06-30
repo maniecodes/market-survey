@@ -8,6 +8,7 @@ import 'package:survey/ui/customerType.dart';
 import 'package:survey/ui/dashboard.dart';
 import 'package:survey/ui/extSaleCustomer.dart';
 import 'package:survey/ui/extSavingCustomer.dart';
+import 'package:survey/ui/auth/forgotPassword.dart';
 import 'package:survey/ui/savingCustomer.dart';
 import 'package:survey/ui/surveyDetail.dart';
 
@@ -24,6 +25,7 @@ class AppPages {
       page: () => RegistrationPage(),
       binding: SignUpBinding(),
     ),
+    GetPage(name: Routes.FORGOT_PASSWORD, page: () => ForgotPassword()),
     GetPage(
       name: Routes.DASHBOARD,
       page: () => DashboardPage(),

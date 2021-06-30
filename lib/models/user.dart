@@ -19,6 +19,7 @@ class UserModel {
       this.token});
 
   UserModel.fromDocumentSnapshot({required DocumentSnapshot documentSnapshot}) {
+    print(documentSnapshot.data());
     uid = documentSnapshot.id;
     firstName = documentSnapshot['firstName'];
     lastName = documentSnapshot['lastName'];
