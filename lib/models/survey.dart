@@ -4,15 +4,15 @@ class SurveyModel {
   String? id;
   late String uid;
   late String cardNo;
-  late String surname;
+  String? surname;
   String? otherNames;
   String? customerTypeLabel;
   String? customerTypeID;
-  late String customerType;
+  String? customerType;
   String? bvn;
   String? otherNumber;
   String? dateOfBirth;
-  late String gender;
+  String? gender;
   String? maritalStatus;
   String? address;
   String? alternativeSurname;
@@ -34,16 +34,16 @@ class SurveyModel {
   SurveyModel(
       {this.id,
       required this.uid,
-      required this.surname,
+      this.surname,
       required this.cardNo,
       this.otherNames,
       this.customerTypeLabel,
       this.customerTypeID,
-      required this.customerType,
+      this.customerType,
       this.bvn,
       this.otherNumber,
       this.dateOfBirth,
-      required this.gender,
+      this.gender,
       this.maritalStatus,
       this.address,
       this.alternativeSurname,

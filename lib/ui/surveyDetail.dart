@@ -22,192 +22,212 @@ class SurveyDetail extends StatelessWidget {
                 ListTile(
                   // leading: Text('1.'),
                   title: Text(
-                    'Customer Card Number',
+                    'Marketer Name',
                   ),
-                  subtitle: Text('${data.cardNo}'),
+                  subtitle: Text("${data[1].firstName}  ${data[1].lastName}"),
                 ),
                 ListTile(
                   // leading: Text('1.'),
                   title: Text(
-                    'Customer Surname',
+                    'Customer Card Number',
                   ),
-                  subtitle: Text('${data.surname}'),
+                  subtitle: Text('${data[0].cardNo}'),
                 ),
-                ListTile(
-                  // leading: Text('2.'),
-                  title: Text(
-                    'Customer Other Names',
-                  ),
-                  subtitle: Text('${data.otherNames}'),
-                ),
-                data.customerTypeID != null
+                data[0].amount != null
+                    ? ListTile(
+                        // leading: Text('1.'),
+                        title: Text(
+                          'Amount',
+                        ),
+                        subtitle: Text('${data[0].amount}'),
+                      )
+                    : SizedBox(),
+                data[0].surname != null
+                    ? ListTile(
+                        // leading: Text('1.'),
+                        title: Text(
+                          'Customer Surname',
+                        ),
+                        subtitle: Text('${data[0].surname}'),
+                      )
+                    : SizedBox(),
+                data[0].otherNames != null
+                    ? ListTile(
+                        // leading: Text('2.'),
+                        title: Text(
+                          'Customer Other Names',
+                        ),
+                        subtitle: Text('${data[0].otherNames}'))
+                    : SizedBox(),
+                data[0].customerTypeID != null
                     ? ListTile(
                         // leading: Text('3.'),
                         title: Text(
                           'Customer ID Type',
                         ),
-                        subtitle: Text('${data.customerTypeID}'),
+                        subtitle: Text('${data[0].customerTypeID}'),
                       )
                     : SizedBox(),
-                data.customerTypeID != null
+                data[0].customerTypeID != null
                     ? ListTile(
                         // leading: Text('4.'),
                         title: Text(
-                          '${data.customerTypeLabel}',
+                          '${data[0].customerTypeLabel}',
                         ),
-                        subtitle: Text('${data.otherNames}'),
+                        subtitle: Text('${data[0].otherNames}'),
                       )
                     : SizedBox(),
-                data.bvn != null
+                data[0].bvn != null
                     ? ListTile(
                         // leading: Text('5.'),
                         title: Text(
                           'Customer BVN',
                         ),
-                        subtitle: Text('${data.bvn}'),
+                        subtitle: Text('${data[0].bvn}'),
                       )
                     : SizedBox(),
-                data.otherNumber != null
+                data[0].otherNumber != null
                     ? ListTile(
                         // leading: Text('6.'),
                         title: Text(
                           'Customer Phone Number',
                         ),
-                        subtitle: Text('${data.otherNumber}'),
+                        subtitle: Text('${data[0].otherNumber}'),
                       )
                     : SizedBox(),
-                data.dateOfBirth != null
+                data[0].dateOfBirth != null
                     ? ListTile(
                         // leading: Text('7.'),
                         title: Text(
                           'Customer date of birth',
                         ),
-                        subtitle: Text('${data.dateOfBirth}'),
+                        subtitle: Text('${data[0].dateOfBirth}'),
                       )
                     : SizedBox(),
-                ListTile(
-                  // leading: Text('8.'),
-                  title: Text(
-                    'Customer Gender',
-                  ),
-                  subtitle: Text('${data.gender}'),
-                ),
-                data.maritalStatus != null
+                data[0].gender != null
+                    ? ListTile(
+                        // leading: Text('8.'),
+                        title: Text(
+                          'Customer Gender',
+                        ),
+                        subtitle: Text('${data[0].gender}'))
+                    : SizedBox(),
+                data[0].maritalStatus != null
                     ? ListTile(
                         // leading: Text('9.'),
                         title: Text(
                           'Customer marital status',
                         ),
-                        subtitle: Text('${data.maritalStatus}'),
+                        subtitle: Text('${data[0].maritalStatus}'),
                       )
                     : SizedBox(),
-                data.address != null
+                data[0].address != null
                     ? ListTile(
                         // leading: Text('10.'),
                         title: Text(
                           'Customer Surname',
                         ),
-                        subtitle: Text('${data.otherNames}'),
+                        subtitle: Text('${data[0].otherNames}'),
                       )
                     : SizedBox(),
-                data.customerIDImageUrl != null
+                data[0].customerIDImageUrl != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Customer ID photo',
                         ),
-                        subtitle: Text('${data.customerIDImageName}'),
+                        subtitle: Text('${data[0].customerIDImageName}'),
                       )
                     : SizedBox(),
-                data.customerImageUrl != null
+                data[0].customerImageUrl != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Customer Photo',
                         ),
-                        subtitle: Text('${data.customerImageName}'),
+                        subtitle: Text('${data[0].customerImageName}'),
                       )
                     : SizedBox(),
-                data.alternativeSurname != null
+                data[0].alternativeSurname != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Customer Alternative Surname',
                         ),
-                        subtitle: Text('${data.alternativeSurname}'),
+                        subtitle: Text('${data[0].alternativeSurname}'),
                       )
                     : SizedBox(),
-                data.alternativeOtherName != null
+                data[0].alternativeOtherName != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Customer Alternative Other Name',
                         ),
-                        subtitle: Text('${data.alternativeOtherName}'),
+                        subtitle: Text('${data[0].alternativeOtherName}'),
                       )
                     : SizedBox(),
-                data.alternativePhone != null
+                data[0].alternativePhone != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Customer Alternative Phone Number',
                         ),
-                        subtitle: Text('${data.alternativePhone}'),
+                        subtitle: Text('${data[0].alternativePhone}'),
                       )
                     : SizedBox(),
-                data.alternativeSecondPhone != null
+                data[0].alternativeSecondPhone != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Customer Alternative Second Phone Number',
                         ),
-                        subtitle: Text('${data.alternativeSecondPhone}'),
+                        subtitle: Text('${data[0].alternativeSecondPhone}'),
                       )
                     : SizedBox(),
-                data.alternativeContactRelationship != null
+                data[0].alternativeContactRelationship != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Customer Alternative Contact Relationship',
                         ),
                         subtitle:
-                            Text('${data.alternativeContactRelationship}'),
+                            Text('${data[0].alternativeContactRelationship}'),
                       )
                     : SizedBox(),
-                data.collectionPoint != null
+                data[0].collectionPoint != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Collection Point',
                         ),
-                        subtitle: Text('${data.collectionPoint}'),
+                        subtitle: Text('${data[0].collectionPoint}'),
                       )
                     : SizedBox(),
-                data.paymentPlan != null
+                data[0].paymentPlan != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Customer Payment Plan',
                         ),
-                        subtitle: Text('${data.paymentPlan}'),
+                        subtitle: Text('${data[0].paymentPlan}'),
                       )
                     : SizedBox(),
-                data.salesAgent != null
+                data[0].salesAgent != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
                           'Sales Agent',
                         ),
-                        subtitle: Text('${data.salesAgent}'),
+                        subtitle: Text('${data[0].salesAgent}'),
                       )
                     : SizedBox(),
-                data.responserLocation != null
+                data[0].responserLocation != null
                     ? ListTile(
                         // leading: Text('8.'),
                         title: Text(
-                          'Responder Locationn',
+                          'Responder Location',
                         ),
-                        subtitle: Text('${data.responserLocation}'),
+                        subtitle: Text('${data[0].responserLocation}'),
                       )
                     : SizedBox(),
               ],

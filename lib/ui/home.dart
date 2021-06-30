@@ -144,9 +144,11 @@ class HomePage extends GetWidget<AuthController> {
                                 // uid: controller.getUser.uid,
                                 survey: survey,
                                 onTap: () async {
-                                  
-                                  Get.toNamed(Routes.VIEW_SURVERY,
-                                      arguments: survey);
+                                  Get.toNamed(Routes.VIEW_SURVERY, arguments: [
+                                    survey,
+                                    await Get.find<UserController>()
+                                        .getUserDetailsById(survey.uid)
+                                  ]);
                                 });
                           },
                         );
