@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:survey/controllers/authController.dart';
-import 'package:survey/models/models.dart';
-import 'package:survey/service/userService.dart';
+import 'package:andelinks/controllers/authController.dart';
+import 'package:andelinks/models/models.dart';
+import 'package:andelinks/service/userService.dart';
 
 class UserController extends GetxController {
   AuthController _auth = AuthController();
@@ -32,7 +32,7 @@ class UserController extends GetxController {
     try {
       isLoading(true);
       print('isloading');
-    
+
       print(_auth.getUser.uid);
       _userModel.value = await _userService.getUser(_auth.getUser.uid);
       isLoading(false);

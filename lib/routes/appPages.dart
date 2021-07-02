@@ -1,16 +1,16 @@
 import 'package:get/route_manager.dart';
-import 'package:survey/bindings/bindings.dart';
-import 'package:survey/routes/appRoutes.dart';
-import 'package:survey/ui/auth/login.dart';
-import 'package:survey/ui/auth/register.dart';
-import 'package:survey/ui/borrowingCustomer.dart';
-import 'package:survey/ui/customerType.dart';
-import 'package:survey/ui/dashboard.dart';
-import 'package:survey/ui/extSaleCustomer.dart';
-import 'package:survey/ui/extSavingCustomer.dart';
-import 'package:survey/ui/auth/forgotPassword.dart';
-import 'package:survey/ui/savingCustomer.dart';
-import 'package:survey/ui/surveyDetail.dart';
+import 'package:andelinks/bindings/bindings.dart';
+import 'package:andelinks/routes/appRoutes.dart';
+import 'package:andelinks/ui/auth/login.dart';
+import 'package:andelinks/ui/auth/register.dart';
+import 'package:andelinks/ui/borrowingCustomer.dart';
+import 'package:andelinks/ui/customerType.dart';
+import 'package:andelinks/ui/dashboard.dart';
+import 'package:andelinks/ui/extSaleCustomer.dart';
+import 'package:andelinks/ui/extSavingCustomer.dart';
+import 'package:andelinks/ui/auth/forgotPassword.dart';
+import 'package:andelinks/ui/savingCustomer.dart';
+import 'package:andelinks/ui/surveyDetail.dart';
 
 class AppPages {
   AppPages._();

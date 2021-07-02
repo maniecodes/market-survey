@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:survey/controllers/controllers.dart';
-import 'package:survey/ui/home.dart';
+import 'package:andelinks/controllers/controllers.dart';
+import 'package:andelinks/ui/home.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);

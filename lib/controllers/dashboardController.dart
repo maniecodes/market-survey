@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:survey/controllers/controllers.dart';
-import 'package:survey/models/survey.dart';
-import 'package:survey/models/user.dart';
-import 'package:survey/service/dashboardService.dart';
-import 'package:survey/service/local_notification_service.dart';
-import 'package:survey/service/userService.dart';
+import 'package:andelinks/controllers/controllers.dart';
+import 'package:andelinks/models/survey.dart';
+import 'package:andelinks/models/user.dart';
+import 'package:andelinks/service/dashboardService.dart';
+import 'package:andelinks/service/local_notification_service.dart';
+import 'package:andelinks/service/userService.dart';
 
 class DashboardController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;

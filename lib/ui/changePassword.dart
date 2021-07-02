@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:survey/ui/widgets/customWidgets.dart';
+import 'package:andelinks/ui/widgets/customWidgets.dart';
 
 class ChangePassword extends StatelessWidget {
   TextEditingController tx = TextEditingController();

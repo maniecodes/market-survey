@@ -1,5 +1,5 @@
+import 'package:andelinks/models/models.dart';
 import 'package:flutter/material.dart';
-import 'package:survey/models/survey.dart';
 import 'package:date_time_format/date_time_format.dart';
 
 class SurveyCard extends StatelessWidget {

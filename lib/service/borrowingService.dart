@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:survey/models/models.dart';
-import 'package:survey/utils/uuid.dart';
+import 'package:andelinks/models/models.dart';
+import 'package:andelinks/utils/uuid.dart';
 
 class BorrowingService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

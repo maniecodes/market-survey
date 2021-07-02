@@ -4,10 +4,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:survey/controllers/controllers.dart';
-import 'package:survey/models/survey.dart';
-import 'package:survey/routes/routes.dart';
-import 'package:survey/service/services.dart';
+import 'package:andelinks/controllers/controllers.dart';
+import 'package:andelinks/models/survey.dart';
+import 'package:andelinks/routes/routes.dart';
+import 'package:andelinks/service/services.dart';
 
 extension FileExtention on FileSystemEntity {
   String? get name {

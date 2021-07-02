@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:survey/controllers/controllers.dart';
-import 'package:survey/ui/widgets/customWidgets.dart';
+import 'package:andelinks/controllers/controllers.dart';
+import 'package:andelinks/ui/widgets/customWidgets.dart';
 
 class ForgotPassword extends StatelessWidget {
   @override

@@ -1,16 +1,15 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:survey/controllers/controllers.dart';
-import 'package:survey/routes/routes.dart';
-import 'package:survey/themes/themes.dart';
-// import 'package:survey/ui/widgets/customWidgets.dart';
+import 'package:andelinks/controllers/controllers.dart';
+import 'package:andelinks/routes/routes.dart';
+import 'package:andelinks/themes/themes.dart';
+// import 'package:andelinks/ui/widgets/customWidgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:survey/utils/hexColor.dart';
+import 'package:andelinks/utils/hexColor.dart';
 import 'bindings/bindings.dart';
 
 void main() async {
@@ -61,7 +60,7 @@ class App extends StatelessWidget {
         initialBinding: AuthBinding(),
         theme: Themes().lightTheme,
         darkTheme: Themes().darkTheme,
-        themeMode: ThemeMode.system,
+        themeMode: ThemeMode.light,
         debugShowCheckedModeBanner: false,
         getPages: AppPages.pages,
         initialRoute: Routes.LOGIN,

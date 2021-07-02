@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
-// import 'package:survey/models/survey.dart';
-// import 'package:survey/service/surveyDetailService.dart';
+// import 'package:andelinks/models/survey.dart';
+// import 'package:andelinks/service/surveyDetailService.dart';
 
 // class SurveyDetailController extends GetxController {
 //   Rxn<SurveyModel> surveyList = Rxn<SurveyModel>();

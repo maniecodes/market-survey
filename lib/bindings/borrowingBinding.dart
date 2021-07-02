@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:survey/controllers/controllers.dart';
+import 'package:andelinks/controllers/controllers.dart';
 
 class BorrowingBinding extends Bindings {
   @override

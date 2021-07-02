@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:survey/controllers/borrowingController.dart';
-import 'package:survey/ui/widgets/customWidgets.dart';
+import 'package:andelinks/controllers/borrowingController.dart';
+import 'package:andelinks/ui/widgets/customWidgets.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 class BorrowingCustomerPage extends GetView<BorrowingController> {

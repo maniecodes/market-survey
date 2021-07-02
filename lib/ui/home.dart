@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:survey/controllers/controllers.dart';
-import 'package:survey/routes/routes.dart';
-import 'package:survey/ui/widgets/surveyCard.dart';
+import 'package:andelinks/controllers/controllers.dart';
+import 'package:andelinks/routes/routes.dart';
+import 'package:andelinks/ui/widgets/surveyCard.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 

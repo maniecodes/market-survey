@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:survey/routes/routes.dart';
-import 'package:survey/utils/hexColor.dart';
+import 'package:andelinks/routes/routes.dart';
+import 'package:andelinks/utils/hexColor.dart';
 
 class CustomerTypePage extends StatelessWidget {
   const CustomerTypePage({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:survey/utils/hexColor.dart';
+import 'package:andelinks/utils/hexColor.dart';
 
 class Themes {
   final lightTheme = ThemeData().copyWith(

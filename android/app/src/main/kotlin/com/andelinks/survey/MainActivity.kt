@@ -1,4 +1,4 @@
-package com.andelinks.survey
+package com.andelinkslimited.andelinks
 
 import io.flutter.embedding.android.FlutterActivity
 

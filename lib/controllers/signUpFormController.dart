@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:survey/controllers/controllers.dart';
+import 'package:andelinks/controllers/controllers.dart';
 
 class SignUpFormController extends GetxController {
   final AuthController _authController = Get.find();
@@ -84,7 +84,7 @@ class SignUpFormController extends GetxController {
     }
   }
 
-  void passwordValidations(String val)  {
+  void passwordValidations(String val) {
     passwordErrorText.value = null;
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])';
     RegExp regExp = new RegExp(pattern);

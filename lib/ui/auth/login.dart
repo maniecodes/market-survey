@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:survey/controllers/controllers.dart';
-import 'package:survey/routes/routes.dart';
-import 'package:survey/ui/widgets/customPasswordField.dart';
-import 'package:survey/ui/widgets/customWidgets.dart';
+import 'package:andelinks/controllers/controllers.dart';
+import 'package:andelinks/routes/routes.dart';
+import 'package:andelinks/ui/widgets/customPasswordField.dart';
+import 'package:andelinks/ui/widgets/customWidgets.dart';
 
 class LoginPage extends GetView<LoginFormController> {
   @override

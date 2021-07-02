@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:survey/models/models.dart';
-import 'package:survey/routes/routes.dart';
-import 'package:survey/service/services.dart';
-import 'package:survey/utils/hexColor.dart';
+import 'package:andelinks/models/models.dart';
+import 'package:andelinks/routes/routes.dart';
+import 'package:andelinks/service/services.dart';
+import 'package:andelinks/utils/hexColor.dart';
 
 class AuthController extends GetxController {
   GlobalKey<FormState> forgotPasswordEmailFormKey = GlobalKey<FormState>();

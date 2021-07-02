@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:survey/controllers/controllers.dart';
+import 'package:andelinks/controllers/controllers.dart';
 
 class LoginFormController extends GetxController {
   final AuthController _authController = Get.find();

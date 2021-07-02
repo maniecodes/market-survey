@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:survey/controllers/controllers.dart';
-import 'package:survey/models/models.dart';
-import 'package:survey/routes/routes.dart';
-import 'package:survey/service/services.dart';
+import 'package:andelinks/controllers/controllers.dart';
+import 'package:andelinks/models/models.dart';
+import 'package:andelinks/routes/routes.dart';
+import 'package:andelinks/service/services.dart';
 
 class SavingController extends GetxController {
   AuthController _auth = AuthController();
