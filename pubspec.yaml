@@ -31,7 +31,8 @@ dependencies:
   firebase_messaging: ^10.0.2
   flutter_local_notifications: ^6.0.0
   pull_to_refresh: ^2.0.0
-  
+  geolocator: ^7.2.0+1
+  geocoding: ^2.0.0
 
 dev_dependencies:
   flutter_test:

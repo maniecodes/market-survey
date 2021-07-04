@@ -5,6 +5,7 @@ import 'package:andelinks/routes/routes.dart';
 import 'package:andelinks/ui/widgets/surveyCard.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomePage extends GetWidget<AuthController> {
   final data = Get.find<AuthController>().getUser;
@@ -76,87 +77,96 @@ class HomePage extends GetWidget<AuthController> {
           },
         ),
       ),
-      body: Obx(
-        () => dashboard.isEmailVerified.value
-            ? Get.find<UserController>().user.role == 0
-                ? GetX<DashboardController>(
-                    init: Get.put<DashboardController>(DashboardController()),
-                    builder: (DashboardController dashboardController) {
-                      if (dashboardController.allSurveys != null) {
-                        return GroupedListView<dynamic, String>(
-                          elements: dashboardController.allSurveys!,
-                          groupBy: (survey) {
-                            return formatter.format(DateTime.parse(
-                                survey.createdAt.toDate().toString()));
-                          },
-                          order: GroupedListOrder.DESC,
-                          groupSeparatorBuilder: (String value) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              value,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        controller: dashboard.refreshController,
+        onRefresh: dashboard.onRefresh,
+        onLoading: dashboard.onLoading,
+        child: Obx(
+          () => dashboard.isEmailVerified.value
+              ? Get.find<UserController>().user.role == 0
+                  ? GetX<DashboardController>(
+                      init: Get.put<DashboardController>(DashboardController()),
+                      builder: (DashboardController dashboardController) {
+                        if (dashboardController.allSurveys != null) {
+                          return GroupedListView<dynamic, String>(
+                            elements: dashboardController.allSurveys!,
+                            groupBy: (survey) {
+                              return formatter.format(DateTime.parse(
+                                  survey.createdAt.toDate().toString()));
+                            },
+                            order: GroupedListOrder.DESC,
+                            groupSeparatorBuilder: (String value) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                value,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          itemBuilder: (c, survey) {
-                            // print(survey.createdAt.toDate().toString());
-                            return SurveyCard(
-                                survey: survey,
-                                onTap: () async {
-                                  Get.toNamed(Routes.VIEW_SURVERY, arguments: [
-                                    survey,
-                                    await Get.find<UserController>()
-                                        .getUserDetailsById(survey.uid)
-                                  ]);
-                                });
-                          },
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  )
-                : GetX<DashboardController>(
-                    init: Get.put<DashboardController>(DashboardController()),
-                    builder: (DashboardController dashboardController) {
-                      if (dashboardController.surveys != null) {
-                        return GroupedListView<dynamic, String>(
-                          elements: dashboardController.surveys!,
-                          groupBy: (survey) {
-                            return formatter.format(DateTime.parse(
-                                survey.createdAt.toDate().toString()));
-                          },
-                          order: GroupedListOrder.DESC,
-                          groupSeparatorBuilder: (String value) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              value,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            itemBuilder: (c, survey) {
+                              // print(survey.createdAt.toDate().toString());
+                              return SurveyCard(
+                                  survey: survey,
+                                  onTap: () async {
+                                    Get.toNamed(Routes.VIEW_SURVERY,
+                                        arguments: [
+                                          survey,
+                                          await Get.find<UserController>()
+                                              .getUserDetailsById(survey.uid)
+                                        ]);
+                                  });
+                            },
+                          );
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    )
+                  : GetX<DashboardController>(
+                      init: Get.put<DashboardController>(DashboardController()),
+                      builder: (DashboardController dashboardController) {
+                        if (dashboardController.surveys != null) {
+                          return GroupedListView<dynamic, String>(
+                            elements: dashboardController.surveys!,
+                            groupBy: (survey) {
+                              return formatter.format(DateTime.parse(
+                                  survey.createdAt.toDate().toString()));
+                            },
+                            order: GroupedListOrder.DESC,
+                            groupSeparatorBuilder: (String value) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                value,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          itemBuilder: (c, survey) {
-                            // print(survey.createdAt.toDate().toString());
-                            return SurveyCard(
-                                // uid: controller.getUser.uid,
-                                survey: survey,
-                                onTap: () async {
-                                  Get.toNamed(Routes.VIEW_SURVERY, arguments: [
-                                    survey,
-                                    await Get.find<UserController>()
-                                        .getUserDetailsById(survey.uid)
-                                  ]);
-                                });
-                          },
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  )
-            : Text('${dashboard.isEmailVerified}'),
+                            itemBuilder: (c, survey) {
+                              // print(survey.createdAt.toDate().toString());
+                              return SurveyCard(
+                                  // uid: controller.getUser.uid,
+                                  survey: survey,
+                                  onTap: () async {
+                                    Get.toNamed(Routes.VIEW_SURVERY,
+                                        arguments: [
+                                          survey,
+                                          await Get.find<UserController>()
+                                              .getUserDetailsById(survey.uid)
+                                        ]);
+                                  });
+                            },
+                          );
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    )
+              : Text('${dashboard.isEmailVerified}'),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(

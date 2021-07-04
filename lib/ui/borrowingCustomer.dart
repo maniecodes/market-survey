@@ -603,20 +603,20 @@ class BorrowingCustomerPage extends GetView<BorrowingController> {
                     SizedBox(
                       height: SPACING + 10,
                     ),
-                    CustomTextfieldWidget(
-                      labelText: "Responder Location",
-                      controller: controller.responderLocationController,
-                      onChanged: controller.responserLocationChanged,
-                      onSubmitted: (value) =>
-                          controller.responderLocationController.text = value,
-                      hintText: '',
-                      keyboardType: TextInputType.name,
-                      //prefixIcon: Icons.account_balance_rounded,
-                      errorText: controller.responserLocationErrorText.value,
-                    ),
-                    SizedBox(
-                      height: SPACING + 10,
-                    ),
+                    // CustomTextfieldWidget(
+                    //   labelText: "Responder Location",
+                    //   controller: controller.responderLocationController,
+                    //   onChanged: controller.responserLocationChanged,
+                    //   onSubmitted: (value) =>
+                    //       controller.responderLocationController.text = value,
+                    //   hintText: '',
+                    //   keyboardType: TextInputType.name,
+                    //   //prefixIcon: Icons.account_balance_rounded,
+                    //   errorText: controller.responserLocationErrorText.value,
+                    // ),
+                    // SizedBox(
+                    //   height: SPACING + 10,
+                    // ),
 
                     CustomButtonWidget(
                         buttonName: 'Submit',

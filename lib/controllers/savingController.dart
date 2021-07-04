@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:andelinks/controllers/controllers.dart';
 import 'package:andelinks/models/models.dart';
@@ -21,7 +23,7 @@ class SavingController extends GetxController {
       addressController,
       alternativeSurnameController,
       alternativeOtherNameController,
-      responderLocationController,
+      // responderLocationController,
       amountController;
 
   RxBool isCustomerType = false.obs;
@@ -47,7 +49,7 @@ class SavingController extends GetxController {
   RxnString alternativeSurnameErrorText = RxnString(null);
   RxnString alternativeOtherNameErrorText = RxnString(null);
   RxnString paymentPlanErrorText = RxnString(null);
-  RxnString responserLocationErrorText = RxnString(null);
+  // RxnString responserLocationErrorText = RxnString(null);
   RxnString amountErrorText = RxnString(null);
 
   @override
@@ -60,8 +62,61 @@ class SavingController extends GetxController {
     addressController = TextEditingController();
     alternativeSurnameController = TextEditingController();
     alternativeOtherNameController = TextEditingController();
-    responderLocationController = TextEditingController();
+    // responderLocationController = TextEditingController();
     amountController = TextEditingController();
+    var location = await _determinePosition();
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(location.latitude, location.longitude);
+    print(placemarks[0]);
+    // responderLocationController.text = placemarks[0].street!;
+    // responserLocation.value = responderLocationController.text;
+    responserLocation.value = placemarks[0].street.toString() +
+        ', ' +
+        placemarks[0].administrativeArea.toString() +
+        ', ' +
+        placemarks[0].country.toString();
+  }
+
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error.
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return position;
   }
 
   String? validateGender(String value) {
@@ -106,7 +161,7 @@ class SavingController extends GetxController {
   void alternativeContactRelationshipChanged(String val) =>
       alternativeContactRelationship.value = val;
   void paymentPlanChanged(String val) => paymentPlan.value = val;
-  void responserLocationChanged(String val) => responserLocation.value = val;
+ // void responserLocationChanged(String val) => responserLocation.value = val;
   void customerTypeHintTextChanged(String val) =>
       customerTypeHintText.value = val;
   void amountChanged(String val) => amount.value = val;
@@ -144,7 +199,7 @@ class SavingController extends GetxController {
         collectionPoint: null,
         paymentPlan: null,
         salesAgent: null,
-        responserLocation: null,
+        responserLocation: responserLocation.value,
       );
       if (await _savingService.createSurvery(data)) {
         EasyLoading.dismiss();
@@ -216,7 +271,7 @@ class SavingController extends GetxController {
     addressController.dispose();
     alternativeSurnameController.dispose();
     alternativeOtherNameController.dispose();
-    responderLocationController.dispose();
+    //  responderLocationController.dispose();
     super.onClose();
   }
 }

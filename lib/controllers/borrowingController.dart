@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -38,7 +40,7 @@ class BorrowingController extends GetxController {
       collectionPointController,
       paymentPlanController,
       salesAgentController,
-      responderLocationController,
+      //  responderLocationController,
       amountController;
 
   RxBool isCustomerType = false.obs;
@@ -86,7 +88,7 @@ class BorrowingController extends GetxController {
   RxnString collectionPointErrorText = RxnString(null);
   RxnString paymentPlanErrorText = RxnString(null);
   RxnString salesAgentErrorText = RxnString(null);
-  RxnString responserLocationErrorText = RxnString(null);
+  // RxnString responserLocationErrorText = RxnString(null);
   RxnString amountErrorText = RxnString(null);
   // Rxn<Function> submitFunc = Rxn<Function>(null);
 
@@ -110,8 +112,59 @@ class BorrowingController extends GetxController {
     collectionPointController = TextEditingController();
     paymentPlanController = TextEditingController();
     salesAgentController = TextEditingController();
-    responderLocationController = TextEditingController();
+    //  responderLocationController = TextEditingController();
     amountController = TextEditingController();
+    var location = await _determinePosition();
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(location.latitude, location.longitude);
+    print(placemarks[0]);
+    responserLocation.value = placemarks[0].street.toString() +
+        ', ' +
+        placemarks[0].administrativeArea.toString() +
+        ', ' +
+        placemarks[0].country.toString();
+  }
+
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error.
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return position;
   }
 
   String? validateGender(String value) {
@@ -228,7 +281,7 @@ class BorrowingController extends GetxController {
   void collectionPointChanged(String val) => collectionPoint.value = val;
   void paymentPlanChanged(String val) => paymentPlan.value = val;
   void salesAgentChanged(String val) => salesAgent.value = val;
-  void responserLocationChanged(String val) => responserLocation.value = val;
+  //void responserLocationChanged(String val) => responserLocation.value = val;
   void amountChanged(String val) => amount.value = val;
   void customerTypeLabelChanged(String val) => customerTypeLabel.value = val;
   void customerTypeHintTextChanged(String val) =>
@@ -270,7 +323,7 @@ class BorrowingController extends GetxController {
         collectionPoint: null,
         paymentPlan: null,
         salesAgent: null,
-        responserLocation: null,
+        responserLocation: responserLocation.value,
       );
       if (await _borrowingService.createSurvery(data)) {
         EasyLoading.dismiss();
@@ -406,7 +459,7 @@ class BorrowingController extends GetxController {
     collectionPointController.dispose();
     paymentPlanController.dispose();
     salesAgentController.dispose();
-    responderLocationController.dispose();
+   // responderLocationController.dispose();
     super.onClose();
   }
 }
