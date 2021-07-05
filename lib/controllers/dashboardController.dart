@@ -1,3 +1,4 @@
+import 'package:andelinks/routes/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
@@ -88,15 +89,16 @@ class DashboardController extends GetxController {
 
   void onRefresh() async {
     onInit();
-    //  print(Get.find<AuthController>().firebaseUser.value!.emailVerified);
+    print(Get.find<AuthController>().firebaseUser.value!.emailVerified);
     print('refreshing');
     // monitor network fetch
-    // User updatedUser = _auth.currentUser!..reload();
-    // isEmailVerified = updatedUser.emailVerified.obs;
+    User updatedUser = _auth.currentUser!..reload();
+    isEmailVerified = updatedUser.emailVerified.obs;
     // print(isEmailVerified);
 
     // if failed,use refreshFailed()
     refreshController.refreshCompleted();
+    Get.offAllNamed(Routes.DASHBOARD);
   }
 
   void onLoading() async {

@@ -45,7 +45,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeController.to.getThemeModeFromStore();
+    // ThemeController.to.getThemeModeFromStore();
     // return Loading(
     return RefreshConfiguration(
       footerTriggerDistance: 15,

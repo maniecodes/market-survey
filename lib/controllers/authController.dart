@@ -153,6 +153,37 @@ class AuthController extends GetxController {
     }
   }
 
+  void checkVerification() async {
+    User user = _auth.currentUser!..reload();
+    EasyLoading.show(status: 'requesting...');
+
+    print(user);
+    if (user.emailVerified) {
+      EasyLoading.dismiss();
+      update();
+      Get.offAllNamed(Routes.DASHBOARD);
+      EasyLoading.showSuccess('Welcome to Andelinks');
+    } else {
+      try {
+        await user.sendEmailVerification();
+        Future.delayed(Duration(milliseconds: 3000)).then((_) =>
+            EasyLoading.showSuccess('Email verification sent succesfully'));
+        await user.reload();
+        update();
+      } catch (error) {
+        EasyLoading.dismiss();
+        Get.snackbar("Error sending verification email", error.toString(),
+            snackPosition: SnackPosition.TOP,
+            duration: Duration(seconds: 7),
+            borderWidth: 1,
+            borderColor: Colors.grey,
+            backgroundColor: HexColor('#E6284A'),
+            colorText: Colors.white);
+      }
+    }
+    EasyLoading.dismiss();
+  }
+
   resetPassword() async {
     print('moveee');
     if (isNetworkConnected()) {

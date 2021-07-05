@@ -36,31 +36,31 @@ class _DashboardPageState extends State<DashboardPage> {
             child: IndexedStack(
               index: controller.tabIndex.value,
               children: [
-                controller.isEmailVerified.value
-                    ? HomePage()
-                    : Scaffold(
-                        body: SafeArea(
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              //crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                    'Check your email to verify your account.'),
-                                TextButton(
-                                    style: flatButtonStyle,
-                                    onPressed: () =>
-                                        Get.find<AuthController>().signOut(),
-                                    child: Text(
-                                      'Logout',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                // controller.isEmailVerified.value
+                HomePage()
+                // : Scaffold(
+                //     body: SafeArea(
+                //       child: Center(
+                //         child: Column(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           //crossAxisAlignment: CrossAxisAlignment.center,
+                //           mainAxisSize: MainAxisSize.max,
+                //           children: [
+                //             Text(
+                //                 'Check your email to verify your account.'),
+                //             TextButton(
+                //                 style: flatButtonStyle,
+                //                 onPressed: () =>
+                //                     Get.find<AuthController>().signOut(),
+                //                 child: Text(
+                //                   'Logout',
+                //                   style: TextStyle(color: Colors.white),
+                //                 )),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                // ),
               ],
             ),
           ),
