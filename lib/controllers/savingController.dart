@@ -11,7 +11,8 @@ import 'package:andelinks/service/services.dart';
 class SavingController extends GetxController {
   AuthController _auth = AuthController();
   SavingService _savingService = SavingService();
-  final customerType = 'Saving';
+  final newCustomerType = 'Saving';
+  final existingCustomerType = 'ExistingSaving';
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> extSavingformKey = GlobalKey<FormState>();
@@ -40,6 +41,8 @@ class SavingController extends GetxController {
   RxString paymentPlan = ''.obs;
   RxString responserLocation = ''.obs;
   RxString amount = ''.obs;
+  RxDouble longitude = 0.0.obs;
+  RxDouble latitude = 0.0.obs;
 
   RxnString cardNoErrorText = RxnString(null);
   RxnString surnameErrorText = RxnString(null);
@@ -70,6 +73,8 @@ class SavingController extends GetxController {
     print(placemarks[0]);
     // responderLocationController.text = placemarks[0].street!;
     // responserLocation.value = responderLocationController.text;
+    longitude.value = location.longitude;
+    latitude.value = location.latitude;
     responserLocation.value = placemarks[0].street.toString() +
         ', ' +
         placemarks[0].administrativeArea.toString() +
@@ -161,7 +166,7 @@ class SavingController extends GetxController {
   void alternativeContactRelationshipChanged(String val) =>
       alternativeContactRelationship.value = val;
   void paymentPlanChanged(String val) => paymentPlan.value = val;
- // void responserLocationChanged(String val) => responserLocation.value = val;
+  // void responserLocationChanged(String val) => responserLocation.value = val;
   void customerTypeHintTextChanged(String val) =>
       customerTypeHintText.value = val;
   void amountChanged(String val) => amount.value = val;
@@ -177,30 +182,31 @@ class SavingController extends GetxController {
 
       extSavingformKey.currentState!.save();
       SurveyModel data = SurveyModel(
-        uid: _auth.getUser.uid,
-        cardNo: cardNo.value,
-        amount: double.parse(amount.value),
-        surname: null,
-        otherNames: null,
-        customerTypeLabel: null,
-        customerTypeID: null,
-        customerType: null,
-        bvn: null,
-        otherNumber: null,
-        dateOfBirth: null,
-        gender: null,
-        maritalStatus: null,
-        address: null,
-        alternativeSurname: null,
-        alternativeOtherName: null,
-        alternativePhone: null,
-        alternativeSecondPhone: null,
-        alternativeContactRelationship: null,
-        collectionPoint: null,
-        paymentPlan: null,
-        salesAgent: null,
-        responserLocation: responserLocation.value,
-      );
+          uid: _auth.getUser.uid,
+          cardNo: cardNo.value,
+          amount: double.parse(amount.value),
+          surname: null,
+          otherNames: null,
+          customerTypeLabel: null,
+          customerTypeID: null,
+          customerType: existingCustomerType,
+          bvn: null,
+          otherNumber: null,
+          dateOfBirth: null,
+          gender: null,
+          maritalStatus: null,
+          address: null,
+          alternativeSurname: null,
+          alternativeOtherName: null,
+          alternativePhone: null,
+          alternativeSecondPhone: null,
+          alternativeContactRelationship: null,
+          collectionPoint: null,
+          paymentPlan: null,
+          salesAgent: null,
+          responserLocation: responserLocation.value,
+          longitude: longitude.value,
+          latitude: latitude.value);
       if (await _savingService.createSurvery(data)) {
         EasyLoading.dismiss();
         EasyLoading.showSuccess('Entry submitted!');
@@ -231,20 +237,21 @@ class SavingController extends GetxController {
       formKey.currentState!.save();
 
       SurveyModel data = SurveyModel(
-        uid: _auth.getUser.uid,
-        cardNo: cardNo.value,
-        amount: null,
-        surname: surname.value,
-        otherNames: otherNames.value,
-        customerType: customerType,
-        gender: gender.value,
-        address: address.value,
-        alternativeSurname: alternativeSurname.value,
-        alternativeOtherName: alternativeOtherName.value,
-        alternativeContactRelationship: alternativeContactRelationship.value,
-        paymentPlan: paymentPlan.value,
-        responserLocation: responserLocation.value,
-      );
+          uid: _auth.getUser.uid,
+          cardNo: cardNo.value,
+          amount: null,
+          surname: surname.value,
+          otherNames: otherNames.value,
+          customerType: newCustomerType,
+          gender: gender.value,
+          address: address.value,
+          alternativeSurname: alternativeSurname.value,
+          alternativeOtherName: alternativeOtherName.value,
+          alternativeContactRelationship: alternativeContactRelationship.value,
+          paymentPlan: paymentPlan.value,
+          responserLocation: responserLocation.value,
+          longitude: longitude.value,
+          latitude: latitude.value);
       if (await _savingService.createSurvery(data)) {
         EasyLoading.dismiss();
         EasyLoading.showSuccess('Entry submitted!');

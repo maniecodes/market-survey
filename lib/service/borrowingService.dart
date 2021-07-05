@@ -32,6 +32,8 @@ class BorrowingService {
         "paymentPlan": data.paymentPlan,
         "salesAgent": data.salesAgent,
         "responserLocation": data.responserLocation,
+        "longitude": data.longitude,
+        "latitude": data.latitude,
         "customerImageUrl": data.customerImageUrl,
         "customerIDImageName": data.customerIDImageName,
         "customerIDImageUrl": data.customerIDImageUrl,

@@ -22,6 +22,8 @@ class SavingService {
         "alternativeContactRelationship": data.alternativeContactRelationship,
         "paymentPlan": data.paymentPlan,
         "responserLocation": data.responserLocation,
+        "longitude": data.longitude,
+        "latitude": data.latitude,
         "createdAt": Timestamp.now()
       });
       return true;

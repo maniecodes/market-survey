@@ -20,6 +20,7 @@ class UserModel {
 
   UserModel.fromDocumentSnapshot({required DocumentSnapshot documentSnapshot}) {
     print(documentSnapshot.data());
+    print('got in');
     uid = documentSnapshot.id;
     firstName = documentSnapshot['firstName'];
     lastName = documentSnapshot['lastName'];

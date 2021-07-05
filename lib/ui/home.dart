@@ -90,8 +90,8 @@ class HomePage extends GetWidget<AuthController> {
                   init: Get.put<DashboardController>(DashboardController()),
                   builder: (DashboardController dashboardController) {
                     if (dashboardController.allSurveys != null) {
-                      print('up');
-                      return dashboardController.surveys!.length != 0
+                      print('here');
+                      return dashboardController.allSurveys!.length != 0
                           ? GroupedListView<dynamic, String>(
                               elements: dashboardController.allSurveys!,
                               groupBy: (survey) {
@@ -130,7 +130,7 @@ class HomePage extends GetWidget<AuthController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Image.asset(
-                                    'assets/email_verify.png',
+                                    'assets/empty1.gif',
                                     height:
                                         MediaQuery.of(context).size.height / 2,
                                     fit: BoxFit.fitHeight,
@@ -139,23 +139,18 @@ class HomePage extends GetWidget<AuthController> {
                                     padding: const EdgeInsets.only(bottom: 20),
                                     child: RichText(
                                       text: TextSpan(
-                                          text:
-                                              'check your email to verify your account.',
-                                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+                                          text: 'No survey found. Click on the',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),
                                           children: <TextSpan>[
                                             TextSpan(
                                                 text:
-                                                    ' Click on refresh after verifying your account.')
+                                                    '  + sign to get started.')
                                           ]),
                                     ),
                                   ),
-                                  TextButton(
-                                      style: flatButtonStyle,
-                                      onPressed: controller.checkVerification,
-                                      child: Text(
-                                        'Resend Verification / Refresh',
-                                        style: TextStyle(color: Colors.white),
-                                      )),
                                 ],
                               ),
                             );
@@ -168,7 +163,6 @@ class HomePage extends GetWidget<AuthController> {
                   init: Get.put<DashboardController>(DashboardController()),
                   builder: (DashboardController dashboardController) {
                     if (dashboardController.surveys != null) {
-                      print('down');
                       return dashboardController.surveys!.length != 0
                           ? GroupedListView<dynamic, String>(
                               elements: dashboardController.surveys!,

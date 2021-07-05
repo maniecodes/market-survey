@@ -7,6 +7,9 @@
    <application
         android:label="Andelinks"
         android:icon="@mipmap/logo">
+       
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBAyJtlfCK98u4E-EYdgKEDrz-9Y2LHdt4"/>       
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

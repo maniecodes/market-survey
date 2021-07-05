@@ -24,6 +24,8 @@ class SurveyModel {
   String? paymentPlan;
   String? salesAgent;
   String? responserLocation;
+  late double longitude;
+  late double latitude;
   double? amount;
   String? customerImageUrl;
   String? customerImageName;
@@ -55,6 +57,8 @@ class SurveyModel {
       this.paymentPlan,
       this.salesAgent,
       this.responserLocation,
+      required this.longitude,
+      required this.latitude,
       this.amount,
       this.customerImageUrl,
       this.customerIDImageName,
@@ -78,6 +82,8 @@ class SurveyModel {
         documentSnapshot['alternativeContactRelationship'];
     paymentPlan = documentSnapshot['paymentPlan'];
     responserLocation = documentSnapshot['responserLocation'];
+    longitude = documentSnapshot['longitude'];
+    latitude = documentSnapshot['latitude'];
     amount = documentSnapshot['amount'];
     createdAt = documentSnapshot['createdAt'];
 

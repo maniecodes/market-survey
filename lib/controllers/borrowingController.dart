@@ -20,7 +20,8 @@ extension FileExtention on FileSystemEntity {
 class BorrowingController extends GetxController {
   AuthController _auth = AuthController();
   BorrowingService _borrowingService = BorrowingService();
-  final customerType = 'Borrowing';
+  final newCustomerType = 'Borrowing';
+  final existingCustomerType = 'ExistingBorrowing';
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> extSaleformKey = GlobalKey<FormState>();
@@ -71,6 +72,8 @@ class BorrowingController extends GetxController {
   RxString paymentPlan = ''.obs;
   RxString salesAgent = ''.obs;
   RxString responserLocation = ''.obs;
+  RxDouble longitude = 0.0.obs;
+  RxDouble latitude = 0.0.obs;
   RxString amount = ''.obs;
 
   RxnString cardNoErrorText = RxnString(null);
@@ -118,6 +121,8 @@ class BorrowingController extends GetxController {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(location.latitude, location.longitude);
     print(placemarks[0]);
+    longitude.value = location.longitude;
+    latitude.value = location.latitude;
     responserLocation.value = placemarks[0].street.toString() +
         ', ' +
         placemarks[0].administrativeArea.toString() +
@@ -301,30 +306,31 @@ class BorrowingController extends GetxController {
       extSaleformKey.currentState!.save();
       print('got here');
       SurveyModel data = SurveyModel(
-        uid: _auth.getUser.uid,
-        cardNo: cardNo.value,
-        amount: double.parse(amount.value),
-        surname: null,
-        otherNames: null,
-        customerTypeLabel: null,
-        customerTypeID: null,
-        customerType: null,
-        bvn: null,
-        otherNumber: null,
-        dateOfBirth: null,
-        gender: null,
-        maritalStatus: null,
-        address: null,
-        alternativeSurname: null,
-        alternativeOtherName: null,
-        alternativePhone: null,
-        alternativeSecondPhone: null,
-        alternativeContactRelationship: null,
-        collectionPoint: null,
-        paymentPlan: null,
-        salesAgent: null,
-        responserLocation: responserLocation.value,
-      );
+          uid: _auth.getUser.uid,
+          cardNo: cardNo.value,
+          amount: double.parse(amount.value),
+          surname: null,
+          otherNames: null,
+          customerTypeLabel: null,
+          customerTypeID: null,
+          customerType: existingCustomerType,
+          bvn: null,
+          otherNumber: null,
+          dateOfBirth: null,
+          gender: null,
+          maritalStatus: null,
+          address: null,
+          alternativeSurname: null,
+          alternativeOtherName: null,
+          alternativePhone: null,
+          alternativeSecondPhone: null,
+          alternativeContactRelationship: null,
+          collectionPoint: null,
+          paymentPlan: null,
+          salesAgent: null,
+          responserLocation: responserLocation.value,
+          longitude: longitude.value,
+          latitude: latitude.value);
       if (await _borrowingService.createSurvery(data)) {
         EasyLoading.dismiss();
         EasyLoading.showSuccess('Entry submitted!');
@@ -403,7 +409,7 @@ class BorrowingController extends GetxController {
           otherNames: otherNames.value,
           customerTypeLabel: customerTypeLabel.value,
           customerTypeID: customerTypeID.value,
-          customerType: customerType,
+          customerType: newCustomerType,
           bvn: bvn.value,
           otherNumber: otherNumber.value,
           dateOfBirth: dateOfBirth.value,
@@ -419,6 +425,8 @@ class BorrowingController extends GetxController {
           paymentPlan: paymentPlan.value,
           salesAgent: salesAgent.value,
           responserLocation: responserLocation.value,
+          longitude: longitude.value,
+          latitude: latitude.value,
           customerIDImageName: customerIDImageName,
           customerIDImageUrl: customerIDDownloadUrl,
           customerImageName: customerPhotoImageName,
@@ -459,7 +467,7 @@ class BorrowingController extends GetxController {
     collectionPointController.dispose();
     paymentPlanController.dispose();
     salesAgentController.dispose();
-   // responderLocationController.dispose();
+    // responderLocationController.dispose();
     super.onClose();
   }
 }
