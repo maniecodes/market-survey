@@ -211,8 +211,9 @@ class SavingController extends GetxController {
         EasyLoading.dismiss();
         EasyLoading.showSuccess('Entry submitted!');
 
-        Get.offAllNamed(Routes.DASHBOARD);
-        update();
+        Get.until((route) => Get.currentRoute == Routes.DASHBOARD);
+        // Get.offAllNamed(Routes.DASHBOARD);
+        // update();
       }
       EasyLoading.dismiss();
     } catch (error) {

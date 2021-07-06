@@ -50,9 +50,10 @@ class App extends StatelessWidget {
     return RefreshConfiguration(
       footerTriggerDistance: 15,
       dragSpeedRatio: 0.91,
-      enableLoadingWhenNoData: false,
-      enableRefreshVibrate: false,
-      enableLoadMoreVibrate: false,
+      headerBuilder: () => WaterDropHeader(),
+      enableLoadingWhenNoData: true,
+      enableRefreshVibrate: true,
+      enableLoadMoreVibrate: true,
       shouldFooterFollowWhenNotFull: (state) {
         return false;
       },

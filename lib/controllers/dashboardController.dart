@@ -34,8 +34,6 @@ class DashboardController extends GetxController {
     LocalNotificationService.initialize();
     User user = _auth.currentUser!;
     isEmailVerified = user.emailVerified.obs;
-    print('is user email verified?');
-    print(isEmailVerified);
     await user.reload();
     FirebaseMessaging.instance.getInitialMessage();
 
@@ -66,14 +64,9 @@ class DashboardController extends GetxController {
     ///When the app is in background but opened and user taps
     ///on the notification
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print('opened');
-      final routeFromMessage = message.data["route"];
       LocalNotificationService.display(message);
-      print(routeFromMessage);
     });
 
-    print('calling here');
-    print(tabIndex);
     String uid = Get.find<AuthController>().getUser.uid;
     UserModel newUser = await _userService.getUser(uid);
     print('role is: ' + newUser.role.toString());
@@ -83,49 +76,15 @@ class DashboardController extends GetxController {
     }
 
     surveyList.bindStream(_dashboardService.getSurverysByUserID(uid)!);
-    print(surveyList);
-    print(tabIndex);
   }
 
   void onRefresh() async {
     onInit();
-    print(Get.find<AuthController>().firebaseUser.value!.emailVerified);
-    print('refreshing');
-    // monitor network fetch
-    User updatedUser = _auth.currentUser!..reload();
-    isEmailVerified = updatedUser.emailVerified.obs;
-    // print(isEmailVerified);
-
-    // if failed,use refreshFailed()
     refreshController.refreshCompleted();
-    Get.offAllNamed(Routes.DASHBOARD);
   }
 
   void onLoading() async {
     print('loading');
-    // monitor network fetch
-    //await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    // User user = _auth.currentUser!;
-
-    // isEmailVerified = user.emailVerified.obs;
-    // print('is user email verified?');
-    // print(isEmailVerified);
-
-    // String uid = Get.find<AuthController>().getUser.uid;
-    // UserModel newUser = await _userService.getUser(uid);
-
-    // print('role is: ' + newUser.role.toString());
-    // await user.reload();
-    // if (newUser.role == 0) {
-    //   allSurveyList.bindStream(_dashboardService.getAllSurvey()!);
-    //   return;
-    // }
-
-    // surveyList.bindStream(_dashboardService.getSurverysByUserID(uid)!);
-    // print(surveyList);
-    // print(tabIndex);
-
     refreshController.loadComplete();
   }
 }

@@ -13,6 +13,7 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  RefreshController _refreshController = RefreshController();
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
     backgroundColor: Colors.black,
     primary: Colors.black87,
@@ -22,6 +23,7 @@ class _DashboardPageState extends State<DashboardPage> {
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
     ),
   );
+  
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
@@ -32,7 +34,13 @@ class _DashboardPageState extends State<DashboardPage> {
         print('why');
         print(controller.isEmailVerified.value);
         return Scaffold(
-          body: SafeArea(
+            body: SafeArea(
+          child: SmartRefresher(
+            enablePullDown: true,
+            enablePullUp: true,
+            controller: controller.refreshController,
+            onRefresh: controller.onRefresh,
+            onLoading: controller.onLoading,
             child: IndexedStack(
               index: controller.tabIndex.value,
               children: [
@@ -64,7 +72,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ],
             ),
           ),
-        );
+        ));
       },
     );
   }
