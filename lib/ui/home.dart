@@ -85,153 +85,189 @@ class HomePage extends GetWidget<AuthController> {
         ),
       ),
       body: auth.emailVerified
-          ? Obx(() => Get.find<UserController>().user.role == 0
-              ? GetX<DashboardController>(
-                  init: Get.put<DashboardController>(DashboardController()),
-                  builder: (DashboardController dashboardController) {
-                    if (dashboardController.allSurveys != null) {
-                      print('here');
-                      return dashboardController.allSurveys!.length != 0
-                          ? GroupedListView<dynamic, String>(
-                              elements: dashboardController.allSurveys!,
-                              groupBy: (survey) {
-                                return formatter.format(DateTime.parse(
-                                    survey.createdAt.toDate().toString()));
-                              },
-                              order: GroupedListOrder.DESC,
-                              groupSeparatorBuilder: (String value) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  value,
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              itemBuilder: (c, survey) {
-                                // print(survey.createdAt.toDate().toString());
-                                return SurveyCard(
-                                    survey: survey,
-                                    onTap: () async {
-                                      Get.toNamed(Routes.VIEW_SURVERY,
-                                          arguments: [
-                                            survey,
-                                            await Get.find<UserController>()
-                                                .getUserDetailsById(survey.uid)
-                                          ]);
-                                    });
-                              },
-                            )
-                          : Container(
-                              padding: EdgeInsets.all(10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/empty1.gif',
-                                    height:
-                                        MediaQuery.of(context).size.height / 2,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 20),
-                                    child: RichText(
-                                      text: TextSpan(
-                                          text: 'No survey found. Click on the',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                                text:
-                                                    '  + sign to get started.')
-                                          ]),
+          ? Obx(
+              () => Get.find<UserController>().user.role == 0
+                  ? SmartRefresher(
+                      enablePullDown: true,
+                      enablePullUp: true,
+                      controller:
+                          Get.find<DashboardController>().refreshController,
+                      onRefresh: Get.find<DashboardController>().onRefresh,
+                      onLoading: Get.find<DashboardController>().onLoading,
+                      child: GetX<DashboardController>(
+                        init:
+                            Get.put<DashboardController>(DashboardController()),
+                        builder: (DashboardController dashboardController) {
+                          if (dashboardController.allSurveys != null) {
+                            print('here');
+                            return dashboardController.allSurveys!.length != 0
+                                ? GroupedListView<dynamic, String>(
+                                    elements: dashboardController.allSurveys!,
+                                    groupBy: (survey) {
+                                      return formatter.format(DateTime.parse(
+                                          survey.createdAt
+                                              .toDate()
+                                              .toString()));
+                                    },
+                                    order: GroupedListOrder.DESC,
+                                    groupSeparatorBuilder: (String value) =>
+                                        Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        value,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                    } else {
-                      return CircularProgressIndicator();
-                    }
-                  },
-                )
-              : GetX<DashboardController>(
-                  init: Get.put<DashboardController>(DashboardController()),
-                  builder: (DashboardController dashboardController) {
-                    if (dashboardController.surveys != null) {
-                      return dashboardController.surveys!.length != 0
-                          ? GroupedListView<dynamic, String>(
-                              elements: dashboardController.surveys!,
-                              groupBy: (survey) {
-                                return formatter.format(DateTime.parse(
-                                    survey.createdAt.toDate().toString()));
-                              },
-                              order: GroupedListOrder.DESC,
-                              groupSeparatorBuilder: (String value) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  value,
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              itemBuilder: (c, survey) {
-                                // print(survey.createdAt.toDate().toString());
-                                return SurveyCard(
-                                    // uid: controller.getUser.uid,
-                                    survey: survey,
-                                    onTap: () async {
-                                      Get.toNamed(Routes.VIEW_SURVERY,
-                                          arguments: [
-                                            survey,
-                                            await Get.find<UserController>()
-                                                .getUserDetailsById(survey.uid)
-                                          ]);
-                                    });
-                              },
-                            )
-                          : Container(
-                              padding: EdgeInsets.all(10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/empty1.gif',
-                                    height:
-                                        MediaQuery.of(context).size.height / 2,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 20),
-                                    child: RichText(
-                                      text: TextSpan(
-                                          text: 'No survey found. Click on the',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12),
-                                          children: <TextSpan>[
-                                            TextSpan(
+                                    itemBuilder: (c, survey) {
+                                      // print(survey.createdAt.toDate().toString());
+                                      return SurveyCard(
+                                          survey: survey,
+                                          onTap: () async {
+                                            Get.toNamed(Routes.VIEW_SURVERY,
+                                                arguments: [
+                                                  survey,
+                                                  await Get.find<
+                                                          UserController>()
+                                                      .getUserDetailsById(
+                                                          survey.uid)
+                                                ]);
+                                          });
+                                    },
+                                  )
+                                : Container(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Image.asset(
+                                          'assets/empty1.gif',
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              2,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 20),
+                                          child: RichText(
+                                            text: TextSpan(
                                                 text:
-                                                    '  + sign to get started.')
-                                          ]),
+                                                    'No survey found. Click on the',
+                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text:
+                                                          '  + sign to get started.')
+                                                ]),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                    } else {
-                      return CircularProgressIndicator();
-                    }
-                  },
-                ))
+                                  );
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        },
+                      ),
+                    )
+                  : SmartRefresher(
+                      enablePullDown: true,
+                      enablePullUp: true,
+                      controller:
+                          Get.find<DashboardController>().refreshController,
+                      onRefresh: Get.find<DashboardController>().onRefresh,
+                      onLoading: Get.find<DashboardController>().onLoading,
+                      child: GetX<DashboardController>(
+                        init:
+                            Get.put<DashboardController>(DashboardController()),
+                        builder: (DashboardController dashboardController) {
+                          if (dashboardController.surveys != null) {
+                            return dashboardController.surveys!.length != 0
+                                ? GroupedListView<dynamic, String>(
+                                    elements: dashboardController.surveys!,
+                                    groupBy: (survey) {
+                                      return formatter.format(DateTime.parse(
+                                          survey.createdAt
+                                              .toDate()
+                                              .toString()));
+                                    },
+                                    order: GroupedListOrder.DESC,
+                                    groupSeparatorBuilder: (String value) =>
+                                        Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        value,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    itemBuilder: (c, survey) {
+                                      // print(survey.createdAt.toDate().toString());
+                                      return SurveyCard(
+                                          // uid: controller.getUser.uid,
+                                          survey: survey,
+                                          onTap: () async {
+                                            Get.toNamed(Routes.VIEW_SURVERY,
+                                                arguments: [
+                                                  survey,
+                                                  await Get.find<
+                                                          UserController>()
+                                                      .getUserDetailsById(
+                                                          survey.uid)
+                                                ]);
+                                          });
+                                    },
+                                  )
+                                : Container(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Image.asset(
+                                          'assets/empty1.gif',
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              2,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 20),
+                                          child: RichText(
+                                            text: TextSpan(
+                                                text:
+                                                    'No survey found. Click on the',
+                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text:
+                                                          '  + sign to get started.')
+                                                ]),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        },
+                      ),
+                    ),
+            )
           : Container(
               padding: EdgeInsets.all(10.0),
               child: Column(

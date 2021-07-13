@@ -21,6 +21,8 @@ class DashboardController extends GetxController {
   UserService _userService = UserService();
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  RefreshController refreshDashbaordController =
+      RefreshController(initialRefresh: false);
   RxBool isEmailVerified = false.obs;
 
   void changeTabIndex(int index) {

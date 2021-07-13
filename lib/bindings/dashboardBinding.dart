@@ -7,6 +7,6 @@ class DashboardBinding extends Bindings {
   void dependencies() {
     Get.put<UserController>(UserController(), permanent: true);
     Get.lazyPut<ThemeController>(() => ThemeController());
-    Get.lazyPut<DashboardController>(() => DashboardController());
+    Get.put<DashboardController>(DashboardController(), permanent: true);
   }
 }
