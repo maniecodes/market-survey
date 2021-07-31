@@ -1,4 +1,3 @@
-import 'package:andelinks/ui/widgets/customWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:andelinks/controllers/controllers.dart';
@@ -26,19 +25,20 @@ class HomePage extends GetWidget<AuthController> {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          elevation: 0.0,
-          title: GetX<UserController>(
-            initState: (_) async {
-              Get.find<UserController>().user = await user.getUserDetails();
-            },
-            builder: (_) {
-              return Text(
-                'Welcome ' + _.user.firstName.toString(),
-                style: Theme.of(context).textTheme.headline1,
-              );
-            },
-          )),
+        backgroundColor: Theme.of(context).primaryColor,
+        elevation: 0.0,
+        title: GetX<UserController>(
+          initState: (_) async {
+            Get.find<UserController>().user = await user.getUserDetails();
+          },
+          builder: (_) {
+            return Text(
+              'Welcome ' + _.user.firstName.toString(),
+              style: Theme.of(context).textTheme.headline1,
+            );
+          },
+        ),
+      ),
       drawer: Drawer(
         child: GetX<UserController>(
           initState: (_) async {
@@ -99,7 +99,6 @@ class HomePage extends GetWidget<AuthController> {
                             Get.put<DashboardController>(DashboardController()),
                         builder: (DashboardController dashboardController) {
                           if (dashboardController.allSurveys != null) {
-                            print('here');
                             return dashboardController.allSurveys!.length != 0
                                 ? GroupedListView<dynamic, String>(
                                     elements: dashboardController.allSurveys!,
@@ -122,7 +121,6 @@ class HomePage extends GetWidget<AuthController> {
                                       ),
                                     ),
                                     itemBuilder: (c, survey) {
-                                      // print(survey.createdAt.toDate().toString());
                                       return SurveyCard(
                                           survey: survey,
                                           onTap: () async {
