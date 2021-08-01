@@ -1,7 +1,7 @@
 name: andelinks
 description: Andelinks Limited Project
 
-version: 1.0.3+3
+version: 1.0.4+4
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -34,6 +34,7 @@ dependencies:
   geolocator: ^7.2.0+1
   geocoding: ^2.0.0
   google_maps_flutter: ^2.0.6
+  gsheets: ^0.3.1
 
 dev_dependencies:
   flutter_test:
